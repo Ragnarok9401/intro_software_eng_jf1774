@@ -37,5 +37,7 @@
 
 ## Languages & Techniques:
   Languages: Python, HTML, CSS 
+  
   Framework: Django 
+  
   Database: SQLite3 
