@@ -1,9 +1,9 @@
-# Dawg House
+# DawgHouse
 
 ## Description
 
 ### Objective
-  The goal of this project is to develop a small-scale Facebook-like social media web app focused on Mississippi State students called "Dawg House".
+  The goal of this project is to develop a small-scale Facebook-like social media web app focused on Mississippi State students called "DawgHouse".
   In version 1.0, users will be able to log in, log out, post timeline updates, send/accept friend requests, and like, comment on, and re-post the posts of their friends.
 
 ### Features
