@@ -14,7 +14,6 @@
     - A user will also be able to log out of his or her account.
 3. Posting a Bark
    - Users can post a block of text called a "bark" to their timelines.
-   - They will also be able to edit the content of their barks.
 4. Social Interaction
    - A user can send a "sniff request" (friend request) to another user to add that user to their "pack" (friend's list).
    - Users within a poster's pack will be able to see that account's barks and interact with them.
