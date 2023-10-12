@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.username }}'s Profile</title>
+</head>
+<body>
+    <h1>{{ user.username }}'s Profile</h1>
+    <p>Bio: {{ user_profile.bio }}</p>
+
+    <h2>Followers:</h2>
+    <ul>
+        {% for follower in followers %}
+            <li>{{ follower.from_user.username }}</li>
+        {% empty %}
+            <li>No followers yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Following:</h2>
+    <ul>
+        {% for followed_user in following %}
+            <li>{{ followed_user.username }}</li>
+        {% empty %}
+            <li>Not following anyone yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
