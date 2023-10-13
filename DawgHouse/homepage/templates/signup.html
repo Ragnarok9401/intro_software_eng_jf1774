@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Signup Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'signup.css' %}"/>
+</head>
+<body>
+<div class="main-container">
+    <div class="header">
+        <div class="logo"><img src="{% static 'images/DHLogo.png' %}"></div>
+        <h1>DawgHouse</h1>
+    </div>
+    <div class="signup-container">
+        <h2>Create a New Account</h2>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+            <div class="names">
+                <input
+                        type="text"
+                        id="firstname"
+                        name="first_name"
+                        placeholder="First Name"
+                        required
+                />
+                <input
+                        type="text"
+                        id="lastname"
+                        name="last_name"
+                        placeholder="Last Name"
+                        required
+                />
+            </div>
+
+            <div class="input-group">
+                <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Dawgtag"
+                        required
+                />
+            </div>
+
+            <div class="input-group">
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                />
+            </div>
+
+            <div class="input-group">
+                <input
+                        type="password"
+                        id="retype-password"
+                        name="retype-password"
+                        placeholder="Retype Password"
+                        required
+                />
+            </div>
+
+            <div class="password-requirements">
+                <ul>
+                    <li>Your password can't be too similar to your other personal information</li>
+                    <li>Your password must contain at least 8 characters</li>
+                    <li>Your password can't be a commonly used password</li>
+                    <li>Your password can't be entirely numeric</li>
+                </ul>
+            </div>
+
+            <div class="input-group">
+                <button type="submit">Join The Pack</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+
