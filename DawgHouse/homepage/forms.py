@@ -1,14 +1,14 @@
 from django import forms
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.password_validation import validate_password, get_default_password_validators
 from django.core.exceptions import ValidationError
 from .models import DawgHouseUser
 
 class CustomUserCreationForm(forms.ModelForm):
     error_messages = {
-        'password_mismatch': "The two password fields did not match."
+        'password_mismatch': "The two password fields did not match.",
     }
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
-    retype_password = forms.CharField(label='Retype Password', widget=forms.PasswordInput, error_messages={'required': 'The two password fields did not match.'})
+    retype_password = forms.CharField(label='Retype Password', widget=forms.PasswordInput)
 
     class Meta:
         model = DawgHouseUser
@@ -24,14 +24,18 @@ class CustomUserCreationForm(forms.ModelForm):
         password = cleaned_data.get('password')
         retype_password = cleaned_data.get('retype_password')
 
-        if password and retype_password:
-            if password != retype_password:
-                self.add_error('retype_password', self.error_messages['password_mismatch'])
+        if password and retype_password and password != retype_password:
+            self.add_error('retype_password', self.error_messages['password_mismatch'])
 
-        try:
-            validate_password(password, self.instance)
-        except ValidationError as error:
-            raise forms.ValidationError(list(error.messages))
+        if password:
+            try:
+                validate_password(password, self.instance)
+            except ValidationError as error:
+                for validator in get_default_password_validators():
+                    try:
+                        validator.validate(password, self.instance)
+                    except ValidationError as e:
+                        self.add_error('password', e)
 
         return cleaned_data
 
@@ -41,4 +45,3 @@ class CustomUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
