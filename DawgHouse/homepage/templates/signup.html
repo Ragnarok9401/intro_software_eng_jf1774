@@ -15,13 +15,6 @@
     </div>
     <div class="signup-container">
         <h2>Create a New Account</h2>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <form action="{% url 'signup' %}" method="post">
             {% csrf_token %}
             <div class="names">
@@ -70,6 +63,14 @@
                         required
                 />
             </div>
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
             <div class="password-requirements">
                 <ul>
