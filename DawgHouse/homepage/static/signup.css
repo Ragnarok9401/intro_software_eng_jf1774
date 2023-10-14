@@ -123,3 +123,17 @@ button:hover {
 button:hover{
     background-color: #561214;
 }
+
+.messages {
+    font-size: 14px;
+    color: red;
+    margin-bottom: 5px;  
+    text-align: left;
+    padding-left: 0;     
+}
+
+.messages li {
+    list-style-type: none;
+    margin-left: 0;   
+    padding-left: 0;    
+}
