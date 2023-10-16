@@ -1,0 +1,91 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #fffefe;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.container{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    text-align: center;
+    font-size: 35px;
+    color: #71171a;
+    margin-top: 60px;
+    height: 450px;
+    width: 550px;
+    border-style: outset;
+    border-color: lightgray;
+}
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+img {
+    height: 120px;
+    padding-bottom: 20px;
+}
+p{
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+input{
+    width: 290px;
+    height: 25px;
+    margin-bottom: 25px;
+    border: none;
+    box-shadow: 1.5px 1.5px lightgray;
+}
+.lbutton button {
+margin: auto;
+display: block;
+margin-top: 10px;
+padding: 1%;
+width: 120px;
+background-color: #712828;
+color: white;
+border: none;
+text-align: center;
+border-radius: 5px;
+}
+.lbutton button:hover
+{
+    cursor: pointer;
+    color: black;
+}
+.lbutton button:active
+{
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+.jbutton button{
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    padding: 1%;
+    background-color: #712828;
+    color: white;
+    border: none;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+}
+.jbutton button:hover
+{
+    cursor: pointer;
+    color: black;
+}
+.jbutton button:active
+{
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}

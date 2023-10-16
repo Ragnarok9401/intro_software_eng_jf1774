@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect
 from .models import DawgHouseUser
 from .forms import CustomUserCreationForm
 
-def home(request):
-    return render(request, "index.html")
+def login(request):
+    return render(request, "login.html")
 
 def signupView(request):
     if request.method == 'POST':
