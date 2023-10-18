@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to DawgHouse</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'landing.css' %}" />
+  </head>
+  <body>
+    <h2>Welcome to</h2>
+    <div class="header">
+      <div class="logo"><img src="{% static 'images/DHLogo.png' %}" /></div>
+      <h1>DawgHouse</h1>
+    </div>
+    <p>Join the community and connect with friends!</p>
+    <div>
+      {% if user.is_authenticated %}
+      <a class="btn" href="/logout/">Logout</a>
+      {% else %}
+      <a class="btn" href="/login/">Login</a>
+      <a class="btn" href="/signup/">Sign Up</a>
+      {% endif %}
+    </div>
+  </body>
+</html>

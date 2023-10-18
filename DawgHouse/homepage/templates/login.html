@@ -1,38 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Log in</title>
     {% load static %}
-    <link rel="stylesheet" href="static/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <img src="static/images/Logo.png">
-            <h1>DawgHouse</h1>
+      <div class="header">
+        <img src="{% static 'images/Logo.png' %}" />
+        <h1>DawgHouse</h1>
+      </div>
+      <form method="post">
+        {% csrf_token %} {{ form.username }} {{ form.password }}
+        <div class="lbutton">
+          <button type="submit">Login</button>
         </div>
-        <div>
-        <input type="text" placeholder="DawgTag" required>
-         </div>
-         <div>
-        <input type="password" placeholder="Password" required>
-    </div>
-    <div class="lbutton">
-        <button type="submit">Login</button>
-    </div>
-    <p>OR</p>
-
-    <div class="jbutton">
+      </form>
+      {% if message %}
+      <p>{{ message }}</p>
+      {% endif %}
+      <p>OR</p>
+      <div class="jbutton">
         <a href="{% url 'signup' %}">
-            <button>Sign Up</button>
+          <button>Sign Up</button>
         </a>
+      </div>
     </div>
-    </div>
-
-
-
-
-</body>
+  </body>
 </html>

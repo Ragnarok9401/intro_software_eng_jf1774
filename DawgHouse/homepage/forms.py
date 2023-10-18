@@ -45,3 +45,7 @@ class CustomUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder': 'DawgTag', 'class': 'input-field', 'required': True}))
+    password = forms.CharField(max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'input-field', 'required': True}))
