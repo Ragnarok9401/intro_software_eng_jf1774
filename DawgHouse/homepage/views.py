@@ -22,7 +22,7 @@ def login_view(request):
             #right now this redirects to a landing page but this will need to be changed to the user's timeline later
             return redirect('/')
         else:
-            message = 'Incorrect Dawtag or Password'
+            message = 'Unrecognized Dawgtag or Password'
 
         return render(request, "login.html", {'form': form, 'message': message})
         
