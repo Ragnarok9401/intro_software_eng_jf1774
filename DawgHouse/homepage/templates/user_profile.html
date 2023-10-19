@@ -1,4 +1,3 @@
-<!-- user_profile.html -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,9 +12,22 @@
 
     <h2>Friends</h2>
     <ul>
-      {% for friend in user.friends.all %}
+      {% for friend in friends_list %}
       <li>{{ friend.username }}</li>
       {% endfor %}
     </ul>
+
+    <h3>Barks</h3>
+    <u1>
+      {% for bark in barks %}
+      <li>
+        <p><strong>User:</strong> {{ bark.user.username }}</p>
+        <p><strong>Content:</strong> {{ bark.content }}</p>
+        <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
+        <p><strong>Likes:</strong> {{ bark.num_likes }}</p>
+      </li>
+      {% endfor %}
+    </u1>
+
   </body>
 </html>

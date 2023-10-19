@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Bark, DawgHouseUser, SniffRequest
 from .forms import CustomUserCreationForm, EditUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.forms.models import model_to_dict
 
 def home_view(request):
     return render(request, 'homepage.html')
@@ -95,24 +97,27 @@ def accept_example_view(request):
         'all_sniff_requests': all_sniff_requests,
     }
     return render(request, "accept_sniffs_example.html", context)
-        
+
+     
 def ProfileView(request, username):
     user = get_object_or_404(DawgHouseUser, username=username)
     friends_list = user.friends.all()
-    posts = Bark.objects.filter(user=user)
-    context = {'user': user, 'posts': posts, 'friends_list': friends_list}
+    barks = Bark.objects.filter(user=user)
+    context = {'user': user, 'barks': barks, 'friends_list': friends_list}
     return render(request, 'user_profile.html', context)
 
-class UpdateUserView():
-    def edit_user(request):
-        user = request.user 
-        if request.method == 'POST':
-            form = EditUserForm(request.POST, instance=user)
-            if form.is_valid():
-                form.save()
-                return redirect('ProfileView')  
-        else:
-            form = EditUserForm(instance=user)
 
-        return render(request, 'edit_user.html', {'form': form})
-
+def userEdit(request, username):
+    user = get_object_or_404(DawgHouseUser, username=username)
+    if request.method == "GET":
+        form = EditUserForm(initial=model_to_dict(user))
+        return render(request, "edit_user.html", {'form' : form})
+    elif request.method == "POST":
+        user = get_object_or_404(DawgHouseUser, username=username)
+        form = EditUserForm(request.POST)
+        if form.is_valid():
+            user.bio = form.cleaned_data['bio']
+            user.save()
+            return redirect(f'/profile/{username}')
+        else: 
+            return HttpResponseRedirect(reverse('some_fail_loc'))
