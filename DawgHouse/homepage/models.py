@@ -49,3 +49,7 @@ class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = DawgHouseUserManager()
+
+class SniffRequest(models.Model):
+    from_user = models.ForeignKey(DawgHouseUser, related_name='form_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(DawgHouseUser, related_name='to_user', on_delete=models.CASCADE)

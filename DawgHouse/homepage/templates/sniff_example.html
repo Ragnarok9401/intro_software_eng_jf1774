@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friend Request Functionality</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      .all_users {
+        list-style: none;
+        padding: 0;
+      }
+      .all_users li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .user_name {
+        margin: 0;
+      }
+      .friend_request_link {
+        color: #fff;
+        background-color: #007bff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .friend_request_link:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>List of Users</h2>
+    <ul class="all_users">
+      {% for user in allusers %}
+        {% if not user.is_superuser %}
+          {% if user not in request.user.friends.all and user != request.user %}
+            <li>
+              <h1 class="user_name">
+                {{user.username}}
+                <a href="/send_sniff_request/{{user.id}}/" class="friend_request_link"
+                  >Send Sniff Request</a
+                >
+              </h1>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+
