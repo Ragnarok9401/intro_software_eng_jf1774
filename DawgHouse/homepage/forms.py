@@ -49,3 +49,10 @@ class CustomUserCreationForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'placeholder': 'DawgTag', 'class': 'input-field', 'required': True}))
     password = forms.CharField(max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'input-field', 'required': True}))
+
+class EditUserForm(forms.ModelForm):
+    bio = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Enter your bio: "}))
+
+    class Meta:
+        model = DawgHouseUser
+        fields = ['bio']

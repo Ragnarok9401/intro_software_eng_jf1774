@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import DawgHouseUser, SniffRequest
-from .forms import CustomUserCreationForm, LoginForm
+from .models import Bark, DawgHouseUser, SniffRequest
+from .forms import CustomUserCreationForm, EditUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 
 def home_view(request):
@@ -96,4 +96,23 @@ def accept_example_view(request):
     }
     return render(request, "accept_sniffs_example.html", context)
         
+def ProfileView(request, username):
+    user = get_object_or_404(DawgHouseUser, username=username)
+    friends_list = user.friends.all()
+    posts = Bark.objects.filter(user=user)
+    context = {'user': user, 'posts': posts, 'friends_list': friends_list}
+    return render(request, 'user_profile.html', context)
+
+class UpdateUserView():
+    def edit_user(request):
+        user = request.user 
+        if request.method == 'POST':
+            form = EditUserForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+                return redirect('ProfileView')  
+        else:
+            form = EditUserForm(instance=user)
+
+        return render(request, 'edit_user.html', {'form': form})
 

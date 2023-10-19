@@ -26,4 +26,6 @@ urlpatterns = [
     path("send_example/", include("homepage.urls")),
     path("send_sniff_request/<int:user_ID>/", include("homepage.urls")),
     path("accept_sniff_request/<int:request_ID>", include("homepage.urls")),
+    path("profile/<str:username>/", include("homepage.urls")),
+    path("edit/<str:username>/", include("homepage.urls")),
 ]
