@@ -2,32 +2,67 @@
 <html>
   <head>
     <title>User Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'profile.css' %}" />
   </head>
   <body>
-    <h1>User Profile</h1>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>First Name:</strong> {{ user.first_name }}</p>
-    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
-    <p><strong>Bio:</strong> {{ user.bio }}</p>
+    <div class="profile-cover">
+      <img
+        src="{% static 'images/msstate.jpg' %}"
+        alt="{{ user.username }}'s cover photo"
+      />
+    </div>
+    <div class="profile-content">
+      <div class="profile-header">
+        <img
+          src="{% static 'images/profilePicture.jpg' %}"
+          alt="{{ user.username }}'s profile picture"
+        />
+        <div class="profile-name-bio">
+          <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+          <p>@{{ user.username }}</p>
+        </div>
+      </div>
+      <div class="profile-layout">
+        <div class="bio-container">
+          <strong>Bio</strong>
+          <p>{{ user.bio }}</p>
+          <button>Edit Bio</button>
 
-    <h2>Friends</h2>
-    <ul>
-      {% for friend in friends_list %}
-      <li>{{ friend.username }}</li>
-      {% endfor %}
-    </ul>
+          <div class="friends-list">
+            <strong>Friends</strong>
+            {% if friends_list %}
+            <ul>
+              {% for friend in friends_list %}
+              <li>@{{ friend.username }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No friends yet!</p>
+            {% endif %}
+          </div>
+        </div>
 
-    <h3>Barks</h3>
-    <u1>
-      {% for bark in barks %}
-      <li>
-        <p><strong>User:</strong> {{ bark.user.username }}</p>
-        <p><strong>Content:</strong> {{ bark.content }}</p>
-        <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
-        <p><strong>Likes:</strong> {{ bark.num_likes }}</p>
-      </li>
-      {% endfor %}
-    </u1>
+        <div class="add-bark-container">
+          <div class="bark-input-group">
+            <strong>Add a Bark</strong>
+            <textarea placeholder="What's on your mind?"></textarea>
+          </div>
+          <button>Post Bark</button>
+        </div>
 
+        <!-- Barks List -->
+        <ul>
+          {% for bark in barks %}
+          <li class="bark">
+            <p><strong>User:</strong> {{ bark.user.username }}</p>
+            <p><strong>Content:</strong> {{ bark.content }}</p>
+            <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
+            <p><strong>Likes:</strong> {{ bark.num_likes }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </body>
 </html>
