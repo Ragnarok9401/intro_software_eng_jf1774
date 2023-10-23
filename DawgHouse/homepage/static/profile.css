@@ -8,6 +8,7 @@ body {
 }
 .profile-layout {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     width: 100%;
 }
@@ -181,4 +182,62 @@ ul {
 .add-bark-container button:hover {
     background-color: #18191a;
 }
+
+.top-bar {
+    background-color: #18191a;
+    padding: 0px 5px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+.logo-link {
+    display: inline-block; 
+    vertical-align: middle; 
+    z-index: 10;  
+}
+
+.logo {
+    height: 70px; 
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+.logo-link:hover .logo {
+    opacity: 0.7;  
+}
+
+.barks-container {
+    flex: 1 100%;  
+    width: 70%;  
+    margin-left: auto;  
+    margin-right: auto;
+    background-color: #242526;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    color: white;
+    margin-top: 20px; 
+}
+
+
+
+.barks-container h2 {
+    margin: 0;
+    margin-bottom: 20px; 
+    text-align: center;
+    color: #e1e1e1; 
+}
+
+.barks-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.barks-container li {
+    padding: 10px;
+    margin-bottom: 10px; 
+    background-color: #2c2d2e; 
+    border-radius: 5px; 
+}
+
+
 

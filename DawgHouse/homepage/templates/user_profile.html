@@ -6,6 +6,16 @@
     <link rel="stylesheet" href="{% static 'profile.css' %}" />
   </head>
   <body>
+    <div class="top-bar">
+      <a href="/" class="logo-link">
+        <img
+          src="{% static 'images/DHLogo.png' %}"
+          alt="DawgHouse Logo"
+          class="logo"
+        />
+      </a>
+    </div>
+
     <div class="profile-cover">
       <img
         src="{% static 'images/msstate.jpg' %}"
@@ -30,7 +40,7 @@
           <button>Edit Bio</button>
 
           <div class="friends-list">
-            <strong>Friends</strong>
+            <strong>Pack</strong>
             {% if friends_list %}
             <ul>
               {% for friend in friends_list %}
@@ -44,24 +54,42 @@
         </div>
 
         <div class="add-bark-container">
-          <div class="bark-input-group">
-            <strong>Add a Bark</strong>
-            <textarea placeholder="What's on your mind?"></textarea>
-          </div>
-          <button>Post Bark</button>
+          <form action="{% url 'post_bark' %}" method="post">
+            {% csrf_token %}
+            <div class="bark-input-group">
+              <strong>Add a Bark</strong>
+              <textarea
+                name="bark_content"
+                placeholder="What's on your mind?"
+              ></textarea>
+            </div>
+            <button type="submit">Post Bark</button>
+          </form>
         </div>
 
         <!-- Barks List -->
-        <ul>
-          {% for bark in barks %}
-          <li class="bark">
-            <p><strong>User:</strong> {{ bark.user.username }}</p>
-            <p><strong>Content:</strong> {{ bark.content }}</p>
-            <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
-            <p><strong>Likes:</strong> {{ bark.num_likes }}</p>
-          </li>
-          {% endfor %}
-        </ul>
+        <div class="barks-container">
+          <h2>Timeline</h2>
+          <ul>
+            {% for bark in barks %}
+            <li class="bark">
+              <p><strong>User:</strong> {{ bark.user.username }}</p>
+              <p><strong>Content:</strong> {{ bark.content }}</p>
+              <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
+              <p><strong>Treats:</strong> {{ bark.num_likes }}</p>
+              <form action="{% url 'give_treat' bark.id %}" method="post">
+                {% csrf_token %} {% if user in bark.treated_by.all %}
+                <button type="submit" style="background-color: red">
+                  Remove Treat
+                </button>
+                {% else %}
+                <button type="submit">Give a Treat</button>
+                {% endif %}
+              </form>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </div>
   </body>
