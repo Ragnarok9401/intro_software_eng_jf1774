@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Profile</title>
+  </head>
+  <body>
+    <h1>User Profile</h1>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p><strong>Bio:</strong> {{ user.bio }}</p>
+
+    <h2>Friends</h2>
+    <ul>
+      {% for friend in friends_list %}
+      <li>{{ friend.username }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Barks</h3>
+    <u1>
+      {% for bark in barks %}
+      <li>
+        <p><strong>User:</strong> {{ bark.user.username }}</p>
+        <p><strong>Content:</strong> {{ bark.content }}</p>
+        <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
+        <p><strong>Likes:</strong> {{ bark.num_likes }}</p>
+      </li>
+      {% endfor %}
+    </u1>
+
+  </body>
+</html>

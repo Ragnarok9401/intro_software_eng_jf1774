@@ -1,4 +1,6 @@
 from typing import Any
+import uuid
+from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.db import models
 
@@ -42,6 +44,7 @@ class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=30)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    bio = models.TextField(blank=True, max_length=200)
     friends = models.ManyToManyField('self', blank=True)
     is_staff = models.BooleanField(default=False)
 
@@ -49,3 +52,25 @@ class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = DawgHouseUserManager()
+
+class SniffRequest(models.Model):
+    from_user = models.ForeignKey(DawgHouseUser, related_name='form_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(DawgHouseUser, related_name='to_user', on_delete=models.CASCADE)
+
+class Bark(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    user = models.CharField(max_length=100)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now())
+    num_likes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user
+    
+# class Relationship(models.Model):
+#     #idk if the auth_user_model is right or not
+#     from_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='following', on_delete=models.CASCADE)
+#     to_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='followers', on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return '{} follows {}'.format(self.from_user, self.to_user)

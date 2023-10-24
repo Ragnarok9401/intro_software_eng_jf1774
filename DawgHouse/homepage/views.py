@@ -1,9 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
-from django.http import HttpResponseRedirect
-from .models import DawgHouseUser
-from .forms import CustomUserCreationForm, LoginForm
+from django.http import HttpResponse, HttpResponseRedirect
+from .models import Bark, DawgHouseUser, SniffRequest
+from .forms import CustomUserCreationForm, EditUserForm, LoginForm
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.forms.models import model_to_dict
 
 def home_view(request):
     return render(request, 'homepage.html')
@@ -53,3 +56,68 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+@login_required
+def send_sniff_request(request, user_ID):
+    from_user = request.user
+    to_user = DawgHouseUser.objects.get(id=user_ID)
+    sniff_request, created = SniffRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+    if created:
+        return HttpResponse('sniff request sent')
+    else:
+        return HttpResponse('sniff request was already sent')
+    
+@login_required
+def accept_sniff_request(request, request_ID):
+    sniff_request = SniffRequest.objects.get(id = request_ID)
+    if sniff_request.to_user == request.user:
+        sniff_request.to_user.friends.add(sniff_request.from_user)
+        sniff_request.from_user.friends.add(sniff_request.to_user)
+        sniff_request.delete()
+        return HttpResponse('sniff request accepted')
+    else:
+        return HttpResponse('sniff request declined')
+    
+@login_required
+def send_example_view(request):
+    allusers = DawgHouseUser.objects.all()
+    all_sniff_requests = SniffRequest.objects.all()
+
+    context = {
+        'allusers': allusers,
+        'all_sniff_requests': all_sniff_requests,
+    }
+    return render(request, 'sniff_example.html', context) 
+
+@login_required
+def accept_example_view(request):
+    
+    all_sniff_requests = SniffRequest.objects.all()
+
+    context = {
+        'all_sniff_requests': all_sniff_requests,
+    }
+    return render(request, "accept_sniffs_example.html", context)
+
+     
+def ProfileView(request, username):
+    user = get_object_or_404(DawgHouseUser, username=username)
+    friends_list = user.friends.all()
+    barks = Bark.objects.filter(user=user)
+    context = {'user': user, 'barks': barks, 'friends_list': friends_list}
+    return render(request, 'user_profile.html', context)
+
+
+def userEdit(request, username):
+    user = get_object_or_404(DawgHouseUser, username=username)
+    if request.method == "GET":
+        form = EditUserForm(initial=model_to_dict(user))
+        return render(request, "edit_user.html", {'form' : form})
+    elif request.method == "POST":
+        user = get_object_or_404(DawgHouseUser, username=username)
+        form = EditUserForm(request.POST)
+        if form.is_valid():
+            user.bio = form.cleaned_data['bio']
+            user.save()
+            return redirect(f'/profile/{username}')
+        else: 
+            return HttpResponseRedirect(reverse('some_fail_loc'))
