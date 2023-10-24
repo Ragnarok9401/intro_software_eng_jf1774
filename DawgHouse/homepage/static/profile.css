@@ -2,7 +2,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #18191a;
+    background-color: rgb(225, 225, 225);
     color: #333;
     margin: 20px; 
 }
@@ -29,7 +29,7 @@ body {
 
 .profile-header {
     position: relative;
-    background-color: #242526;
+    background-color: #5d1725;
     color: white;
     padding: 20px;
     display: flex;
@@ -38,6 +38,8 @@ body {
     margin-top: -30px;
     min-height: 100px;
     margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
 }
 
 .profile-header img {
@@ -48,7 +50,7 @@ body {
     height: 170px;
     object-fit: cover;
     border-radius: 50%; 
-    border: 5px solid #242526;
+    border: 5px solid #5d1725;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
@@ -84,10 +86,10 @@ ul {
 
 .bio-container {
     flex: 0 0 30%;
-    background-color: #242526;
+    background-color: #5d1725;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
     color: white;
 }
 
@@ -109,15 +111,15 @@ ul {
     width: 100%;  
     padding: 10px;  
     margin-top: 10px;  
-    background-color: #5b5c5d;  
-    color: white;  
+    background-color: #f7f7f7;  
+    color: black;  
     border: none;  
     border-radius: 5px;  
     cursor: pointer;  
 }
 
 .bio-container button:hover {
-    background-color: #18191a;  
+    background-color: rgb(235, 235, 235);  
 }
 
 .friends-list {
@@ -137,10 +139,10 @@ ul {
 
 .add-bark-container {
     flex: 1;
-    background-color: #242526;
+    background-color: #5d1725;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
     color: white;
     max-height: 150px;
 }
@@ -162,7 +164,7 @@ ul {
     margin: 10px 0; 
     border-radius: 55px;
     resize: vertical; 
-    background-color:#5b5c5d; 
+    background-color:#f7f7f7; 
 }
 
 .add-bark-container button {
@@ -172,21 +174,21 @@ ul {
     width: 60%;  
     display: block;
     padding: 10px;
-    background-color: #5b5c5d;
-    color: white;
+    background-color: #f7f7f7;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .add-bark-container button:hover {
-    background-color: #18191a;
+    background-color: rgb(235, 235, 235);
 }
 
 .top-bar {
-    background-color: #18191a;
+    background-color: rgb(235, 235, 235)white;
     padding: 0px 5px; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+
 }
 
 .logo-link {
@@ -210,11 +212,11 @@ ul {
     width: 70%;  
     margin-left: auto;  
     margin-right: auto;
-    background-color: #242526;
+    background-color: #5d1725;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    color: white;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: black;
     margin-top: 20px; 
 }
 
@@ -235,7 +237,7 @@ ul {
 .barks-container li {
     padding: 10px;
     margin-bottom: 10px; 
-    background-color: #2c2d2e; 
+    background-color: rgb(225, 225, 225); 
     border-radius: 5px; 
 }
 

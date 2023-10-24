@@ -36,8 +36,15 @@
       <div class="profile-layout">
         <div class="bio-container">
           <strong>Bio</strong>
-          <p>{{ user.bio }}</p>
-          <button>Edit Bio</button>
+          <div class="display-bio">
+            <p id="bioText">{{ user.bio }}</p>
+            <button id="editBioButton">Edit Bio</button>
+          </div>
+          <div class="edit-bio" style="display: none">
+            <textarea id="bioTextarea">{{ user.bio }}</textarea>
+            <button id="saveBioButton">Save</button>
+            <button id="cancelBioButton">Cancel</button>
+          </div>
 
           <div class="friends-list">
             <strong>Pack</strong>
@@ -92,5 +99,57 @@
         </div>
       </div>
     </div>
+
+
+
+    <script>
+      // you always want the DOM to load in before you script otherwise itll go wackers (hence why you place it after HTML stuff)
+      document.addEventListener('DOMContentLoaded', function() {
+        // event listener just grabs input/waits for a user to touch it lol
+          document.getElementById('editBioButton').addEventListener('click', function(){
+              document.querySelector('.display-bio').style.display = 'none'; 
+              document.querySelector('.edit-bio').style.display = 'block';
+          });
+  
+          //event listender for the cancle button
+          document.getElementById('cancelBioButton').addEventListener('click', function(){
+              document.querySelector('.display-bio').style.display = 'block';
+              document.querySelector('.edit-bio').style.display = 'none'; // we dont want to see the edited version because we canceled
+          });
+  
+          // save button event listener
+          document.getElementById('saveBioButton').addEventListener('click', function(){
+              const updatedBio = document.getElementById('bioTextarea').value; // we want the updated block (HTML)
+              
+            //server stuff 
+              fetch('/edit_bio/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': '{{ csrf_token }}' //django token
+                  },
+                  body: JSON.stringify({ //sends to json (i added to the view)
+                      'bio': updatedBio
+                  })
+              })
+              .then(response => { //error handles server response so it doesnt break 
+                  if (!response.ok) {
+                      throw new Error('bad response');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  if(data.success){
+                    // will display if success
+                      document.getElementById('bioText').innerText = updatedBio;
+                      document.querySelector('.display-bio').style.display = 'block';
+                      document.querySelector('.edit-bio').style.display = 'none';
+                  }
+              });
+          });
+      });
+      </script>
+    </body>
+  </html>
   </body>
 </html>

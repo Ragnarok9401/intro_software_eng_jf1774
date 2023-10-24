@@ -7,6 +7,10 @@ from .forms import CustomUserCreationForm, EditUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.forms.models import model_to_dict
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
 
 
 def home_view(request):
@@ -171,3 +175,14 @@ def give_treat(request, bark_id):
 
     bark.save()
     return redirect(f"/profile/{request.user.username}/")
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+def edit_bio_ajax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        new_bio = data.get("bio")
+        request.user.bio = new_bio
+        request.user.save()
+        return JsonResponse({"success": True})
+    return JsonResponse({"success": False})
