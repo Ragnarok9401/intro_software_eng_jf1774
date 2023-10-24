@@ -6,6 +6,7 @@ body {
     color: #333;
     margin: 20px; 
 }
+
 .profile-layout {
     display: flex;
     flex-wrap: wrap;
@@ -122,6 +123,13 @@ ul {
     background-color: rgb(235, 235, 235);  
 }
 
+.bio-container textarea
+{
+    resize: none;
+    width: 97%;
+    height: 100px;
+}
+
 .friends-list {
     margin-top: 40px;
 }
@@ -144,7 +152,7 @@ ul {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgb(127, 126, 126);
     color: white;
-    max-height: 150px;
+    max-height: 250px;
 }
 .bark-input-group {
     display: flex;
@@ -162,9 +170,10 @@ ul {
     width: 100%;
     padding: 5px;
     margin: 10px 0; 
-    border-radius: 55px;
-    resize: vertical; 
+    border-radius: 5px;
+    resize: none; 
     background-color:#f7f7f7; 
+    height: 65px;
 }
 
 .add-bark-container button {
@@ -209,7 +218,7 @@ ul {
 
 .barks-container {
     flex: 1 100%;  
-    width: 70%;  
+    width: 60%;  
     margin-left: auto;  
     margin-right: auto;
     background-color: #5d1725;
@@ -219,8 +228,6 @@ ul {
     color: black;
     margin-top: 20px; 
 }
-
-
 
 .barks-container h2 {
     margin: 0;
@@ -235,11 +242,53 @@ ul {
 }
 
 .barks-container li {
-    padding: 10px;
+    padding: 15px;
+    margin-left: 50px;
+    margin-right: 50px;
     margin-bottom: 10px; 
     background-color: rgb(225, 225, 225); 
     border-radius: 5px; 
 }
 
+.barks-container h3 {
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.barks-container h4 { 
+    font-size: 15px;
+    font-weight: normal;
+    margin-top:  3px;
+    margin-left: 10px;
+    color: #606060;
+}
+
+.barks-container hr {
+    margin-top: -10px;
+}
+
+.barks-container button
+{
+    width: 100px;
+    height: 30px;
+    border-radius: 25px;
+    background-color: #606060;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 300;
+    padding-top: 4px;
+    margin-top: 0px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: white;
+    border: none;
+}
+
+.barks-container p
+{
+    margin-left: 10px;
+}
 
 

@@ -4,6 +4,7 @@
     <title>User Profile</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'profile.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
   <body>
     <div class="top-bar">
@@ -68,6 +69,7 @@
               <textarea
                 name="bark_content"
                 placeholder="What's on your mind?"
+                required
               ></textarea>
             </div>
             <button type="submit">Post Bark</button>
@@ -80,17 +82,18 @@
           <ul>
             {% for bark in barks %}
             <li class="bark">
-              <p><strong>User:</strong> {{ bark.user.username }}</p>
-              <p><strong>Content:</strong> {{ bark.content }}</p>
-              <p><strong>Timestamp:</strong> {{ bark.timestamp }}</p>
-              <p><strong>Treats:</strong> {{ bark.num_likes }}</p>
+              <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+              <h4>@{{ user.username }}</h4>
+              <hr color="maroon">
+              <p>{{ bark.content }}</p>
+              <!--<p><strong>Timestamp:</strong> {{ bark.timestamp }}</p> -->
+              <h4><strong>{{ bark.num_likes }}</strong> Treats</h4>
+              <hr>
               <form action="{% url 'give_treat' bark.id %}" method="post">
                 {% csrf_token %} {% if user in bark.treated_by.all %}
-                <button type="submit" style="background-color: red">
-                  Remove Treat
-                </button>
+                <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i>        Treat</button>
                 {% else %}
-                <button type="submit">Give a Treat</button>
+                <button type="submit"><i class="fa-solid fa-bone" style="color:white;"></i>        Treat</button>
                 {% endif %}
               </form>
             </li>
