@@ -1,23 +1,30 @@
 from typing import Any
 import uuid
 from django.utils import timezone
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import (
+    BaseUserManager,
+    AbstractBaseUser,
+    PermissionsMixin,
+)
 from django.db import models
 
 # Create your models here.
 
+
 class DawgHouseUserManager(BaseUserManager):
-    def create_user(self, username, password=None, first_name=None, last_name=None, **extra_fields):
+    def create_user(
+        self, username, password=None, first_name=None, last_name=None, **extra_fields
+    ):
         if not username:
-            raise ValueError('You must enter a DawgTag')
+            raise ValueError("You must enter a DawgTag")
         if not first_name:
-            raise ValueError('You must enter your first name')
+            raise ValueError("You must enter your first name")
         if not last_name:
-            raise ValueError('You must enter your last name')
-        
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        
+            raise ValueError("You must enter your last name")
+
+        extra_fields.setdefault("is_staff", False)
+        extra_fields.setdefault("is_superuser", False)
+
         user = self.model(
             username=username,
             first_name=first_name,
@@ -28,34 +35,45 @@ class DawgHouseUserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
-    def create_superuser(self, username, password=None, first_name=None, last_name=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+    def create_superuser(
+        self, username, password=None, first_name=None, last_name=None, **extra_fields
+    ):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
-        return self.create_user(username, password, first_name, last_name, **extra_fields)
-    
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(
+            username, password, first_name, last_name, **extra_fields
+        )
+
+
 class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=30)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     bio = models.TextField(blank=True, max_length=200)
-    friends = models.ManyToManyField('self', blank=True)
+    friends = models.ManyToManyField("self", blank=True)
     is_staff = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects = DawgHouseUserManager()
 
+
 class SniffRequest(models.Model):
-    from_user = models.ForeignKey(DawgHouseUser, related_name='form_user', on_delete=models.CASCADE)
-    to_user = models.ForeignKey(DawgHouseUser, related_name='to_user', on_delete=models.CASCADE)
+    from_user = models.ForeignKey(
+        DawgHouseUser, related_name="form_user", on_delete=models.CASCADE
+    )
+    to_user = models.ForeignKey(
+        DawgHouseUser, related_name="to_user", on_delete=models.CASCADE
+    )
+
 
 class Bark(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -63,10 +81,14 @@ class Bark(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now())
     num_likes = models.IntegerField(default=0)
+    treated_by = models.ManyToManyField(
+        DawgHouseUser, related_name="treats_given", blank=True
+    )
 
     def __str__(self):
         return self.user
-    
+
+
 # class Relationship(models.Model):
 #     #idk if the auth_user_model is right or not
 #     from_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='following', on_delete=models.CASCADE)
