@@ -29,7 +29,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             # right now this redirects to a landing page but this will need to be changed to the user's timeline later
-            return redirect("/")
+            return redirect(f"/profile/{user.username}")
         else:
             message = "Unrecognized Dawgtag or Password"
 
@@ -48,7 +48,8 @@ def signupView(request):
             # for example, if we wanted to go to signup with would be "signup/"
             # for now upon successful recreation we will redirect home, which is path ""
             # we can change this later
-            return redirect("/")
+            login(request, user)
+            return redirect(f"/profile/{user.username}")
         else:
             for field in form:
                 for error in field.errors:

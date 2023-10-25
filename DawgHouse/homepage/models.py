@@ -79,7 +79,7 @@ class Bark(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.CharField(max_length=100)
     content = models.TextField()
-    timestamp = models.DateTimeField(default=timezone.now())
+    timestamp = models.DateTimeField(auto_now_add=True)
     num_likes = models.IntegerField(default=0)
     treated_by = models.ManyToManyField(
         DawgHouseUser, related_name="treats_given", blank=True
@@ -87,12 +87,3 @@ class Bark(models.Model):
 
     def __str__(self):
         return self.user
-
-
-# class Relationship(models.Model):
-#     #idk if the auth_user_model is right or not
-#     from_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='following', on_delete=models.CASCADE)
-#     to_user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='followers', on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return '{} follows {}'.format(self.from_user, self.to_user)
