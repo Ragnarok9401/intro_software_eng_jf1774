@@ -17,6 +17,7 @@
     <div>
       {% if user.is_authenticated %}
       <a class="btn" href="/logout/">Logout</a>
+      <a class="btn" href="{% url 'profile' user.username %}">View Profile</a>
       {% else %}
       <a class="btn" href="/login/">Login</a>
       <a class="btn" href="/signup/">Sign Up</a>
