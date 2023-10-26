@@ -23,4 +23,5 @@ urlpatterns = [
     path("post_bark/", views.post_bark, name="post_bark"),
     path("give_treat/<uuid:bark_id>/", views.give_treat, name="give_treat"),
     path("edit_bio/", views.edit_bio_ajax, name="edit_bio_ajax"),
+    path('search/', views.search_users, name='search_users'),
 ]

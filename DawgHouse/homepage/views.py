@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
+from fuzzywuzzy import fuzz
 
 
 def home_view(request):
@@ -184,3 +185,16 @@ def edit_bio_ajax(request):
         request.user.save()
         return JsonResponse({"success": True})
     return JsonResponse({"success": False})
+
+def search_users(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', None)
+        if username:
+            users = DawgHouseUser.objects.all()
+            similar_users = []
+            for user in users:
+                similarity_ratio = fuzz.ratio(username, user.username)
+                if similarity_ratio >= 70: 
+                    similar_users.append(user)
+            return render(request, 'search_results.html', {'similar_users': similar_users})
+    return render(request, 'search_users.html')
