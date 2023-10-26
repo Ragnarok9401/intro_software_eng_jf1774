@@ -189,6 +189,17 @@ ul {
     border-radius: 5px;
     cursor: pointer;
 }
+.button-container {
+    display: flex;       
+    align-items: center; 
+    gap: 10px;           
+}
+
+.inline-form {
+    display: flex;       
+    gap: 5px;            
+    margin: 0;           
+}
 
 .add-bark-container button:hover {
     background-color: rgb(235, 235, 235);
