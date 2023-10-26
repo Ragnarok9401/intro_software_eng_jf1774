@@ -89,7 +89,14 @@
               <h4>@{{ user.username }}</h4>
               <hr color="maroon">
               <p>{{ bark.content }}</p>
-              <h4><strong>{{ bark.num_likes }}</strong> Treats</h4>
+              <div class="counters-container">
+                <h4 class="counters-container">
+                  <strong>{{ bark.num_likes }}</strong> Treats
+                  <span class="comment-counter"><strong>0</strong> Yips</span> <!--needs backend-->
+                  <span class="share-counter"><strong>0</strong> Howls</span> <!--needs backend-->
+              </h4>
+              
+            </div>
               <hr>
               <div class="button-container">
                 <form action="{% url 'give_treat' bark.id %}" method="post">

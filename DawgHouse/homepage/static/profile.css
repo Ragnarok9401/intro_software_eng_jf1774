@@ -195,6 +195,7 @@ ul {
     gap: 10px;           
 }
 
+
 .inline-form {
     display: flex;       
     gap: 5px;            
@@ -262,7 +263,7 @@ ul {
 }
 
 .barks-container h3 {
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 5px;
     margin-bottom: 0;
     margin-left: 10px;
@@ -270,11 +271,33 @@ ul {
 }
 
 .barks-container h4 { 
-    font-size: 15px;
+    font-size: 12px;
     font-weight: normal;
     margin-top:  -5px;
     margin-left: 10px;
     color: #606060;
+}
+
+.counters-container h4
+{
+    font-size: 12px;
+    font-weight: normal;
+    margin-top:  5px;
+    margin-left: 10px;
+    color: #606060;
+}
+.counters-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.comment-counter{
+    margin-left: 10px;
+}
+
+.share-counter {
+    margin-left: 700px;
 }
 
 .bark-header {
