@@ -116,7 +116,7 @@ def accept_example_view(request):
 def ProfileView(request, username):
     user = get_object_or_404(DawgHouseUser, username=username)
     friends_list = user.friends.all()
-    barks = Bark.objects.filter(user=user)
+    barks = Bark.objects.filter(user=user).order_by("-timestamp")
     context = {"user": user, "barks": barks, "friends_list": friends_list}
     return render(request, "user_profile.html", context)
 
