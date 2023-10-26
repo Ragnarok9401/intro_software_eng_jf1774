@@ -82,11 +82,13 @@
           <ul>
             {% for bark in barks %}
             <li class="bark">
-              <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+              <div class="bark-header">
+                  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                  <p class="timestamp">{{ bark.timestamp }}</p>
+              </div>
               <h4>@{{ user.username }}</h4>
               <hr color="maroon">
               <p>{{ bark.content }}</p>
-              <!--<p><strong>Timestamp:</strong> {{ bark.timestamp }}</p> -->
               <h4><strong>{{ bark.num_likes }}</strong> Treats</h4>
               <hr>
               <form action="{% url 'give_treat' bark.id %}" method="post">
