@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #71171a;
+    margin: 0;
+    padding: 0;
+}
+.box .sidebar p
+{
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+.box .sidebar
+{
+    position: fixed;
+    border-right: solid white;
+    border-width: 5px;
+    width: 200px;
+    height: 100%;
+    transition: all 0.5s ease;
+}
+.box .sidebar ul li{
+    list-style-type: none;
+}
+.box .sidebar ul li a
+{
+    text-decoration: none;
+    display: block;
+    padding-bottom: 30px;
+    color: white;
+    font-size: 20px;
+    position: relative;
+}
+.box .sidebar ul li a .icon
+{
+    color: white;
+    font-size: 25px;
+    padding-right: 10px;
+
+}
+.searchbar
+{
+    background-color: #5d1725;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.searchbar input
+{
+    border-radius: 10px;
+    padding-right: 200px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    margin-top: 8px;
+    font-size: 20px;
+}
+
+.searchbar button
+{
+    font-size: 20px;
+    border-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.barks-container {
+    flex: 1 100%;  
+    width: 60%;  
+    margin-left: auto;  
+    margin-right: auto;
+    background-color: #5d1725;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: black;
+    margin-top: 20px; 
+}
+
+.barks-container h2 {
+    margin: 0;
+    margin-bottom: 20px; 
+    text-align: center;
+    color: #e1e1e1; 
+}
+
+.barks-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.barks-container li {
+    padding: 15px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 10px; 
+    background-color: rgb(225, 225, 225); 
+    border-radius: 5px; 
+}
+
+.barks-container h3 {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.barks-container h4 { 
+    font-size: 10px;
+    font-weight: normal;
+    margin-top:  -5px;
+    margin-left: 10px;
+    color: #606060;
+}
+.counters-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.comment-counter {
+    margin-left: 10px;
+}
