@@ -153,15 +153,6 @@ def post_bark(request):
 @login_required
 def give_treat(request, bark_id):
     bark = get_object_or_404(Bark, id=bark_id)
-    bark.num_likes += 1
-    bark.save()
-
-    return redirect(f"/profile/{request.user.username}/")
-
-
-@login_required
-def give_treat(request, bark_id):
-    bark = get_object_or_404(Bark, id=bark_id)
     user = request.user
 
     if user in bark.treated_by.all():

@@ -1,3 +1,4 @@
+/* general body styling */
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(225, 225, 225);
@@ -5,6 +6,7 @@ body {
     margin: 20px; 
 }
 
+/* styling for the overall profile layout */
 .profile-layout {
     display: flex;
     flex-wrap: wrap;
@@ -12,11 +14,12 @@ body {
     width: 100%;
 }
 
-
+/* defines the grid column for the profile content */
 .profile-content {
     grid-column: 2;
 }
 
+/* styling for the cover photo of the profile */
 .profile-cover img {
     display: block;  
     width: 100%;
@@ -26,6 +29,7 @@ body {
     border-radius: 10px;
 }
 
+/* styling for the profile header, which includes name, username, etc. */
 .profile-header {
     position: relative;
     background-color: #5d1725;
@@ -41,6 +45,7 @@ body {
     box-shadow: 0 4px 8px rgb(127, 126, 126);
 }
 
+/* styling for the profile picture within the header */
 .profile-header img {
     position: absolute;
     top: -85px;
@@ -53,6 +58,7 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* styling for the name and bio area of the profile header */
 .profile-name-bio {
     display: flex;
     flex-direction: column;  
@@ -60,6 +66,7 @@ body {
     margin-left: 220px; 
 }
 
+/* styling for the username in profile-name-bio */
 .profile-name-bio h1 {
     margin: 0;
     padding: 0;
@@ -67,22 +74,25 @@ body {
     margin-top: 0;
 }
 
+/* styling for the bio text */
 .profile-name-bio p {
     margin: 5px 0;  
     margin-top: 5px;
 }
 
+/* general styling for each individual bark (post) */
 .bark {
     border-bottom: 1px solid #ccc;
     padding: 10px 0;
 }
 
+/* styling for unordered lists */
 ul {
     list-style-type: none;
     padding: 0;
 }
 
-
+/* styling for the container of the bio */
 .bio-container {
     flex: 0 0 30%;
     background-color: #5d1725;
@@ -92,6 +102,7 @@ ul {
     color: white;
 }
 
+/* bolded text within the bio container */
 .bio-container strong {
     display: block; 
     text-align: left;  
@@ -100,11 +111,12 @@ ul {
     font-size: 20px;
 }
 
-
+/* text alignment for the bio text */
 .bio-container p {
     text-align: center;  
 }
 
+/* edit bio button within the bio container */
 .bio-container button {
     display: block;  
     width: 100%;  
@@ -117,10 +129,12 @@ ul {
     cursor: pointer;  
 }
 
+/* hover effect for the edit bio button */
 .bio-container button:hover {
     background-color: rgb(235, 235, 235);  
 }
 
+/* styling for the textarea for editing the bio */
 .bio-container textarea
 {
     resize: none;
@@ -128,10 +142,12 @@ ul {
     height: 100px;
 }
 
+/* section that displays the user's friends or pack */
 .friends-list {
     margin-top: 40px;
 }
 
+/* bolded text for the pack section */
 .friends-list strong {
     display: block;
     margin-bottom: 10px;
@@ -139,10 +155,12 @@ ul {
     font-size: 20px;
 }
 
+/* padding for the list of friends */
 .friends-list ul {
     padding-left: 20px;  
 }
 
+/* container for adding a new bark */
 .add-bark-container {
     flex: 1;
     background-color: #5d1725;
@@ -152,6 +170,8 @@ ul {
     color: white;
     max-height: 250px;
 }
+
+/* group styling for the bark input area */
 .bark-input-group {
     display: flex;
     flex-direction: column;
@@ -160,6 +180,7 @@ ul {
     margin: 0 auto; 
 }
 
+/* styling for the textarea for adding a bark */
 .add-bark-container textarea {
     margin-left: 0;
     margin-right: 0;
@@ -174,6 +195,7 @@ ul {
     height: 65px;
 }
 
+/* button styling for posting a bark */
 .add-bark-container button {
     margin-left: auto;
     margin-right: auto;
@@ -187,23 +209,27 @@ ul {
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* group of buttons for bark actions like treat, yip, and howl */
 .button-container {
     display: flex;       
     align-items: center; 
     gap: 10px;           
 }
 
-
+/* inline form styling, potentially for other elements */
 .inline-form {
     display: flex;       
     gap: 5px;            
     margin: 0;           
 }
 
+/* hover effect for the post bark button */
 .add-bark-container button:hover {
     background-color: rgb(235, 235, 235);
 }
 
+/* top navigation bar that contains the logo and the search bar */
 .top-bar {
     display: flex;
     align-items: center; 
@@ -212,7 +238,7 @@ ul {
     position: relative;
 }
 
-
+/* styling for the search bar and its components */
 .search-bar-container {
     display: flex; 
     align-items: center;
@@ -226,6 +252,7 @@ ul {
     width: 400px;
 }
 
+/* styling for the search input text box */
 #searchInput {
     border: none; 
     outline: none;
@@ -233,27 +260,32 @@ ul {
     flex-grow: 1; 
 }
 
+/* search icon styling */
 .fa-search {
     color: #5d1725; 
     cursor: pointer; 
 }
 
+/* link container for the site's logo */
 .logo-link {
     display: inline-block; 
     vertical-align: middle; 
     z-index: 10;  
 }
 
+/* site logo styling */
 .logo {
     height: 70px; 
     width: auto;
     transition: opacity 0.3s ease;
 }
 
+/* hover effect for the site logo */
 .logo-link:hover .logo {
     opacity: 0.7;  
 }
 
+/* container for the main content of barks or posts */
 .barks-container {
     flex: 1 100%;  
     width: 60%;  
@@ -267,6 +299,7 @@ ul {
     margin-top: 20px; 
 }
 
+/* header for the barks section */
 .barks-container h2 {
     margin: 0;
     margin-bottom: 20px; 
@@ -274,11 +307,13 @@ ul {
     color: #e1e1e1; 
 }
 
+/* styling for the list of barks */
 .barks-container ul {
     list-style-type: none;
     padding: 0;
 }
 
+/* individual bark styling */
 .barks-container li {
     padding: 15px;
     margin-left: 50px;
@@ -288,6 +323,7 @@ ul {
     border-radius: 5px; 
 }
 
+/* title or username of the bark author */
 .barks-container h3 {
     font-size: 18px;
     margin-top: 5px;
@@ -296,6 +332,7 @@ ul {
     font-weight: bold;
 }
 
+/* timestamp of the bark */
 .barks-container h4 { 
     font-size: 10px;
     font-weight: normal;
@@ -304,6 +341,7 @@ ul {
     color: #606060;
 }
 
+/* counters for the number of treats, yips, and howls a bark has */
 .counters-container h4
 {
     font-size: 12px;
@@ -313,6 +351,7 @@ ul {
     color: #606060;
 }
 
+/* container for counters of treats, yips, and howls */
 .counters-container {
     display: flex;
     align-items: center;
@@ -320,21 +359,24 @@ ul {
     flex-wrap: wrap;
 }
 
+/* counter for comments or yips on the bark */
 .comment-counter {
     margin-left: 10px;
 }
 
+/* counter for shares or howls of the bark */
 .share-counter {
     position: absolute;
     margin-left: 1000px;
 }
 
-
+/* header section for each individual bark */
 .bark-header {
     display: flex;
     justify-content: space-between;  
 }
 
+/* timestamp for the bark */
 .barks-container .timestamp {
     text-align: right;
     font-size: 15px;
@@ -342,11 +384,12 @@ ul {
     color: #606060;
 }
 
-
+/* divider between barks */
 .barks-container hr {
     margin-top: -10px;
 }
 
+/* button for actions on the bark, like giving a treat */
 .barks-container button
 {
     width: 70px;
@@ -363,11 +406,13 @@ ul {
     border: none;
 }
 
+/* styling for the content of the bark */
 .barks-container p
 {
     margin-left: 10px;
 }
 
+/* show and hide buttons for the edit bark form */
 .show-edit-bark-form,
 .hide-edit-bark-form {
     cursor: pointer;
@@ -378,11 +423,13 @@ ul {
     margin-top: 10px;
 }
 
+/* hover effects for show and hide edit form buttons */
 .show-edit-bark-form:hover,
 .hide-edit-bark-form:hover {
     background-color: #d0d0d0;
 }
 
+/* textarea for editing a bark */
 .edit-bark-form textarea {
     width: 100%;
     padding: 5px;
@@ -392,6 +439,7 @@ ul {
     background-color:#f7f7f7; 
 }
 
+/* show button to reveal the edit form for a bark */
 .show-edit-bark-form {
     margin-top: 40px;
     float: right; 
@@ -399,15 +447,18 @@ ul {
     color: #d0d0d0; 
 }
 
+/* hover effect for the show button */
 .show-edit-bark-form:hover {
     color: #a0a0a0;  
 }
 
+/* display content of the bark */
 .bark-content-display {
     position: relative; 
     padding-right: 25px; 
 }
 
+/* button to delete a bark */
 .delete-bark {
     margin-top: 45px;
     float: right; 
@@ -416,8 +467,7 @@ ul {
     margin-left: 10px; 
 }
 
+/* hover effect for the delete button */
 .delete-bark:hover {
     color: #a0a0a0;
 }
-
-
