@@ -205,9 +205,37 @@ ul {
 }
 
 .top-bar {
-    background-color: rgb(235, 235, 235)white;
-    padding: 0px 5px; 
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 5px; 
+    position: relative;
+}
 
+
+.search-bar-container {
+    display: flex; 
+    align-items: center;
+    background-color: white; 
+    border-radius: 20px;
+    padding: 5px 15px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+}
+
+#searchInput {
+    border: none; 
+    outline: none;
+    padding: 5px; 
+    flex-grow: 1; 
+}
+
+.fa-search {
+    color: #5d1725; 
+    cursor: pointer; 
 }
 
 .logo-link {
