@@ -1,5 +1,3 @@
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: rgb(225, 225, 225);
@@ -341,4 +339,57 @@ ul {
 {
     margin-left: 10px;
 }
+
+.show-edit-bark-form,
+.hide-edit-bark-form {
+    cursor: pointer;
+    background-color: #e1e1e1;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.show-edit-bark-form:hover,
+.hide-edit-bark-form:hover {
+    background-color: #d0d0d0;
+}
+
+.edit-bark-form textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0; 
+    border-radius: 5px;
+    resize: none; 
+    background-color:#f7f7f7; 
+}
+
+.show-edit-bark-form {
+    margin-top: 40px;
+    float: right; 
+    cursor: pointer;
+    color: #d0d0d0; 
+}
+
+.show-edit-bark-form:hover {
+    color: #a0a0a0;  
+}
+
+.bark-content-display {
+    position: relative; 
+    padding-right: 25px; 
+}
+
+.delete-bark {
+    margin-top: 45px;
+    float: right; 
+    cursor: pointer;
+    color: #d0d0d0;
+    margin-left: 10px; 
+}
+
+.delete-bark:hover {
+    color: #a0a0a0;
+}
+
 
