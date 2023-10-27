@@ -321,10 +321,10 @@ ul {
 
 .barks-container button
 {
-    width: 100px;
+    width: 70px;
     height: 30px;
-    border-radius: 25px;
-    background-color: #606060;
+    border-radius: 5px;
+    background-color: #b2b2b2;
     text-align: center;
     font-size: 12px;
     font-weight: 300;
