@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h2>Similar Users:</h2>
+    <ul>
+        {% for user in similar_users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
