@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Homepage</title>
+  </head>
+  <body>
+    <div class="box">
+      <div class="sidebar">
+        <p> DawgHouse </p>
+        <ul>
+          <li>
+            <a href="" class="active">
+              <span class="icon"><i class='bx bx-home'></i></span>
+              <span class="item">Home</span>
+          </a>
+        </li>
+          <li>
+            <a href="">
+              <span class="icon"><i class='bx bx-user-circle'></i></span>
+              <span class="item">Account</span>
+          </a>
+        </li>
+        <li>
+          <a href="" class="active">
+            <span class="icon"><i class='bx bx-log-out'></i></span>
+            <span class="item">Logout</span>
+        </a>
+      </li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="searchbar">
+      <input type="text" placeholder="Sniff out a Friend">
+      <button type="submit"><i class='bx bx-search'></i></button>
+    </div>
+    <div class="timeline">
+    </div>
+
+        <!-- Barks-->
+        <div class="barks-container">
+          <h2>Timeline</h2>
+          <ul>
+            {% for bark in barks %}
+            <li class="bark">
+              <div class="bark-header">
+                  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                  <p class="timestamp">{{ bark.timestamp }}</p>
+              </div>
+              <h4>@{{ user.username }}</h4>
+              <hr color="maroon">
+              <p>{{ bark.content }}</p>
+              <div class="counters-container">
+                <h4 class="counters-container">
+                  <strong>{{ bark.num_likes }}</strong> Treats
+                  <span class="comment-counter"><strong>0</strong> Yips</span> <!--needs backend-->
+              </h4>
+              {% endfor %}
+            </li> 
+            </div>
+
+  </body>
+</html>
