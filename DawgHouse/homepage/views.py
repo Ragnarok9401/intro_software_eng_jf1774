@@ -14,7 +14,7 @@ import json
 
 
 def home_view(request):
-    return render(request, "homepage.html")
+    return render(request, "friend_view.html")
 
 
 def login_view(request):

@@ -1,0 +1,366 @@
+/* general body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(225, 225, 225);
+    color: #333;
+    margin: 20px; 
+}
+
+/* styling for the overall profile layout */
+.profile-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+/* defines the grid column for the profile content */
+.profile-content {
+    grid-column: 2;
+}
+
+/* styling for the cover photo of the profile */
+.profile-cover img {
+    display: block;  
+    width: 100%;
+    height: 300px;
+    object-fit: cover;  
+    margin: 0;
+    border-radius: 10px;
+}
+
+/* styling for the profile header, which includes name, username, etc. */
+.profile-header {
+    position: relative;
+    background-color: #5d1725;
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;  
+    gap: 15px;
+    margin-top: -30px;
+    min-height: 100px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+}
+
+/* styling for the profile picture within the header */
+.profile-header img {
+    position: absolute;
+    top: -85px;
+    left: 20px;
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 50%; 
+    border: 5px solid #5d1725;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* styling for the name and bio area of the profile header */
+.profile-name-bio {
+    display: flex;
+    flex-direction: column;  
+    gap: 5px;  
+    margin-left: 220px; 
+}
+
+/* styling for the username in profile-name-bio */
+.profile-name-bio h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 35px;  
+    margin-top: 0;
+}
+
+/* styling for the bio text */
+.profile-name-bio p {
+    margin: 5px 0;  
+    margin-top: 5px;
+}
+
+/* general styling for each individual bark (post) */
+.bark {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+/* styling for unordered lists */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* styling for the container of the bio */
+.bio-container {
+    flex: 1;
+    background-color: #5d1725;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: white;
+}
+
+/* bolded text within the bio container */
+.bio-container strong {
+    display: block; 
+    text-align: left;  
+    margin-bottom: 10px;  
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+/* text alignment for the bio text */
+.bio-container p {
+    text-align: center;  
+}
+
+/* edit bio button within the bio container */
+.bio-container button {
+    display: block;  
+    width: 100%;  
+    padding: 10px;  
+    margin-top: 10px;  
+    background-color: #f7f7f7;  
+    color: black;  
+    border: none;  
+    border-radius: 5px;  
+    cursor: pointer;  
+}
+
+/* hover effect for the edit bio button */
+.bio-container button:hover {
+    background-color: rgb(235, 235, 235);  
+}
+
+/* styling for the textarea for editing the bio */
+.bio-container textarea
+{
+    resize: none;
+    width: 97%;
+    height: 100px;
+}
+
+/* section that displays the user's friends or pack */
+.friends-list {
+    margin-top: 40px;
+}
+
+/* bolded text for the pack section */
+.friends-list strong {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 20px;
+}
+
+/* padding for the list of friends */
+.friends-list ul {
+    padding-left: 20px;  
+}
+
+/* group of buttons for bark actions like treat, yip, and howl */
+.button-container {
+    display: flex;       
+    align-items: center; 
+    gap: 10px;           
+}
+
+/* inline form styling, potentially for other elements */
+.inline-form {
+    display: flex;       
+    gap: 5px;            
+    margin: 0;           
+}
+
+
+/* top navigation bar that contains the logo and the search bar */
+.top-bar {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 5px; 
+    position: relative;
+}
+
+/* styling for the search bar and its components */
+.search-bar-container {
+    display: flex; 
+    align-items: center;
+    background-color: white; 
+    border-radius: 20px;
+    padding: 5px 15px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+}
+
+/* styling for the search input text box */
+#searchInput {
+    border: none; 
+    outline: none;
+    padding: 5px; 
+    flex-grow: 1; 
+}
+
+/* search icon styling */
+.fa-search {
+    color: #5d1725; 
+    cursor: pointer; 
+}
+
+/* link container for the site's logo */
+.logo-link {
+    display: inline-block; 
+    vertical-align: middle; 
+    z-index: 10;  
+}
+
+/* site logo styling */
+.logo {
+    height: 70px; 
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+/* hover effect for the site logo */
+.logo-link:hover .logo {
+    opacity: 0.7;  
+}
+
+/* container for the main content of barks or posts */
+.barks-container {
+    flex: 1 100%;  
+    width: 60%;  
+    margin-left: auto;  
+    margin-right: auto;
+    background-color: #5d1725;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: black;
+    margin-top: 20px; 
+}
+
+/* header for the barks section */
+.barks-container h2 {
+    margin: 0;
+    margin-bottom: 20px; 
+    text-align: center;
+    color: #e1e1e1; 
+}
+
+/* styling for the list of barks */
+.barks-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* individual bark styling */
+.barks-container li {
+    padding: 15px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 10px; 
+    background-color: rgb(225, 225, 225); 
+    border-radius: 5px; 
+}
+
+/* title or username of the bark author */
+.barks-container h3 {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+/* timestamp of the bark */
+.barks-container h4 { 
+    font-size: 10px;
+    font-weight: normal;
+    margin-top:  -5px;
+    margin-left: 10px;
+    color: #606060;
+}
+
+/* counters for the number of treats, yips, and howls a bark has */
+.counters-container h4
+{
+    font-size: 12px;
+    font-weight: normal;
+    margin-top:  5px;
+    margin-left: 10px;
+    color: #606060;
+}
+
+/* container for counters of treats, yips, and howls */
+.counters-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+/* counter for comments or yips on the bark */
+.comment-counter {
+    margin-left: 10px;
+}
+
+/* counter for shares or howls of the bark */
+.share-counter {
+    position: absolute;
+    margin-left: 1000px;
+}
+
+/* header section for each individual bark */
+.bark-header {
+    display: flex;
+    justify-content: space-between;  
+}
+
+/* timestamp for the bark */
+.barks-container .timestamp {
+    text-align: right;
+    font-size: 15px;
+    margin-top: 5px;
+    color: #606060;
+}
+
+/* divider between barks */
+.barks-container hr {
+    margin-top: -10px;
+}
+
+/* button for actions on the bark, like giving a treat */
+.barks-container button
+{
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #b2b2b2;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 300;
+    padding-top: 4px;
+    margin-top: 0px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: white;
+    border: none;
+}
+
+/* styling for the content of the bark */
+.barks-container p
+{
+    margin-left: 10px;
+}
+
+/* display content of the bark */
+.bark-content-display {
+    position: relative; 
+    padding-right: 25px; 
+}
+
