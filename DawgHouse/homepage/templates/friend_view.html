@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ user.first_name }} {{ user.last_name }}'s Profile</title>
+    {% load static %} <!--loading in the static files-->
+    <link rel="stylesheet" href="{% static 'friend.css' %}" /> <!--css sheet connect to-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!--icons-->
+  </head>
+  <body>
+    <div class="top-bar"> <!--this is the bar with the logo and the search bar-->
+      <a href="/" class="logo-link">
+        <img
+          src="{% static 'images/DHLogo.png' %}"
+          alt="DawgHouse Logo"
+          class="logo"
+        />
+      </a>
+      <div class="search-bar-container">
+        <input type="text" id="searchInput" placeholder="Search...">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!--photo of the drill field-->
+    <div class="profile-cover">
+      <img
+        src="{% static 'images/msstate.jpg' %}"
+        alt="{{ user.username }}'s cover photo"
+      />
+    </div>
+
+    <!--profile container in front of cover photo ^-->
+    <div class="profile-content">
+      <div class="profile-header">
+        <img
+          src="{% static 'images/profilePicture.jpg' %}"
+          alt="{{ user.username }}'s profile picture"
+        />
+        <!--profile name and bio-->
+        <div class="profile-name-bio">
+          <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+          <p>@{{ user.username }}</p>
+        </div>
+      </div>
+      <!--layout is the grid which has two columns: bio and add a bark-->
+      <div class="profile-layout">
+        <!--bio-->
+        <div class="bio-container">
+          <strong>Bio</strong>
+          <div class="display-bio">
+            <p id="bioText">{{ user.bio }}</p>
+          </div>
+          <!--pack list-->
+          <div class="friends-list">
+            <strong>Pack</strong>
+            {% if friends_list %}
+            <ul>
+              {% for friend in friends_list %}
+              <li>@{{ friend.username }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No friends yet!</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- posted barks-->
+        <div class="barks-container">
+          <h2>Timeline</h2>
+          <ul>
+            {% for bark in barks %}
+            <!--lists of barks-->
+            <li class="bark">
+              <div class="bark-header">
+                  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                  <p class="timestamp">{{ bark.timestamp }}</p>
+              </div>
+              <h4>@{{ user.username }}</h4>
+              <hr color="maroon"> <!--line-->
+              <!--content of barks-->
+              <div class="bark-content-display">
+                <p>{{ bark.content }}</p>
+              </div>
+        <!--shows number of yips and treats (yips needs functionality)-->
+        <div class="counters-container">
+          <h4 class="counters-container">
+            <strong>{{ bark.num_likes }}</strong> Treats
+            <span class="comment-counter"><strong>0</strong> Yips</span> <!--needs backend-->
+          </h4>
+        </div>
+        <hr> <!--line-->
+        <!--contains the buttons for counters (Yip and Howl need functionality)-->
+        <div class="button-container">
+          <!--this is how i set up only allowing one treat per user. button is maroon if already given treat-->
+          <form action="{% url 'give_treat' bark.id %}" method="post">
+            {% csrf_token %} {% if user in bark.treated_by.all %}
+            <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
+            {% else %}
+            <button type="submit"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
+            {% endif %}
+          </form>
+          <!-- needs backend -->
+          <button type="button">
+              <i class="fa-solid fa-comments" style="color:white;"></i> Yip
+          </button>
+          <!-- needs backend -->
+          <button type="button">
+              <i class="fa-solid fa-dog" style="color:white;"></i> Howl
+          </button>
+      </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+
+<!--javascript for editing bio (didnt want the refresh so i used ajax)-->
+    <script>
+      // you always want the DOM to load in before you script otherwise itll go wackers (hence why you place it after HTML stuff)
+      document.addEventListener('DOMContentLoaded', function() {
+        // event listener just grabs input/waits for a user to touch it lol
+          document.getElementById('editBioButton').addEventListener('click', function(){
+              document.querySelector('.display-bio').style.display = 'none'; 
+              document.querySelector('.edit-bio').style.display = 'block';
+          });
+  
+          //event listender for the cancle button
+          document.getElementById('cancelBioButton').addEventListener('click', function(){
+              document.querySelector('.display-bio').style.display = 'block';
+              document.querySelector('.edit-bio').style.display = 'none'; // we dont want to see the edited version because we canceled
+          });
+  
+          // save button event listener
+          document.getElementById('saveBioButton').addEventListener('click', function(){
+              const updatedBio = document.getElementById('bioTextarea').value; // we want the updated block (HTML)
+              
+            //server stuff 
+              fetch('/edit_bio/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': '{{ csrf_token }}' //django token
+                  },
+                  body: JSON.stringify({ //sends to json (i added to the view)
+                      'bio': updatedBio
+                  })
+              })
+              .then(response => { //error handles server response so it doesnt break 
+                  if (!response.ok) {
+                      throw new Error('bad response');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  if(data.success){
+                    // will display if success
+                      document.getElementById('bioText').innerText = updatedBio;
+                      document.querySelector('.display-bio').style.display = 'block';
+                      document.querySelector('.edit-bio').style.display = 'none';
+                  }
+              });
+          });
+      });
+    
+      </script>
+    </body>
+  </html>
