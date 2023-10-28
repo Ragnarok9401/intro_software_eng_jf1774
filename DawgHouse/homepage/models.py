@@ -1,5 +1,6 @@
 from typing import Any
 import uuid
+from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import (
     BaseUserManager,
@@ -77,7 +78,7 @@ class SniffRequest(models.Model):
 
 class Bark(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    user = models.CharField(max_length=100)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     num_likes = models.IntegerField(default=0)

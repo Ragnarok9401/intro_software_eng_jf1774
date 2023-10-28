@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>User Profile</title>
+    <title>{{ user.first_name }} {{ user.last_name }}'s Profile</title>
     {% load static %} <!--loading in the static files-->
-    <link rel="stylesheet" href="{% static 'profile.css' %}" /> <!--css sheet connect to-->
+    <link rel="stylesheet" href="{% static 'nonfriend.css' %}" /> <!--css sheet connect to-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!--icons-->
   </head>
   <body>
     <div class="top-bar"> <!--this is the bar with the logo and the search bar-->
-      <a href="{% url 'main_timeline' %}" class="logo-link">
+      <a href="/" class="logo-link">
         <img
           src="{% static 'images/DHLogo.png' %}"
           alt="DawgHouse Logo"
@@ -16,7 +16,7 @@
         />
       </a>
       <div class="search-bar-container">
-        <input type="text" id="searchInput" placeholder="Search by Dawgtag...">
+        <input type="text" id="searchInput" placeholder="Search...">
         <i class="fa fa-search" aria-hidden="true"></i>
       </div>
     </div>
@@ -40,6 +40,7 @@
         <div class="profile-name-bio">
           <h1>{{ user.first_name }} {{ user.last_name }}</h1>
           <p>@{{ user.username }}</p>
+          <button class="friend-request-btn">Send Sniff Request</button> <!-- needs backend -->
         </div>
       </div>
       <!--layout is the grid which has two columns: bio and add a bark-->
@@ -49,13 +50,6 @@
           <strong>Bio</strong>
           <div class="display-bio">
             <p id="bioText">{{ user.bio }}</p>
-            <button id="editBioButton">Edit Bio</button>
-          </div>
-          <!--for editing the bio (needs functionality, feel free to change!!)-->
-          <div class="edit-bio" style="display: none">
-            <textarea id="bioTextarea">{{ user.bio }}</textarea>
-            <button id="saveBioButton">Save</button>
-            <button id="cancelBioButton">Cancel</button>
           </div>
           <!--pack list-->
           <div class="friends-list">
@@ -71,24 +65,11 @@
             {% endif %}
           </div>
         </div>
-        <!--add bark-->
-        <div class="add-bark-container">
-          <form action="{% url 'post_bark' %}" method="post">
-            {% csrf_token %}
-            <div class="bark-input-group">
-              <strong>Add a Bark</strong>
-              <textarea
-                name="bark_content"
-                placeholder="What's on your mind?"
-                required
-              ></textarea>
-            </div>
-            <button type="submit">Post Bark</button>
-          </form>
-        </div>
-
         <!-- posted barks-->
+        
         <div class="barks-container">
+          <div class="overlay-content"><strong> Sniff to see content!</strong></div>
+          <div class="barks-content blur-effect">
           <h2>Timeline</h2>
           <ul>
             {% for bark in barks %}
@@ -103,18 +84,7 @@
               <!--content of barks-->
               <div class="bark-content-display">
                 <p>{{ bark.content }}</p>
-                <i class="fa fa-pencil show-edit-bark-form" aria-hidden="true"></i> <!-- needs backend -->
-                <i class="fa fa-trash delete-bark" onclick="return confirm('Are you sure you want to delete this bark?');" aria-hidden="true"></i> <!-- needs backend -->
               </div>
-        <!--edit barks (needs functionality)-->
-        <div class="edit-bark-form" style="display: none;">
-          <form action="#" method="post">
-              {% csrf_token %}
-              <textarea name="edited_bark_content" required>{{ bark.content }}</textarea>
-              <button type="submit">Save</button>
-              <button type="button" class="hide-edit-bark-form">Cancel</button>
-          </form>
-        </div>
         <!--shows number of yips and treats (yips needs functionality)-->
         <div class="counters-container">
           <h4 class="counters-container">
@@ -146,6 +116,7 @@
       {% endfor %}
     </ul>
   </div>
+</div>
 </div>
 
 

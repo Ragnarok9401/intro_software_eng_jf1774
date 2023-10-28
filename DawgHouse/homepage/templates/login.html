@@ -18,16 +18,16 @@
         <div class="lbutton">
           <button type="submit">Login</button>
         </div>
+        {% if message %}
+        <p class="error">{{ message }}</p>
+        {% endif %}
+        <p>OR</p>
+        <div class="jbutton">
+          <a href="{% url 'signup' %}">
+            <button>Sign Up</button>
+          </a> 
+        </div>
       </form>
-      {% if message %}
-      <p>{{ message }}</p>
-      {% endif %}
-      <p>OR</p>
-      <div class="jbutton">
-        <a href="{% url 'signup' %}">
-          <button>Sign Up</button>
-        </a>
-      </div>
     </div>
   </body>
 </html>

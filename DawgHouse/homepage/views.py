@@ -11,6 +11,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
+from Levenshtein import distance
+from django.db.models import Q
+
 
 
 def home_view(request):
@@ -28,8 +31,7 @@ def login_view(request):
             )
         if user is not None:
             login(request, user)
-            # right now this redirects to a landing page but this will need to be changed to the user's timeline later
-            return redirect(f"/profile/{user.username}")
+            return redirect(f"/main/")
         else:
             message = "Unrecognized Dawgtag or Password"
 
@@ -44,12 +46,8 @@ def signupView(request):
         if form.is_valid():
             user = form.save()
             messages.success(request, "Account created successfully")
-            # for these redirects, put the URL path in there
-            # for example, if we wanted to go to signup with would be "signup/"
-            # for now upon successful recreation we will redirect home, which is path ""
-            # we can change this later
             login(request, user)
-            return redirect(f"/profile/{user.username}")
+            return redirect(f"/main/")
         else:
             for field in form:
                 for error in field.errors:
@@ -175,3 +173,32 @@ def edit_bio_ajax(request):
         request.user.save()
         return JsonResponse({"success": True})
     return JsonResponse({"success": False})
+
+def search_users(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', None)
+        if username:
+            users = DawgHouseUser.objects.all()
+            similar_users = []
+            for user in users:
+                dist = distance(username, user.username)
+                username_length = len(username)
+                similarity_ratio = (1 - dist / max(username_length, len(user.username))) * 100
+                if similarity_ratio >= 60:
+                    similar_users.append(user)
+            return render(request, 'search_results.html', {'similar_users': similar_users})
+    return render(request, 'search_users.html')
+
+@login_required
+def main_timeline(request):
+    user = request.user
+    friends = user.friends.all()
+    barks = Bark.objects.filter(Q(user=user) | Q(user__in=friends)).order_by("-timestamp")
+
+    for friend in friends:
+        print(friend.username)
+
+    context = {
+        "barks": barks,
+    }
+    return render(request, "main_page.html", context)
