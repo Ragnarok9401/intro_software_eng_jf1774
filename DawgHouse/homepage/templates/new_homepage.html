@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Homepage</title>
@@ -59,7 +60,8 @@
                   <strong>{{ bark.num_likes }}</strong> Treats
                   <span class="comment-counter"><strong>0</strong> Yips</span> <!--needs backend-->
               </h4>
-              
+              {% endfor %}
+            </li> 
             </div>
 
   </body>
