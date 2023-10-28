@@ -116,7 +116,7 @@ def accept_example_view(request):
 def ProfileView(request, username):
     user = get_object_or_404(DawgHouseUser, username=username)
     friends_list = user.friends.all()
-    barks = Bark.objects.filter(user=user)
+    barks = Bark.objects.filter(user=user).order_by("-timestamp")
     context = {"user": user, "barks": barks, "friends_list": friends_list}
     return render(request, "user_profile.html", context)
 
@@ -148,15 +148,6 @@ def post_bark(request):
         return redirect(f"/profile/{request.user.username}/")
 
     return redirect("/")
-
-
-@login_required
-def give_treat(request, bark_id):
-    bark = get_object_or_404(Bark, id=bark_id)
-    bark.num_likes += 1
-    bark.save()
-
-    return redirect(f"/profile/{request.user.username}/")
 
 
 @login_required
