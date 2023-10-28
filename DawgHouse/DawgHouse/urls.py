@@ -28,5 +28,6 @@ urlpatterns = [
     path("accept_sniff_request/<int:request_ID>", include("homepage.urls")),
     path("profile/<str:username>/", include("homepage.urls")),
     path("edit/<str:username>/", include("homepage.urls")),
-    path("search/", include("homepage.urls")),
+    path("search_users/", include("homepage.urls")),
+    path("main/", include("homepage.urls"))
 ]
