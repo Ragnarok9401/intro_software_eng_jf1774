@@ -29,5 +29,6 @@ urlpatterns = [
     path("profile/<str:username>/", include("homepage.urls")),
     path("edit/<str:username>/", include("homepage.urls")),
     path("search_users/", include("homepage.urls")),
-    path("main/", include("homepage.urls"))
+    path("main/", include("homepage.urls")),
+    path('give_treat/<uuid:bark_id>/<str:user_which>/', include("homepage.urls"))
 ]

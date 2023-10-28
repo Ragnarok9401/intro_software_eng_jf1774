@@ -116,7 +116,12 @@ def ProfileView(request, username):
     friends_list = user.friends.all()
     barks = Bark.objects.filter(user=user).order_by("-timestamp")
     context = {"user": user, "barks": barks, "friends_list": friends_list}
-    return render(request, "user_profile.html", context)
+    if user == request.user:
+        return render(request, "user_profile.html", context)
+    elif request.user in user.friends.all():
+        return render(request, "friend_view.html", context)
+    else:
+        return render(request, "non_friend_view.html", context)
 
 
 def userEdit(request, username):
@@ -149,7 +154,7 @@ def post_bark(request):
 
 
 @login_required
-def give_treat(request, bark_id):
+def give_treat(request, bark_id, user_which):
     bark = get_object_or_404(Bark, id=bark_id)
     user = request.user
 
@@ -161,7 +166,7 @@ def give_treat(request, bark_id):
         bark.treated_by.add(user)
 
     bark.save()
-    return redirect(f"/profile/{request.user.username}/")
+    return redirect(f"/profile/{user_which}/")
 
 
 @method_decorator(csrf_exempt, name="dispatch")
