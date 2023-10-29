@@ -19,10 +19,13 @@ urlpatterns = [
     path("accept_example/", views.accept_example_view, name="accept_example"),
     path("send_example/", views.send_example_view, name="send_example"),
     path("profile/<str:username>/", views.ProfileView, name="profile"),
-    path("edit/<str:username>/", views.userEdit, name="edit_profile"),
     path("post_bark/", views.post_bark, name="post_bark"),
     path('give_treat/<uuid:bark_id>/<str:user_which>/', views.give_treat, name='give_treat'),
     path("edit_bio/", views.edit_bio_ajax, name="edit_bio_ajax"),
     path('search_users/', views.search_users, name='search_users'),
-    path('main/', views.main_timeline, name="main_timeline")
+    path('main/', views.main_timeline, name="main_timeline"),
+    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    path('bark_edit/', views.edit_bark_ajax, name='edit_bark_ajax'),
+    path('bark_delete/<uuid:bark_id>/', views.delete_bark_ajax, name='delete_bark'),
+    path('repost/<uuid:bark_id>/', views.repost_bark, name='repost_bark'),
 ]

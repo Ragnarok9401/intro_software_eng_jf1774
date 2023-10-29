@@ -72,6 +72,23 @@
                     <span class="comment-counter"><strong>0</strong> Yips</span> <!--needs backend-->
                 </h4>
             </div>
+    <!-- Placeholder -->
+    <div class="comments-container">
+      <h4>Comments</h4>
+      <ul>
+        {% for comment in bark.comments.all %}
+          <li class="comment">
+            <div class="comment-header">
+              <h5>{{ comment.name.username }}</h5>
+              <p class="timestamp">{{ comment.date_added }}</p>
+            </div>
+            <div class="comment-content-display">
+              <p>{{ comment.body }}</p>
+            </div>
+          </li>
+  
+  <!-- placeholder end -->
+  
         </li>
         {% endfor %}
     </ul>

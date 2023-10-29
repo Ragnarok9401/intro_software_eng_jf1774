@@ -82,9 +82,24 @@ class Bark(models.Model):
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     num_likes = models.IntegerField(default=0)
+    num_howls = models.IntegerField(default=0)
     treated_by = models.ManyToManyField(
         DawgHouseUser, related_name="treats_given", blank=True
     )
 
     def __str__(self):
-        return self.user
+        return str(self.user)
+    
+class Comment(models.Model):
+    bark = models.ForeignKey(Bark, related_name="comments", on_delete=models.CASCADE)
+    name = models.ForeignKey(DawgHouseUser, on_delete=models.CASCADE)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s - %s' % (self.bark.content, self.name)
+    
+class Repost(models.Model):
+    bark = models.ForeignKey(Bark, on_delete=models.CASCADE)
+    user = models.ForeignKey(DawgHouseUser, on_delete=models.CASCADE)
+

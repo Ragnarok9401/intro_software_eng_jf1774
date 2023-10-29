@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Bark, DawgHouseUser, SniffRequest
+from .models import Bark, DawgHouseUser, SniffRequest, Comment, Repost
 from .forms import CustomUserCreationForm, EditUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -123,23 +123,6 @@ def ProfileView(request, username):
     else:
         return render(request, "non_friend_view.html", context)
 
-
-def userEdit(request, username):
-    user = get_object_or_404(DawgHouseUser, username=username)
-    if request.method == "GET":
-        form = EditUserForm(initial=model_to_dict(user))
-        return render(request, "edit_user.html", {"form": form})
-    elif request.method == "POST":
-        user = get_object_or_404(DawgHouseUser, username=username)
-        form = EditUserForm(request.POST)
-        if form.is_valid():
-            user.bio = form.cleaned_data["bio"]
-            user.save()
-            return redirect(f"/profile/{username}")
-        else:
-            return HttpResponseRedirect(reverse("some_fail_loc"))
-
-
 @login_required
 def post_bark(request):
     if request.method == "POST":
@@ -151,6 +134,49 @@ def post_bark(request):
         return redirect(f"/profile/{request.user.username}/")
 
     return redirect("/")
+
+def repost_bark(request, bark_id):
+    if request.method == 'POST':
+        bark = get_object_or_404(Bark, id=bark_id)
+        user = request.user
+
+        # Check if the user has already reposted the bark
+        if not Repost.objects.filter(bark=bark, user=user).exists():
+            # Increment the howls count of the original bark
+            bark.num_howls += 1
+            bark.save()
+
+            # Create a new Repost entry
+            Repost.objects.create(bark=bark, user=user)
+
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Already reposted'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+@login_required
+def delete_bark_ajax(request, bark_id):
+    if request.method == "DELETE":
+            bark = Bark.objects.get(id=bark_id)
+            # Check if the user has permission to delete the Bark
+            if request.user == bark.user:
+                bark.delete()
+                return JsonResponse({"success": True})
+            else:
+                return JsonResponse({"success": False, "error": "Invalid request method"})
+
+
+@login_required
+def delete_comment(request, comment_id):
+        comment = Comment.objects.get(id=comment_id)
+
+        # Check if the user is the owner of the comment or the owner of the Bark.
+        if request.user == comment.user or request.user == comment.bark.user:
+            comment.delete()
+            return JsonResponse({'success': True})
+
+        return JsonResponse({'success': False, 'error': 'Permission denied'})
 
 
 @login_required
@@ -176,6 +202,18 @@ def edit_bio_ajax(request):
         new_bio = data.get("bio")
         request.user.bio = new_bio
         request.user.save()
+        return JsonResponse({"success": True})
+    return JsonResponse({"success": False})
+
+@method_decorator(csrf_exempt, name="dispatch")
+def edit_bark_ajax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        post_id = data.get("post_id")
+        new_content = data.get("new_content")
+        post = Bark.objects.get(id=post_id)
+        post.content = new_content
+        post.save()
         return JsonResponse({"success": True})
     return JsonResponse({"success": False})
 

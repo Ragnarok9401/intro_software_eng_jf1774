@@ -3,6 +3,7 @@ from django.contrib.auth.password_validation import validate_password, get_defau
 from django.core.exceptions import ValidationError
 from .models import DawgHouseUser
 
+
 class CustomUserCreationForm(forms.ModelForm):
     error_messages = {
         'password_mismatch': "The two password fields did not match.",
