@@ -2,8 +2,49 @@
 <html>
   <head>
     <title>Search Results</title>
+    {% load static %}
+    <!--loading in the static files-->
+    <link rel="stylesheet" href="{% static 'search.css' %}" />
+    <!--css sheet connect to-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!--icons-->
+    <style>
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+    </style>
   </head>
   <body>
+    <div class="top-bar">
+      <a href="{% url 'main_timeline' %}" class="logo-link">
+        <img
+          src="{% static 'images/DHLogo.png' %}"
+          alt="DawgHouse Logo"
+          class="logo"
+        />
+      </a>
+      <form
+        method="POST"
+        action="{% url 'search_users' %}"
+        class="search-bar-container"
+      >
+        {% csrf_token %}
+        <input
+          type="text"
+          id="searchInput"
+          name="username"
+          placeholder="Search by Dawgtag..."
+        />
+        <button type="submit">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+    <hr color="maroon" />
     <h2>Similar Users:</h2>
     <ul>
       {% for user in similar_users %}

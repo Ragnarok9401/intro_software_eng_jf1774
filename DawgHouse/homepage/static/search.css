@@ -1,0 +1,92 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(225, 225, 225);
+    color: #333;
+    margin: 20px; 
+}
+
+a {
+    text-decoration: none;  /* Remove underlines */
+    color: inherit;  /* Use the parent's text color */
+}
+
+/* You might also want to specify a hover effect, so users know it's a clickable link */
+a:hover {
+    text-decoration: underline;  /* Add underline on hover */
+}
+
+
+/* Top navigation bar that contains the logo and the search bar */
+.top-bar {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 5px; 
+    position: relative; 
+}
+
+/* Styling for the search bar and its components */
+.search-bar-container {
+    display: flex; 
+    align-items: center;
+    background-color: white; 
+    border-radius: 20px;
+    padding: 5px 15px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+}
+
+/* Styling for the search input text box */
+#searchInput {
+    border: none; 
+    outline: none;
+    padding: 5px; 
+    flex-grow: 1; 
+}
+
+/* Search icon styling */
+.fa-search {
+    color: #5d1725; 
+    cursor: pointer; 
+}
+
+.search-bar-container button {
+    background: none;  /* Remove background */
+    border: none;  /* Remove borders */
+    padding: 5px;  /* Adjust as necessary for spacing */
+    cursor: pointer;  /* Hand cursor to indicate it's clickable */
+    color: #5d1725;  /* The color of the search icon; adjust if needed */
+}
+
+.search-bar-container button:hover {
+    opacity: 0.7;  /* Slight fade effect on hover for visual feedback */
+}
+
+/* If you want to ensure the search icon itself has specific styles, you can target it directly */
+.search-bar-container button .fa-search {
+    /* Example: setting a specific size for the icon */
+    font-size: 16px; 
+}
+
+/* Link container for the site's logo */
+.logo-link {
+    display: inline-block; 
+    vertical-align: middle; 
+    z-index: 10;  
+}
+
+/* Site logo styling */
+.logo {
+    height: 70px; 
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effect for the site logo */
+.logo-link:hover .logo {
+    opacity: 0.7;  
+}
