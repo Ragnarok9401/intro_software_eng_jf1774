@@ -66,7 +66,7 @@ border-radius: 5px;
     box-shadow: 0 3px #666;
     transform: translateY(4px);
 }
-.jbutton button{
+.jbutton .button-link {
     margin: auto;
     display: block;
     margin-top: 10px;
@@ -78,17 +78,20 @@ border-radius: 5px;
     width: 120px;
     text-align: center;
     border-radius: 5px;
+    text-decoration: none; 
+    font-size: 13px; 
 }
-.jbutton button:hover
-{
+
+.jbutton .button-link:hover {
     cursor: pointer;
     color: black;
 }
-.jbutton button:active
-{
+
+.jbutton .button-link:active {
     box-shadow: 0 3px #666;
     transform: translateY(4px);
 }
+
 .error
 {
     font-size: 20px;

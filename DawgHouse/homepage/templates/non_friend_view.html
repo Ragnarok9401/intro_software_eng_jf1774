@@ -96,14 +96,7 @@
         <hr> <!--line-->
         <!--contains the buttons for counters (Yip and Howl need functionality)-->
         <div class="button-container">
-          <!--this is how i set up only allowing one treat per user. button is maroon if already given treat-->
-          <form action="{% url 'give_treat' bark.id %}" method="post">
-            {% csrf_token %} {% if user in bark.treated_by.all %}
-            <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
-            {% else %}
             <button type="submit"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
-            {% endif %}
-          </form>
           <!-- needs backend -->
           <button type="button">
               <i class="fa-solid fa-comments" style="color:white;"></i> Yip
