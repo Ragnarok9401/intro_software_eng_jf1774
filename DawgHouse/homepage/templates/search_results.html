@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Search Results</title>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Similar Users:</h2>
     <ul>
-        {% for user in similar_users %}
-            <li>{{ user.username }}</li>
-        {% endfor %}
+      {% for user in similar_users %}
+      <li>
+        <a href="{% url 'profile' user.username %}">@{{ user.username }}</a>
+      </li>
+      {% endfor %}
     </ul>
-</body>
+  </body>
 </html>
