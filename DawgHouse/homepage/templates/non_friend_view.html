@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{ user.first_name }} {{ user.last_name }}'s Profile</title>
     {% load static %} <!--loading in the static files-->
     <link rel="stylesheet" href="{% static 'nonfriend.css' %}" /> <!--css sheet connect to-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!--icons-->
-  </head>
-  <body>
+</head>
+<body>
     <div class="top-bar"> <!--this is the bar with the logo and the search bar-->
-      <a href="{% url 'main_timeline' %}" class="logo-link">
-        <img
-          src="{% static 'images/DHLogo.png' %}"
-          alt="DawgHouse Logo"
-          class="logo"
-        />
-      </a>
-      <div class="search-bar-container">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <i class="fa fa-search" aria-hidden="true"></i>
-      </div>
+        <a href="{% url 'main_timeline' %}" class="logo-link">
+            <img
+                src="{% static 'images/DHLogo.png' %}"
+                alt="DawgHouse Logo"
+                class="logo"
+            />
+        </a>
+        <form method="POST" action="{% url 'search_users' %}" class="search-bar-container">
+            {% csrf_token %}
+            <input type="text" id="searchInput" name="username" placeholder="Search by Dawgtag...">
+            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
     </div>
 
     <!--photo of the drill field-->

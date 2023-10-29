@@ -17,6 +17,17 @@ from django.db.models import Q
 
 
 def home_view(request):
+    if request.user.is_authenticated:
+        user = request.user
+        friends = user.friends.all()
+        barks = Bark.objects.filter(Q(user=user) | Q(user__in=friends)).order_by("-timestamp")
+
+        context = {
+            "barks": barks,
+        }  
+
+        return render(request, "main_page.html", context)
+    
     return render(request, "homepage.html")
 
 
