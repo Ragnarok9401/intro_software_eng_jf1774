@@ -233,20 +233,19 @@ ul {
 }
 
 .search-bar-container button {
-    background: none;  /* Remove background */
-    border: none;  /* Remove borders */
-    padding: 5px;  /* Adjust as necessary for spacing */
-    cursor: pointer;  /* Hand cursor to indicate it's clickable */
-    color: #5d1725;  /* The color of the search icon; adjust if needed */
+    background: none;  
+    border: none;  
+    padding: 5px;  
+    cursor: pointer;  
+    color: #5d1725;  
 }
 
 .search-bar-container button:hover {
-    opacity: 0.7;  /* Slight fade effect on hover for visual feedback */
+    opacity: 0.7;  
 }
 
-/* If you want to ensure the search icon itself has specific styles, you can target it directly */
+
 .search-bar-container button .fa-search {
-    /* Example: setting a specific size for the icon */
     font-size: 16px; 
 }
 
