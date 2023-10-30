@@ -87,6 +87,8 @@ class Bark(models.Model):
     treated_by = models.ManyToManyField(
         DawgHouseUser, related_name="treats_given", blank=True
     )
+    is_repost = models.BooleanField(default=False)
+    original_bark=models.ForeignKey('self',null=True,blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return str(self.user)

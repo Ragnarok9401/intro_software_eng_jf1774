@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Bark, DawgHouseUser, SniffRequest, Comment
-from .forms import CustomUserCreationForm, EditUserForm, LoginForm
+from .forms import CustomUserCreationForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.forms.models import model_to_dict
@@ -163,6 +163,28 @@ def delete_bark(request, id):
         else:
             return JsonResponse({'success': False, 'error': 'Permission denied'})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+@csrf_exempt  # Make sure to apply proper security measures.
+@login_required
+def repost_post(request, bark_id):
+    if request.method == 'POST':
+        # Get the original bark (you might need to adjust this query based on your models)
+        original_bark = Bark.objects.get(id=bark_id)
+        
+        # Create a new Bark instance
+        new_bark = Bark(
+            content=original_bark.content,
+            user=request.user,  # Use the currently logged-in user as the author
+            is_repost=True,
+            original_bark=original_bark
+        )
+        new_bark.save()
+
+        # Handle the rest of your repost logic here
+
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
 
 
 @csrf_exempt
