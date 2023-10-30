@@ -96,6 +96,9 @@
             <!--lists of barks-->
             <li class="bark">
               <div class="bark-header">
+                {% if bark.is_repost %}
+                <h3>Reposted From: {{ bark.original_bark.user.username }}</h3>
+              {% endif %}
                   <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                   <p class="timestamp">{{ bark.timestamp }}</p>
               </div>
@@ -137,19 +140,21 @@
                   {% endif %}
                 </form>
                 <!-- needs backend -->
-                <button class="show-comment-input" data-bark-id="{{ bark.id }}"><i class="fa-solid fa-dog" style="color:white;"></i> Yip</button>
+                <button class="show-comment-input" data-bark-id="{{ bark.id }}"><i class="fa-solid fa-comments" style="color:white;"></i> Yip</button>
 
-                <div id="comment-input-{{ bark.id }}" style="display: none;">
-                    <textarea id="comment-text-{{ bark.id }}" placeholder="Add a comment" required></textarea>
-                    <button class="comment-button" data-bark-id="{{ bark.id }}">Post Comment</button>
-                </div>
-                
+         <div id="comment-input-{{ bark.id }}" style="display: none;">
+         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
+         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
+         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
+         </div>
               
-                <!-- needs backend -->
-                <button type="button">
-                    <i class="fa-solid fa-dog" style="color:white;"></i> Howl
-                </button>
-              </div>
+         <form method="POST" class="repost-form">
+          {% csrf_token %}
+          <input type="hidden" name="original_post_id" value="{{ bark.id }}">
+          <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
+              <i class="fa-solid fa-dog" style="color:white;"></i> Howl
+          </button>
+      </form>
                   <!-- Placeholder -->
                   <div class="comments-container">
                     <h2>Comments</h2>
@@ -228,7 +233,6 @@
       </script>
 
 </script>
-<!-- Include this code within your HTML template where you display the delete button -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -271,129 +275,182 @@ if (confirm('Are you sure you want to delete this bark?')) {
 
 
 </script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 $(document).ready(function () {
-// Show the comment input field when the "Yip" button is clicked
-$(".show-comment-input").on("click", function () {
-    var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
-    $("#comment-input-" + barkID).show(); // Show the comment input for the specific bark
-});
-
-// Intercept the button click to add a comment
-$(".comment-button").on("click", function () {
-    var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
-    var commentText = $("#comment-text-" + barkID).val();
-
-    // Send an AJAX POST request to create a new comment
-    $.ajax({
-        type: "POST",
-        url: "/main/add_comment/" + barkID + "/", // Use the actual URL
-        data: {
-            'comment_text': commentText,
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-        },
-        success: function (data) {
-            // Append the new comment to the specific container for the bark
-            $("#comment-list-" + barkID).append("<li>" + data.text + "</li>");
-            $("#comment-text-" + barkID).val('');  // Clear the input field
-        }
+    // Show the comment input field when the "Yip" button is clicked
+    $(".show-comment-input").on("click", function () {
+        var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+        $("#comment-input-" + barkID).show(); // Show the comment input for the specific bark
     });
-});
-});
-</script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function () {
-// Handle comment deletion
-$(".delete-comment").on("click", function () {
-    if (confirm('Are you sure you want to delete this comment?')) {
-        var commentId = $(this).data("comment-id");
+    // Hide the comment input field when the "Cancel" button is clicked
+    $(".cancel-comment").on("click", function () {
+        var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+        $("#comment-input-" + barkID).hide(); // Hide the comment input for the specific bark
+    });
 
-        // Send an AJAX POST request to delete the comment
+    // Intercept the button click to add a comment
+    $(".comment-button").on("click", function () {
+        var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+        var commentText = $("#comment-text-" + barkID).val();
+
+        // Send an AJAX POST request to create a new comment
         $.ajax({
             type: "POST",
-            url: "/delete_comment/" + commentId + "/",
+            url: "/main/add_comment/" + barkID + "/", // Use the actual URL
             data: {
+                'comment_text': commentText,
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
             },
             success: function (data) {
-                if (data.success) {
-                    // Remove the deleted comment from the UI
-                    var deletedComment = $(".comment[data-comment-id='" + commentId + "']");
-                    deletedComment.remove();
-                } else {
-                    // Handle permission denied or other errors
-                    alert("Comment deletion failed: " + data.error);
-                }
-            },
-            error: function () {
-                // Handle AJAX request error
-                alert("An error occurred while deleting the comment.");
+                // Append the new comment to the specific container for the bark
+                $("#comment-list-" + barkID).append("<li>" + data.text + "</li>");
+                $("#comment-text-" + barkID).val('');  // Clear the input field
+                location.reload();  // Refresh the page after posting a comment
             }
         });
-    }
+    });
+
+    // Handle comment deletion
+    $(".delete-comment").on("click", function () {
+        if (confirm('Are you sure you want to delete this comment?')) {
+            var commentId = $(this).data("comment-id");
+
+            // Send an AJAX POST request to delete the comment
+            $.ajax({
+                type: "POST",
+                url: "/delete_comment/" + commentId + "/",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (data) {
+                    if (data.success) {
+                        // Remove the deleted comment from the UI
+                        var deletedComment = $(".comment[data-comment-id='" + commentId + "']");
+                        deletedComment.remove();
+                        location.reload();  // Refresh the page after deleting a comment
+                    } else {
+                        // Handle permission denied or other errors
+                        alert("Comment deletion failed: " + data.error);
+                    }
+                },
+                error: function () {
+                    // Handle AJAX request error
+                    alert("An error occurred while deleting the comment.");
+                }
+            });
+        }
+    });
 });
+
+$(document).ready(function () {
+    // Event listener for clicking the edit icon
+    $(".edit-bark").on("click", function () {
+        var barkID = $(this).data("bark-id");
+        var contentElement = $("#bark-content-" + barkID);
+        var editForm = $("#edit-bark-form-" + barkID);
+
+        // Toggle the visibility of the content and edit form
+        contentElement.hide();
+        editForm.show();
+    });
+
+    // Event listener for clicking the "Cancel" button
+    $(".hide-edit-bark-form").on("click", function () {
+        var barkID = $(this).closest("form").data("bark-id");
+        var contentElement = $("#bark-content-" + barkID);
+        var editForm = $("#edit-bark-form-" + barkID);
+
+        // Toggle the visibility of the content and edit form
+        contentElement.show();
+        editForm.hide();
+    });
+
+    // Event listener for submitting the edit form
+    $("form[id^='edit-bark-form']").on("submit", function (event) {
+        event.preventDefault();
+        var barkID = $(this).data("bark-id");
+        var editedContent = $(this).find("textarea[name='edited_bark_content']").val();
+
+        // Send an AJAX request to save the edited content
+        $.ajax({
+            type: "POST",
+            url: "/edit_bark_ajax/",
+            data: JSON.stringify({
+                'post_id': barkID,
+                'new_content': editedContent,
+            }),
+            contentType: "application/json",
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+            success: function (data) {
+                if (data.success) {
+                    // Update the content and toggle visibility
+                    $("#bark-content-" + barkID).text(editedContent);
+                    $("#bark-content-" + barkID).show();
+                    $("#edit-bark-form-" + barkID).hide();
+                }
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    // Event listener for clicking the "Delete" link
+    $(".delete-bark").on("click", function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        if (confirm('Are you sure you want to delete this bark?')) {
+            const deleteUrl = $(this).attr('href'); // Get the URL from the href attribute
+            const postContainer = $(this).closest('.bark'); // Cache the post container
+
+            // Send a DELETE request to the server with the correct method
+            $.ajax({
+                url: deleteUrl,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    if (data.success) {
+                        // The post was deleted successfully
+                        // Remove the post container from the UI
+                        postContainer.remove();
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
 });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function () {
-  // Event listener for clicking the edit icon
-  $(".edit-bark").on("click", function () {
-      var barkID = $(this).data("bark-id");
-      var contentElement = $("#bark-content-" + barkID);
-      var editForm = $("#edit-bark-form-" + barkID);
+  $(document).ready(function() {
+      $('.repost-button').click(function() {
+          var barkId = $(this).data('bark-id');
 
-      // Toggle the visibility of the content and edit form
-      contentElement.hide();
-      editForm.show();
-  });
-
-  // Event listener for clicking the "Cancel" button
-  $(".hide-edit-bark-form").on("click", function () {
-      var barkID = $(this).closest("form").data("bark-id");
-      var contentElement = $("#bark-content-" + barkID);
-      var editForm = $("#edit-bark-form-" + barkID);
-
-      // Toggle the visibility of the content and edit form
-      contentElement.show();
-      editForm.hide();
-  });
-
-  // Event listener for submitting the edit form
-  $("form[id^='edit-bark-form']").on("submit", function (event) {
-      event.preventDefault();
-      var barkID = $(this).data("bark-id");
-      var editedContent = $(this).find("textarea[name='edited_bark_content']").val();
-
-      // Send an AJAX request to save the edited content
-      $.ajax({
-          type: "POST",
-          url: "/edit_bark_ajax/",
-          data: JSON.stringify({
-              'post_id': barkID,
-              'new_content': editedContent,
-          }),
-          contentType: "application/json",
-          headers: { 'X-CSRFToken': '{{ csrf_token }}' },
-          success: function (data) {
-              if (data.success) {
-                  // Update the content and toggle visibility
-                  $("#bark-content-" + barkID).text(editedContent);
-                  $("#bark-content-" + barkID).show();
-                  $("#edit-bark-form-" + barkID).hide();
+          // Send a POST request to repost the bark
+          $.ajax({
+              type: 'POST',
+              url: "/repost_post/" + barkId + "/",
+              data: {'bark_id': barkId, csrfmiddlewaretoken: '{{ csrf_token }}'},
+              success: function(data) {
+                  // Update the page content if needed
+                  alert('Bark reposted successfully');
+              },
+              error: function() {
+                  alert('Error reposting bark');
               }
-          }
+          });
       });
   });
-});
+  </script>
 
-</script>
 
     </body>
   </html>
