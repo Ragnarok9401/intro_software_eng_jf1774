@@ -28,5 +28,5 @@ urlpatterns = [
     path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('delete_bark/<uuid:id>/', views.delete_bark, name='delete_bark'),
     path('edit_bark_ajax/', views.edit_bark_ajax, name='edit_bark_ajax'),
-
+    path('repost_post/<str:bark_id>/', views.repost_post, name='repost_post'),
 ]
