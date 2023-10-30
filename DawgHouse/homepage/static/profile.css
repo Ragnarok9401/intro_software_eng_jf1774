@@ -470,6 +470,10 @@ ul {
     color: #a0a0a0;  
 }
 
+.edit-bark-form button:hover {
+    background-color: rgb(77, 33, 33);  
+}
+
 /* display content of the bark */
 .bark-content-display {
     position: relative; 
