@@ -165,6 +165,22 @@ def delete_bark(request, id):
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 
+@csrf_exempt
+@login_required
+def edit_bark_ajax(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        post_id = data.get("post_id")
+        new_content = data.get("new_content")
+        post = Bark.objects.filter(id=post_id).first()
+
+        if post and request.user == post.user:  # Check if the post exists and the user is the owner of the bark
+            post.content = new_content
+            post.save()
+            return JsonResponse({"success": True})
+    return JsonResponse({"success": False})
+
+
 @login_required
 def add_comment(request, bark_id):  # include bark_id here
     if request.method == "POST":
