@@ -104,8 +104,10 @@
               <!--content of barks-->
               <div class="bark-content-display">
                 <p id="bark-content-{{ bark.id }}">{{ bark.content }}</p>
-                <i class="fa fa-pencil edit-bark" data-bark-id="{{ bark.id }}" aria-hidden="true"></i>
-                <a href="{% url 'delete_bark' bark.id %}" class="fa fa-trash delete-bark" onclick="return confirm('Are you sure you want to delete this bark?');" aria-hidden="true"></a>
+                <div class="action-icons">
+                  <i class="fa fa-pencil edit-bark" data-bark-id="{{ bark.id }}" aria-hidden="true"></i>
+                  <a href="{% url 'delete_bark' bark.id %}" class="fa fa-trash delete-bark" onclick="return confirm('Are you sure you want to delete this bark?');" aria-hidden="true"></a>
+              </div>              
               </div>
               <!--edit barks (needs functionality)-->
               <div class="edit-bark-form" id="edit-bark-form-{{ bark.id }}" style="display: none;">

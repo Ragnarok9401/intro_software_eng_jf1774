@@ -453,6 +453,8 @@ ul {
     border-radius: 5px;
     resize: none; 
     background-color:#f7f7f7; 
+    border: none;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
 }
 
 /* show button to reveal the edit form for a bark */
@@ -468,22 +470,38 @@ ul {
     color: #a0a0a0;  
 }
 
+.edit-bark-form button:hover {
+    background-color: rgb(77, 33, 33);  
+}
+
 /* display content of the bark */
 .bark-content-display {
     position: relative; 
     padding-right: 25px; 
 }
 
-/* button to delete a bark */
-.delete-bark {
-    margin-top: 45px;
-    float: right; 
-    cursor: pointer;
-    color: #d0d0d0;
-    margin-left: 10px; 
+.action-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* provides spacing between icons */
 }
 
-/* hover effect for the delete button */
-.delete-bark:hover {
+.edit-bark, .delete-bark {
+    cursor: pointer;
+    color: #d0d0d0; 
+    position: absolute;
+    top: 50%;
+    transform: translateY(100%);
+}
+
+.edit-bark:hover, .delete-bark:hover {
     color: #a0a0a0;
+}
+
+.edit-bark {
+    right: 25px; 
+}
+
+.delete-bark {
+    right: 0;
 }
