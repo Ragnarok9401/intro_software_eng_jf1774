@@ -5,6 +5,7 @@
     {% load static %} <!--loading in the static files-->
     <link rel="stylesheet" href="{% static 'nonfriend.css' %}" /> <!--css sheet connect to-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!--icons-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="top-bar"> <!--this is the bar with the logo and the search bar-->
@@ -41,7 +42,15 @@
         <div class="profile-name-bio">
           <h1>{{ user.first_name }} {{ user.last_name }}</h1>
           <p>@{{ user.username }}</p>
-          <button class="friend-request-btn">Send Sniff Request</button> <!-- needs backend -->
+                {% for message in messages %}
+          <div class="{{ message.tags }}">
+              {{ message }}
+          </div>
+      {% endfor %}
+
+          <a href="{% url 'send_sniff_request' user.id %}">
+            <button class="friend-request-btn">Send Sniff Request</button>
+          </a>
         </div>
       </div>
       <!--layout is the grid which has two columns: bio and add a bark-->
