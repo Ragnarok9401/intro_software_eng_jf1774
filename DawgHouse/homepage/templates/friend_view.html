@@ -80,9 +80,9 @@
               <h4>@{{ user.username }}</h4>
               <hr color="maroon"> <!--line-->
               <!--content of barks-->
-              <div class="bark-content-display">
-                <p>{{ bark.content }}</p>
-              </div>
+          <div class="bark-content-display">
+          <p>{{ bark.content }}</p>
+          </div>
         <!--shows number of yips and treats (yips needs functionality)-->
         <div class="counters-container">
           <h4 class="counters-container">
@@ -102,13 +102,35 @@
             {% endif %}
           </form>
           <!-- needs backend -->
-          <button type="button">
-              <i class="fa-solid fa-comments" style="color:white;"></i> Yip
-          </button>
+          <button class="show-comment-input" data-bark-id="{{ bark.id }}"><i class="fa-solid fa-comments" style="color:white;"></i> Yip</button>
+         <div id="comment-input-{{ bark.id }}" style="display: none;">
+         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
+         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
+         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
+         </div>
           <!-- needs backend -->
           <button type="button">
               <i class="fa-solid fa-dog" style="color:white;"></i> Howl
           </button>
+        </div>
+        <!-- Placeholder -->
+        <div class="comments-container">
+          <h2>Comments</h2>
+          <ul id="comment-list">
+              {% for comment in bark.comments.all %}
+              <li class="comment">
+                  <div class="comment-header">
+                      <h5 class="username">{{ comment.name.username }}</h5>
+                      <p class="timestamp">{{ comment.date_added }}</p>
+                  </div>
+                  <div class="comment-content-display">
+                      <p>{{ comment.body }}</p>
+                      <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>
+                  </div>
+              </li>
+              {% endfor %}
+          </ul>
+      </div>
       </div>
       </li>
       {% endfor %}
@@ -117,6 +139,75 @@
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    // Show the comment input field when the "Yip" button is clicked
+    $(".show-comment-input").on("click", function () {
+        var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+        $("#comment-input-" + barkID).show(); // Show the comment input for the specific bark
+    });
+        // Hide the comment input field when the "Cancel" button is clicked
+        $(".cancel-comment").on("click", function () {
+        var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+        $("#comment-input-" + barkID).hide(); // Hide the comment input for the specific bark
+    });
+
+    // Intercept the button click to add a comment
+    $(".comment-button").on("click", function () {
+        var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+        var commentText = $("#comment-text-" + barkID).val();
+
+        // Send an AJAX POST request to create a new comment
+        $.ajax({
+            type: "POST",
+            url: "/main/add_comment/" + barkID + "/", // Use the actual URL
+            data: {
+                'comment_text': commentText,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function (data) {
+                // Append the new comment to the specific container for the bark
+                $("#comment-list-" + barkID).append("<li>" + data.text + "</li>");
+                $("#comment-text-" + barkID).val('');  // Clear the input field
+                location.reload();  // Refresh the page after posting a comment
+            }
+        });
+    });
+
+    // Handle comment deletion
+    $(".delete-comment").on("click", function () {
+        if (confirm('Are you sure you want to delete this comment?')) {
+            var commentId = $(this).data("comment-id");
+
+            // Send an AJAX POST request to delete the comment
+            $.ajax({
+                type: "POST",
+                url: "/delete_comment/" + commentId + "/",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (data) {
+                    if (data.success) {
+                        // Remove the deleted comment from the UI
+                        var deletedComment = $(".comment[data-comment-id='" + commentId + "']");
+                        deletedComment.remove();
+                        location.reload();  // Refresh the page after deleting a comment
+                    } else {
+                        // Handle permission denied or other errors
+                        alert("Comment deletion failed: " + data.error);
+                    }
+                },
+                error: function () {
+                    // Handle AJAX request error
+                    alert("An error occurred while deleting the comment.");
+                }
+            });
+        }
+    });
+});
+</script>
 
 <!--javascript for editing bio (didnt want the refresh so i used ajax)-->
     <script>
