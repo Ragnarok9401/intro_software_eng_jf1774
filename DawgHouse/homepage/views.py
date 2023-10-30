@@ -135,6 +135,7 @@ def post_bark(request):
 
     return redirect("/")
 
+@login_required
 def repost_bark(request, bark_id):
     if request.method == 'POST':
         bark = get_object_or_404(Bark, id=bark_id)
@@ -156,27 +157,55 @@ def repost_bark(request, bark_id):
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 @login_required
-def delete_bark_ajax(request, bark_id):
-    if request.method == "DELETE":
-            bark = Bark.objects.get(id=bark_id)
-            # Check if the user has permission to delete the Bark
-            if request.user == bark.user:
-                bark.delete()
-                return JsonResponse({"success": True})
-            else:
-                return JsonResponse({"success": False, "error": "Invalid request method"})
+def delete_bark(request, id):
+    post = get_object_or_404(Bark, pk=id)
+    
+    if request.method == 'DELETE':
+        # Check if the user has permission to delete the post (you may customize this)
+        if request.user == post.user:
+            post.delete()  # Delete the post
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Permission denied'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+@login_required
+def add_comment(request, bark_id):  # include bark_id here
+    if request.method == "POST":
+        comment_text = request.POST.get('comment_text')
+        user = request.user
+
+        if comment_text:
+            bark = Bark.objects.get(id=bark_id)  # now bark_id is defined
+            comment = Comment(bark=bark, name=user, body=comment_text)
+            bark.num_yips = Comment.objects.filter(bark=bark).count() + 1
+            comment.save()
+            bark.save()
+
+            return JsonResponse({'user': user.username, 'text': comment_text})
+        else:
+            return JsonResponse({'error': 'Comment text is empty'}, status=400)
+
+    return JsonResponse({}, status=400)
 
 @login_required
 def delete_comment(request, comment_id):
+    try:
         comment = Comment.objects.get(id=comment_id)
 
         # Check if the user is the owner of the comment or the owner of the Bark.
-        if request.user == comment.user or request.user == comment.bark.user:
+        if request.user == comment.name or request.user == comment.bark.user:
             comment.delete()
+
+            bark = comment.bark
+            bark.num_yips = Comment.objects.filter(bark=bark).count()
+            bark.save()
+
             return JsonResponse({'success': True})
 
         return JsonResponse({'success': False, 'error': 'Permission denied'})
+    except Comment.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Comment not found'})
 
 
 @login_required

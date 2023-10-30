@@ -24,8 +24,9 @@ urlpatterns = [
     path("edit_bio/", views.edit_bio_ajax, name="edit_bio_ajax"),
     path('search_users/', views.search_users, name='search_users'),
     path('main/', views.main_timeline, name="main_timeline"),
-    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+    path('add_comment/<str:bark_id>/', views.add_comment, name='add_comment'),
+    path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('bark_edit/', views.edit_bark_ajax, name='edit_bark_ajax'),
-    path('bark_delete/<uuid:bark_id>/', views.delete_bark_ajax, name='delete_bark'),
+    path('delete_bark/<uuid:id>/', views.delete_bark, name='delete_bark'),
     path('repost/<uuid:bark_id>/', views.repost_bark, name='repost_bark'),
 ]

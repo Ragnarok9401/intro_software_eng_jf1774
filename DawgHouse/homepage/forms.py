@@ -57,3 +57,4 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = DawgHouseUser
         fields = ['bio']
+        
