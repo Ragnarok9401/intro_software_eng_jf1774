@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Bark, DawgHouseUser, SniffRequest
+from .models import Bark, DawgHouseUser, SniffRequest, Comment
 from .forms import CustomUserCreationForm, EditUserForm, LoginForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -138,22 +138,6 @@ def ProfileView(request, username):
         return render(request, "non_friend_view.html", context)
 
 
-def userEdit(request, username):
-    user = get_object_or_404(DawgHouseUser, username=username)
-    if request.method == "GET":
-        form = EditUserForm(initial=model_to_dict(user))
-        return render(request, "edit_user.html", {"form": form})
-    elif request.method == "POST":
-        user = get_object_or_404(DawgHouseUser, username=username)
-        form = EditUserForm(request.POST)
-        if form.is_valid():
-            user.bio = form.cleaned_data["bio"]
-            user.save()
-            return redirect(f"/profile/{username}")
-        else:
-            return HttpResponseRedirect(reverse("some_fail_loc"))
-
-
 @login_required
 def post_bark(request):
     if request.method == "POST":
@@ -165,6 +149,60 @@ def post_bark(request):
         return redirect(f"/profile/{request.user.username}/")
 
     return redirect("/")
+
+
+@login_required
+def delete_bark(request, id):
+    post = get_object_or_404(Bark, pk=id)
+    
+    if request.method == 'DELETE':
+        # Check if the user has permission to delete the post (you may customize this)
+        if request.user == post.user:
+            post.delete()  # Delete the post
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Permission denied'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+@login_required
+def add_comment(request, bark_id):  # include bark_id here
+    if request.method == "POST":
+        comment_text = request.POST.get('comment_text')
+        user = request.user
+
+        if comment_text:
+            bark = Bark.objects.get(id=bark_id)  # now bark_id is defined
+            comment = Comment(bark=bark, name=user, body=comment_text)
+            bark.num_yips = Comment.objects.filter(bark=bark).count() + 1
+            comment.save()
+            bark.save()
+
+            return JsonResponse({'user': user.username, 'text': comment_text})
+        else:
+            return JsonResponse({'error': 'Comment text is empty'}, status=400)
+
+    return JsonResponse({}, status=400)
+
+
+@login_required
+def delete_comment(request, comment_id):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+
+        # Check if the user is the owner of the comment or the owner of the Bark.
+        if request.user == comment.name or request.user == comment.bark.user:
+            comment.delete()
+
+            bark = comment.bark
+            bark.num_yips = Comment.objects.filter(bark=bark).count()
+            bark.save()
+
+            return JsonResponse({'success': True})
+
+        return JsonResponse({'success': False, 'error': 'Permission denied'})
+    except Comment.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Comment not found'})
 
 
 @login_required
