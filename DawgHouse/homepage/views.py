@@ -15,19 +15,20 @@ from Levenshtein import distance
 from django.db.models import Q
 
 
-
 def home_view(request):
     if request.user.is_authenticated:
         user = request.user
         friends = user.friends.all()
-        barks = Bark.objects.filter(Q(user=user) | Q(user__in=friends)).order_by("-timestamp")
+        barks = Bark.objects.filter(Q(user=user) | Q(user__in=friends)).order_by(
+            "-timestamp"
+        )
 
         context = {
             "barks": barks,
-        }  
+        }
 
         return render(request, "main_page.html", context)
-    
+
     return render(request, "homepage.html")
 
 
@@ -83,9 +84,11 @@ def send_sniff_request(request, user_ID):
         from_user=from_user, to_user=to_user
     )
     if created:
-        return HttpResponse("sniff request sent")
+        messages.success(request, "Sniff request sent successfully.")
+        return redirect("profile", username=to_user.username)
     else:
-        return HttpResponse("sniff request was already sent")
+        messages.warning(request, "Sniff request was already sent.")
+        return redirect("profile", username=to_user.username)
 
 
 @login_required
@@ -95,9 +98,9 @@ def accept_sniff_request(request, request_ID):
         sniff_request.to_user.friends.add(sniff_request.from_user)
         sniff_request.from_user.friends.add(sniff_request.to_user)
         sniff_request.delete()
-        return HttpResponse("sniff request accepted")
+        return redirect("home_view")
     else:
-        return HttpResponse("sniff request declined")
+        return HttpResponse("home_view")
 
 
 @login_required
@@ -190,26 +193,34 @@ def edit_bio_ajax(request):
         return JsonResponse({"success": True})
     return JsonResponse({"success": False})
 
+
 def search_users(request):
-    if request.method == 'POST':
-        username = request.POST.get('username', None)
+    if request.method == "POST":
+        username = request.POST.get("username", None)
         if username:
             users = DawgHouseUser.objects.all()
             similar_users = []
             for user in users:
                 dist = distance(username, user.username)
                 username_length = len(username)
-                similarity_ratio = (1 - dist / max(username_length, len(user.username))) * 100
+                similarity_ratio = (
+                    1 - dist / max(username_length, len(user.username))
+                ) * 100
                 if similarity_ratio >= 60:
                     similar_users.append(user)
-            return render(request, 'search_results.html', {'similar_users': similar_users})
-    return render(request, 'search_users.html')
+            return render(
+                request, "search_results.html", {"similar_users": similar_users}
+            )
+    return render(request, "search_users.html")
+
 
 @login_required
 def main_timeline(request):
     user = request.user
     friends = user.friends.all()
-    barks = Bark.objects.filter(Q(user=user) | Q(user__in=friends)).order_by("-timestamp")
+    barks = Bark.objects.filter(Q(user=user) | Q(user__in=friends)).order_by(
+        "-timestamp"
+    )
 
     for friend in friends:
         print(friend.username)
