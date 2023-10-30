@@ -21,6 +21,7 @@ urlpatterns = [
     path("profile/<str:username>/", views.ProfileView, name="profile"),
     path("post_bark/", views.post_bark, name="post_bark"),
     path('give_treat/<uuid:bark_id>/<str:user_which>/', views.give_treat, name='give_treat'),
+    path('give_treat_homepage/<uuid:bark_id>/<str:user_which>/', views.give_treat_homepage, name='give_treat_homepage'),
     path("edit_bio/", views.edit_bio_ajax, name="edit_bio_ajax"),
     path('search_users/', views.search_users, name='search_users'),
     path('main/', views.main_timeline, name="main_timeline"),

@@ -258,6 +258,20 @@ def give_treat(request, bark_id, user_which):
     bark.save()
     return redirect(f"/profile/{user_which}/")
 
+@login_required
+def give_treat_homepage(request, bark_id, user_which):
+    bark = get_object_or_404(Bark, id=bark_id)
+    user = request.user
+
+    if user in bark.treated_by.all():
+        bark.num_likes -= 1
+        bark.treated_by.remove(user)
+    else:
+        bark.num_likes += 1
+        bark.treated_by.add(user)
+
+    bark.save()
+    return redirect(f"/main/")
 
 @method_decorator(csrf_exempt, name="dispatch")
 def edit_bio_ajax(request):
