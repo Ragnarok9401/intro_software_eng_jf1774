@@ -69,6 +69,9 @@
             <!--lists of barks-->
             <li class="bark">
               <div class="bark-header">
+                {% if bark.is_repost %}
+                <h3>Reposted From: {{ bark.original_bark.user.username }}</h3>
+              {% endif %}
                   <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                   <p class="timestamp">{{ bark.timestamp }}</p>
               </div>
@@ -105,10 +108,13 @@
          <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
          </div>
               
-                <!-- needs backend -->
-                <button type="button">
-                    <i class="fa-solid fa-dog" style="color:white;"></i> Howl
-                </button>
+                <form method="POST" class="repost-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="original_post_id" value="{{ bark.id }}">
+                  <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
+                      <i class="fa-solid fa-dog" style="color:white;"></i> Howl
+                  </button>
+              </form>
               </div>
                   <!-- Placeholder -->
                   <div class="comments-container">
@@ -202,6 +208,30 @@
             });
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+      $('.repost-button').click(function() {
+          var barkId = $(this).data('bark-id');
+
+          // Send a POST request to repost the bark
+          $.ajax({
+              type: 'POST',
+              url: "/repost_post/" + barkId + "/",
+              data: {'bark_id': barkId, csrfmiddlewaretoken: '{{ csrf_token }}'},
+              success: function(data) {
+                  // Update the page content if needed
+                  alert('Bark reposted successfully');
+              },
+              error: function() {
+                  alert('Error reposting bark');
+              }
+          });
+      });
+  });
+  </script>
+  
 </body>
 
 </html>
