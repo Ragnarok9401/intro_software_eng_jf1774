@@ -249,3 +249,10 @@ ul {
     gap: 5px;            
     margin: 0;           
 }
+
+.comments-container h2{
+    text-align: left;
+    color:black;
+    font-size: 12px;
+    margin-top: 8px;
+}
