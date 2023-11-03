@@ -137,7 +137,7 @@
               <!--contains the buttons for counters (Yip and Howl need functionality)-->
               <div class="button-container">
                 <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
-                <form action="{% url 'give_treat' bark.id user.username %}" method="post">
+                <form action="{% url 'give_treat' bark.id user.username 'profile' %}" method="post">
                   {% csrf_token %} {% if user in bark.treated_by.all %}
                   <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
                   {% else %}
@@ -146,20 +146,14 @@
                 </form>
                 <!-- needs backend -->
                 <button class="show-comment-input" data-bark-id="{{ bark.id }}"><i class="fa-solid fa-comments" style="color:white;"></i> Yip</button>
-
-         <div id="comment-input-{{ bark.id }}" style="display: none;">
-         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
-         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
-         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
-         </div>
-              
-         <form method="POST" class="repost-form">
-          {% csrf_token %}
-          <input type="hidden" name="original_post_id" value="{{ bark.id }}">
-          <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
-              <i class="fa-solid fa-dog" style="color:white;"></i> Howl
-          </button>
-      </form>
+                                
+                  <form method="POST" class="repost-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="original_post_id" value="{{ bark.id }}">
+                  <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
+                     <i class="fa-solid fa-dog" style="color:white;"></i> Howl
+                  </button>
+                </div>
                   <!-- Placeholder -->
                   <div class="comments-container">
                     <h2>Comments</h2>
@@ -178,12 +172,16 @@
                         {% endfor %}
                     </ul>
                 </div>
-                
-
+         <div id="comment-input-{{ bark.id }}" style="display: none;">
+         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
+         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
+         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
+         </div>
+      </form>
+      </li>
           {% endfor %}
           </ul>
         </div>
-      </div>
 
 
 
