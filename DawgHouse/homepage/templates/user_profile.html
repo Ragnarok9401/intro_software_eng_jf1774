@@ -88,21 +88,23 @@
           </form>
         </div>
 
-        <!-- posted barks-->
-        <div class="barks-container">
-          <h2>Timeline</h2>
-          <ul>
-            {% for bark in barks %}
-            <!--lists of barks-->
-            <li class="bark">
-              <div class="bark-header">
-                {% if bark.is_repost %}
-                <h3>Reposted From: {{ bark.original_bark.user.username }}</h3>
-              {% endif %}
+ <!-- posted barks-->
+<div class="barks-container">
+  <h2>Timeline</h2>
+  <ul>
+      {% for bark in barks %}
+      <!--lists of barks-->
+      <li class="bark">
+          <div class="bark-header">
+              <div class="user-names">
                   <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                  <p class="timestamp">{{ bark.timestamp }}</p>
+                  <h4>@{{ user.username }}</h4>
+                  {% if bark.is_repost %}
+                  <p>Howled <a href="{% url 'profile' username=bark.original_bark.user.username %}">@{{ bark.original_bark.user.username }}'s bark</a></p>
+                  {% endif %}
               </div>
-              <h4>@{{ user.username }}</h4>
+              <p class="timestamp">{{ bark.timestamp }}</p>
+          </div>
               <hr color="maroon"> <!--line-->
               <!--content of barks-->
               <div class="bark-content-display">
