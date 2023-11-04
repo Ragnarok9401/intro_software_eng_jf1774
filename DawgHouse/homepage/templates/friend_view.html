@@ -92,7 +92,7 @@
               <!--contains the buttons for counters (Yip and Howl need functionality)-->
               <div class="button-container">
                 <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
-                <form action="{% url 'give_treat' bark.id user.username %}" method="post">
+                <form action="{% url 'give_treat' bark.id user.username 'profile' %}" method="post">
                   {% csrf_token %} {% if user in bark.treated_by.all %}
                   <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
                   {% else %}
@@ -128,7 +128,9 @@
                             </div>
                             <div class="comment-content-display">
                                 <p>{{ comment.body }}</p>
+                                {% if logged_in_user.id == comment.name.id %}
                                 <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>
+                            {% endif %}
                             </div>
                         </li>
                         {% endfor %}

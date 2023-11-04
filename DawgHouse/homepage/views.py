@@ -126,10 +126,11 @@ def accept_example_view(request):
 
 
 def ProfileView(request, username):
+    logged_in_user = request.user
     user = get_object_or_404(DawgHouseUser, username=username)
     friends_list = user.friends.all()
     barks = Bark.objects.filter(user=user).order_by("-timestamp")
-    context = {"user": user, "barks": barks, "friends_list": friends_list}
+    context = {"user": user, "barks": barks, "friends_list": friends_list, "logged_in_user": logged_in_user}
     if user == request.user:
         return render(request, "user_profile.html", context)
     elif request.user in user.friends.all():
