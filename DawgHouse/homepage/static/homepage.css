@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #71171a;
-    margin: 0;
+    background-color: rgb(225, 225, 225);
+    margin: 20px; 
     padding: 0;
 }
 .box .sidebar p
@@ -15,10 +15,11 @@ body {
 .box .sidebar
 {
     position: fixed;
-    border-right: solid white;
-    border-width: 5px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #5d1725;
     width: 200px;
-    height: 100%;
+    padding-bottom: 55%;
     transition: all 0.5s ease;
 }
 .box .sidebar ul li{
@@ -26,6 +27,7 @@ body {
 }
 .box .sidebar ul li a
 {
+    padding-left: 20px;
     text-decoration: none;
     display: block;
     padding-bottom: 30px;
@@ -40,31 +42,73 @@ body {
     padding-right: 10px;
 
 }
-.searchbar
-{
-    background-color: #5d1725;
-    padding-bottom: 20px;
-    text-align: center;
+.top-bar {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 10px 5px; 
+    position: relative;
 }
-.searchbar input
-{
-    border-radius: 10px;
-    padding-right: 200px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: none;
-    margin-top: 8px;
-    font-size: 20px;
+/* styling for the search bar and its components */
+.search-bar-container {
+    display: flex; 
+    align-items: center;
+    background-color: white; 
+    border-radius: 20px;
+    padding: 5px 15px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
 }
 
-.searchbar button
-{
-    font-size: 20px;
-    border-radius: 10px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-right: 20px;
-    padding-left: 20px;
+/* styling for the search input text box */
+#searchInput {
+    border: none; 
+    outline: none;
+    padding: 5px; 
+    flex-grow: 1; 
+}
+
+/* search icon styling */
+.fa-search {
+    color: #5d1725; 
+    cursor: pointer; 
+}
+
+.search-bar-container button {
+    background: none;  
+    border: none;  
+    padding: 5px; 
+    cursor: pointer;  
+    color: #5d1725;  
+}
+
+.search-bar-container button:hover {
+    opacity: 0.7;  
+}
+
+.search-bar-container button .fa-search {
+    font-size: 16px; 
+}
+/* link container for the site's logo */
+.logo-link {
+    display: inline-block; 
+    vertical-align: middle; 
+    z-index: 10;  
+}
+
+/* site logo styling */
+.logo {
+    height: 70px; 
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+/* hover effect for the site logo */
+.logo-link:hover .logo {
+    opacity: 0.7;  
 }
 
 /* general styling for each individual bark (post) */
