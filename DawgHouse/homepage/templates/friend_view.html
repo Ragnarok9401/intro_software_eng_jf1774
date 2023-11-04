@@ -61,85 +61,130 @@
                 </div>
             </div>
 
-            <!-- posted barks-->
-        <div class="barks-container">
-          <h2>Timeline</h2>
-          <ul>
-            {% for bark in barks %}
-            <!--lists of barks-->
-            <li class="bark">
-              <div class="bark-header">
-                {% if bark.is_repost %}
-                <h3>Reposted From: {{ bark.original_bark.user.username }}</h3>
-              {% endif %}
-                  <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                  <p class="timestamp">{{ bark.timestamp }}</p>
-              </div>
-              <h4>@{{ user.username }}</h4>
-              <hr color="maroon"> <!--line-->
-              <!--content of barks-->
-              <div class="bark-content-display">
-                <p id="bark-content-{{ bark.id }}">{{ bark.content }}</p>              
-              </div>
-              <!--shows number of yips and treats (yips needs functionality)-->
-              <div class="counters-container">
-                <h4 class="counters-container">
-                  <strong>{{ bark.num_likes }}</strong> Treats
-                  <span class="comment-counter"><strong>{{ bark.num_yips }}</strong> Yips</span> <!--needs backend-->
-                </h4>
-              </div>
-              <hr> <!--line-->
-              <!--contains the buttons for counters (Yip and Howl need functionality)-->
-              <div class="button-container">
-                <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
-                <form action="{% url 'give_treat' bark.id user.username 'profile' %}" method="post">
-                  {% csrf_token %} {% if user in bark.treated_by.all %}
-                  <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
-                  {% else %}
-                  <button type="submit"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
-                  {% endif %}
-                </form>
-                <!-- needs backend -->
-                <button class="show-comment-input" data-bark-id="{{ bark.id }}"><i class="fa-solid fa-comments" style="color:white;"></i> Yip</button>
-
-         <div id="comment-input-{{ bark.id }}" style="display: none;">
-         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
-         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
-         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
-         </div>
-              
-                <form method="POST" class="repost-form">
-                  {% csrf_token %}
-                  <input type="hidden" name="original_post_id" value="{{ bark.id }}">
-                  <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
-                      <i class="fa-solid fa-dog" style="color:white;"></i> Howl
-                  </button>
-              </form>
-              </div>
-                  <!-- Placeholder -->
-                  <div class="comments-container">
-                    <h2>Comments</h2>
-                    <ul id="comment-list">
+            <div class="barks-container">
+                <h2>Timeline</h2>
+                <ul>
+                  {% for bark in barks %}
+                  <!--lists of barks-->
+                  <li class="bark">
+                    <div class="bark-header">
+                      <div class="user-names">
+                        <h3>
+                          <strong
+                            ><a
+                              href="{% url 'profile' bark.user.username %}"
+                              class="hidden-link"
+                              >{{ bark.user.first_name }} {{ bark.user.last_name }}</a
+                            ></strong
+                          >
+                        </h3>
+                        <h4>@{{ bark.user.username }}</h4>
+                        {% if bark.is_repost %}
+                        <p>
+                          Howled
+                          <a
+                            href="{% url 'profile' username=bark.original_bark.user.username %}"
+                            ><strong>@{{ bark.original_bark.user.username }}'s</strong>
+                            bark</a
+                          >
+                        </p>
+                        {% endif %}
+                      </div>
+                      <p class="timestamp">{{ bark.timestamp }}</p>
+                    </div>
+                    <hr color="maroon" />
+                    <!--line-->
+                    <!--content of barks-->
+                    <div class="bark-content-display">
+                      <p id="bark-content-{{ bark.id }}">{{ bark.content }}</p>
+                    </div>
+                    <!--shows number of yips and treats (yips needs functionality)-->
+                    <div class="counters-container">
+                      <h4 class="counters-container">
+                        <strong>{{ bark.num_likes }}</strong> Treats
+                        <span class="comment-counter"
+                          ><strong>{{ bark.num_yips }}</strong> Yips</span
+                        >
+                        <!--needs backend-->
+                      </h4>
+                    </div>
+                    <hr />
+                    <!--line-->
+                    <!--contains the buttons for counters (Yip and Howl need functionality)-->
+                    <div class="button-container">
+                      <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
+                      <form
+                        action="{% url 'give_treat' bark.id user.username 'main_timeline' %}"
+                        method="post"
+                      >
+                        {% csrf_token %} {% if user in bark.treated_by.all %}
+                        <button type="submit" style="background-color: rgb(70, 18, 18)">
+                          <i class="fa-solid fa-bone" style="color: white"></i> Treat
+                        </button>
+                        {% else %}
+                        <button type="submit">
+                          <i class="fa-solid fa-bone" style="color: white"></i> Treat
+                        </button>
+                        {% endif %}
+                      </form>
+                      <!-- needs backend -->
+                      <button class="show-comment-input" data-bark-id="{{ bark.id }}">
+                        <i class="fa-solid fa-comments" style="color: white"></i> Yip
+                      </button>
+          
+                      <form method="POST" class="repost-form">
+                        {% csrf_token %}
+                        <input
+                          type="hidden"
+                          name="original_post_id"
+                          value="{{ bark.id }}"
+                        />
+                        <button
+                          type="button"
+                          class="repost-button"
+                          data-bark-id="{{ bark.id }}"
+                        >
+                          <i class="fa-solid fa-dog" style="color: white"></i> Howl
+                        </button>
+          
+                        <div id="comment-input-{{ bark.id }}" style="display: none">
+                          <textarea
+                            id="comment-text-{{ bark.id }}"
+                            placeholder="Yip..."
+                            required
+                          ></textarea>
+                          <button class="comment-button" data-bark-id="{{ bark.id }}">
+                            Post
+                          </button>
+                          <button class="cancel-comment" data-bark-id="{{ bark.id }}">
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="comments-container">
+                      <h2>Comments</h2>
+                      <ul id="comment-list">
                         {% for comment in bark.comments.all %}
                         <li class="comment">
-                            <div class="comment-header">
-                                <h5 class="username">{{ comment.name.username }}</h5>
-                                <p class="timestamp">{{ comment.date_added }}</p>
-                            </div>
-                            <div class="comment-content-display">
-                                <p>{{ comment.body }}</p>
-                                {% if logged_in_user.id == comment.name.id %}
-                                <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>
-                            {% endif %}
-                            </div>
+                          <div class="comment-header">
+                            <h5 class="username">{{ comment.name.username }}</h5>
+                            <p class="timestamp">{{ comment.date_added }}</p>
+                          </div>
+                          <div class="comment-content-display">
+                            <p>{{ comment.body }}</p>
+                            {% if user.id == comment.name.id %}
+                            <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>   <!--needs script-->
+                        {% endif %}
+                          </div>
                         </li>
                         {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
-            </ul>
-        </div>
-    </div>
+                      </ul>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
