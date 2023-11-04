@@ -161,7 +161,12 @@
                         {% for comment in bark.comments.all %}
                         <li class="comment">
                             <div class="comment-header">
-                                <h5 class="username">{{ comment.name.username }}</h5>
+                              <h5 class="username">
+                                <a href="{% url 'profile' comment.name.username %}"
+                                class="hidden-link">
+                                {{ comment.name.username }}
+                              </a>
+                              </h5>
                                 <p class="timestamp">{{ comment.date_added }}</p>
                             </div>
                             <div class="comment-content-display">
