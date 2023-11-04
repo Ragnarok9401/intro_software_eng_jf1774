@@ -392,6 +392,24 @@ ul {
     justify-content: space-between;  
 }
 
+.user-names h4 {
+    margin-top: 5px;
+}
+
+.user-names p
+{
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    margin-top: -5px;
+}
+
+.user-names a {
+    text-decoration: none;
+    color:#333;
+}
+
+
 /* timestamp for the bark */
 .barks-container .timestamp {
     text-align: right;
@@ -483,7 +501,7 @@ ul {
 .action-icons {
     display: flex;
     align-items: center;
-    gap: 10px;  /* provides spacing between icons */
+    gap: 10px;  
 }
 
 .edit-bark, .delete-bark {

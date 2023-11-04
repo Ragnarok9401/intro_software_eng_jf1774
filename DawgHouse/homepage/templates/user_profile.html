@@ -88,27 +88,32 @@
           </form>
         </div>
 
-        <!-- posted barks-->
-        <div class="barks-container">
-          <h2>Timeline</h2>
-          <ul>
-            {% for bark in barks %}
-            <!--lists of barks-->
-            <li class="bark">
-              <div class="bark-header">
-                {% if bark.is_repost %}
-                <h3>Reposted From: {{ bark.original_bark.user.username }}</h3>
-              {% endif %}
+ <!-- posted barks-->
+<div class="barks-container">
+  <h2>Timeline</h2>
+  <ul>
+      {% for bark in barks %}
+      <!--lists of barks-->
+      <li class="bark">
+          <div class="bark-header">
+              <div class="user-names">
                   <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                  <p class="timestamp">{{ bark.timestamp }}</p>
+                  <h4>@{{ user.username }}</h4>
+                  {% if bark.is_repost %}
+
+                  <p>Howled <a href="{% url 'profile' username=bark.original_bark.user.username %}"><strong>@{{ bark.original_bark.user.username }}'s</strong> bark</a></p>
+                  {% endif %}
               </div>
-              <h4>@{{ user.username }}</h4>
+              <p class="timestamp">{{ bark.timestamp }}</p>
+          </div>
               <hr color="maroon"> <!--line-->
               <!--content of barks-->
               <div class="bark-content-display">
                 <p id="bark-content-{{ bark.id }}">{{ bark.content }}</p>
                 <div class="action-icons">
+                  {% if not bark.is_repost %}
                   <i class="fa fa-pencil edit-bark" data-bark-id="{{ bark.id }}" aria-hidden="true"></i>
+                  {% endif %}
                   <a href="{% url 'delete_bark' bark.id %}" class="fa fa-trash delete-bark" onclick="return confirm('Are you sure you want to delete this bark?');" aria-hidden="true"></a>
               </div>              
               </div>
@@ -117,7 +122,7 @@
                 <form id="edit-bark-form" data-bark-id="{{ bark.id }}">
                   {% csrf_token %}
                   <textarea name="edited_bark_content" required>{{ bark.content }}</textarea>
-                  <button type="submit">Save</button>
+                    <button type="submit">Save</button>
                   <button type="button" class="hide-edit-bark-form">Cancel</button>
                 </form>
               </div>
@@ -132,7 +137,7 @@
               <!--contains the buttons for counters (Yip and Howl need functionality)-->
               <div class="button-container">
                 <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
-                <form action="{% url 'give_treat' bark.id user.username %}" method="post">
+                <form action="{% url 'give_treat' bark.id user.username 'profile' %}" method="post">
                   {% csrf_token %} {% if user in bark.treated_by.all %}
                   <button type="submit" style="background-color: rgb(70, 18, 18)"><i class="fa-solid fa-bone" style="color:white;"></i> Treat</button>
                   {% else %}
@@ -141,20 +146,14 @@
                 </form>
                 <!-- needs backend -->
                 <button class="show-comment-input" data-bark-id="{{ bark.id }}"><i class="fa-solid fa-comments" style="color:white;"></i> Yip</button>
-
-         <div id="comment-input-{{ bark.id }}" style="display: none;">
-         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
-         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
-         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
-         </div>
-              
-         <form method="POST" class="repost-form">
-          {% csrf_token %}
-          <input type="hidden" name="original_post_id" value="{{ bark.id }}">
-          <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
-              <i class="fa-solid fa-dog" style="color:white;"></i> Howl
-          </button>
-      </form>
+                                
+                  <form method="POST" class="repost-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="original_post_id" value="{{ bark.id }}">
+                  <button type="button" class="repost-button" data-bark-id="{{ bark.id }}">
+                     <i class="fa-solid fa-dog" style="color:white;"></i> Howl
+                  </button>
+                </div>
                   <!-- Placeholder -->
                   <div class="comments-container">
                     <h2>Comments</h2>
@@ -173,12 +172,16 @@
                         {% endfor %}
                     </ul>
                 </div>
-                
-
+         <div id="comment-input-{{ bark.id }}" style="display: none;">
+         <textarea id="comment-text-{{ bark.id }}" placeholder="Yip..." required></textarea>
+         <button class="comment-button" data-bark-id="{{ bark.id }}">Post</button>
+         <button class="cancel-comment" data-bark-id="{{ bark.id }}">Cancel</button>
+         </div>
+      </form>
+      </li>
           {% endfor %}
           </ul>
         </div>
-      </div>
 
 
 
@@ -232,7 +235,6 @@
     
       </script>
 
-</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

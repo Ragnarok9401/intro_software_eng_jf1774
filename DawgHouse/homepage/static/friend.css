@@ -174,7 +174,6 @@ ul {
     margin: 0;           
 }
 
-
 /* top navigation bar that contains the logo and the search bar */
 .top-bar {
     display: flex;
@@ -215,7 +214,7 @@ ul {
 .search-bar-container button {
     background: none;  
     border: none;  
-    padding: 5px;  
+    padding: 5px; 
     cursor: pointer;  
     color: #5d1725;  
 }
@@ -223,7 +222,6 @@ ul {
 .search-bar-container button:hover {
     opacity: 0.7;  
 }
-
 
 .search-bar-container button .fa-search {
     font-size: 16px; 
@@ -339,6 +337,24 @@ ul {
     justify-content: space-between;  
 }
 
+.user-names h4 {
+    margin-top: 5px;
+}
+
+.user-names p
+{
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    margin-top: -5px;
+}
+
+.user-names a {
+    text-decoration: none;
+    color:#333;
+}
+
+
 /* timestamp for the bark */
 .barks-container .timestamp {
     text-align: right;
@@ -375,9 +391,80 @@ ul {
     margin-left: 10px;
 }
 
+/* show and hide buttons for the edit bark form */
+.show-edit-bark-form,
+.hide-edit-bark-form {
+    cursor: pointer;
+    background-color: #e1e1e1;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* hover effects for show and hide edit form buttons */
+.show-edit-bark-form:hover,
+.hide-edit-bark-form:hover {
+    background-color: #d0d0d0;
+}
+
+/* textarea for editing a bark */
+.edit-bark-form textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0; 
+    border-radius: 5px;
+    resize: none; 
+    background-color:#f7f7f7; 
+    border: none;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+}
+
+/* show button to reveal the edit form for a bark */
+.show-edit-bark-form {
+    margin-top: 40px;
+    float: right; 
+    cursor: pointer;
+    color: #d0d0d0; 
+}
+
+/* hover effect for the show button */
+.show-edit-bark-form:hover {
+    color: #a0a0a0;  
+}
+
+.edit-bark-form button:hover {
+    background-color: rgb(77, 33, 33);  
+}
+
 /* display content of the bark */
 .bark-content-display {
     position: relative; 
     padding-right: 25px; 
 }
 
+.action-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;  
+}
+
+.edit-bark, .delete-bark {
+    cursor: pointer;
+    color: #d0d0d0; 
+    position: absolute;
+    top: 50%;
+    transform: translateY(100%);
+}
+
+.edit-bark:hover, .delete-bark:hover {
+    color: #a0a0a0;
+}
+
+.edit-bark {
+    right: 25px; 
+}
+
+.delete-bark {
+    right: 0;
+}

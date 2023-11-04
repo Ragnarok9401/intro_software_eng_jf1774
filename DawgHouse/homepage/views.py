@@ -126,10 +126,11 @@ def accept_example_view(request):
 
 
 def ProfileView(request, username):
+    logged_in_user = request.user
     user = get_object_or_404(DawgHouseUser, username=username)
     friends_list = user.friends.all()
     barks = Bark.objects.filter(user=user).order_by("-timestamp")
-    context = {"user": user, "barks": barks, "friends_list": friends_list}
+    context = {"user": user, "barks": barks, "friends_list": friends_list, "logged_in_user": logged_in_user}
     if user == request.user:
         return render(request, "user_profile.html", context)
     elif request.user in user.friends.all():
@@ -154,20 +155,21 @@ def post_bark(request):
 @login_required
 def delete_bark(request, id):
     post = get_object_or_404(Bark, pk=id)
-    
-    if request.method == 'DELETE':
+
+    if request.method == "DELETE":
         # Check if the user has permission to delete the post (you may customize this)
         if request.user == post.user:
             post.delete()  # Delete the post
-            return JsonResponse({'success': True})
+            return JsonResponse({"success": True})
         else:
-            return JsonResponse({'success': False, 'error': 'Permission denied'})
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+            return JsonResponse({"success": False, "error": "Permission denied"})
+    return JsonResponse({"success": False, "error": "Invalid request method"})
+
 
 @csrf_exempt
 @login_required
 def repost_post(request, bark_id):
-    if request.method == 'POST':
+    if request.method == "POST":
         # Get the original bark (you might need to adjust this query based on your models)
         original_bark = Bark.objects.get(id=bark_id)
 
@@ -176,14 +178,14 @@ def repost_post(request, bark_id):
             content=original_bark.content,
             user=request.user,  # Use the currently logged-in user as the author
             is_repost=True,
-            original_bark=original_bark
+            original_bark=original_bark,
         )
         new_bark.save()
 
         # Handle the rest of your repost logic here
 
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False})
+        return JsonResponse({"success": True})
+    return JsonResponse({"success": False})
 
 
 @csrf_exempt
@@ -195,7 +197,9 @@ def edit_bark_ajax(request):
         new_content = data.get("new_content")
         post = Bark.objects.filter(id=post_id).first()
 
-        if post and request.user == post.user:  # Check if the post exists and the user is the owner of the bark
+        if (
+            post and request.user == post.user
+        ):  # Check if the post exists and the user is the owner of the bark
             post.content = new_content
             post.save()
             return JsonResponse({"success": True})
@@ -205,7 +209,7 @@ def edit_bark_ajax(request):
 @login_required
 def add_comment(request, bark_id):  # include bark_id here
     if request.method == "POST":
-        comment_text = request.POST.get('comment_text')
+        comment_text = request.POST.get("comment_text")
         user = request.user
 
         if comment_text:
@@ -215,9 +219,9 @@ def add_comment(request, bark_id):  # include bark_id here
             comment.save()
             bark.save()
 
-            return JsonResponse({'user': user.username, 'text': comment_text})
+            return JsonResponse({"user": user.username, "text": comment_text})
         else:
-            return JsonResponse({'error': 'Comment text is empty'}, status=400)
+            return JsonResponse({"error": "Comment text is empty"}, status=400)
 
     return JsonResponse({}, status=400)
 
@@ -235,15 +239,15 @@ def delete_comment(request, comment_id):
             bark.num_yips = Comment.objects.filter(bark=bark).count()
             bark.save()
 
-            return JsonResponse({'success': True})
+            return JsonResponse({"success": True})
 
-        return JsonResponse({'success': False, 'error': 'Permission denied'})
+        return JsonResponse({"success": False, "error": "Permission denied"})
     except Comment.DoesNotExist:
-        return JsonResponse({'success': False, 'error': 'Comment not found'})
+        return JsonResponse({"success": False, "error": "Comment not found"})
 
 
 @login_required
-def give_treat(request, bark_id, user_which):
+def give_treat(request, bark_id, user_which, return_to):
     bark = get_object_or_404(Bark, id=bark_id)
     user = request.user
 
@@ -255,7 +259,13 @@ def give_treat(request, bark_id, user_which):
         bark.treated_by.add(user)
 
     bark.save()
-    return redirect(f"/profile/{user_which}/")
+
+    if return_to == "main_timeline":
+        return redirect("main_timeline")
+    elif return_to == "profile":
+        return redirect(f"/profile/{user_which}/")
+    else:
+        return redirect(f"/profile/{return_to}/")
 
 
 @method_decorator(csrf_exempt, name="dispatch")
