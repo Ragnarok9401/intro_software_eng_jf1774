@@ -5,6 +5,17 @@
     {% load static %} <!--loading in the static files-->
     <link rel="stylesheet" href="{% static 'profile.css' %}" /> <!--css sheet connect to-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!--icons-->
+
+    <style>
+      .hidden-link {
+        text-decoration: none;
+        color: inherit;
+      }
+      .hidden-link:hover {
+        text-decoration: none;
+      }
+    </style>
+    
 </head>
 <body>
     <div class="top-bar">
@@ -161,12 +172,7 @@
                         {% for comment in bark.comments.all %}
                         <li class="comment">
                             <div class="comment-header">
-                              <h5 class="username">
-                                <a href="{% url 'profile' comment.name.username %}"
-                                class="hidden-link">
-                                {{ comment.name.username }}
-                              </a>
-                              </h5>
+                                <h5 class="username">{{ comment.name.username }}</h5>
                                 <p class="timestamp">{{ comment.date_added }}</p>
                             </div>
                             <div class="comment-content-display">
