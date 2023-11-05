@@ -524,14 +524,12 @@ ul {
     right: 0;
 }
 
-/* Styling for the comment list to remove default list styling */
 #comment-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
   
-  /* Styling for individual comments */
   .comment {
     position: relative;
     background-color: #fff;
@@ -544,22 +542,23 @@ ul {
   
 
   .comment-header {
-    margin-bottom: 1px; /* Adjust space between header and content */
+    margin-bottom: 1px; 
   }
   
   .comment .comment-content-display {
-    margin-top: 25px; /* space above the comment content */
+    margin-top: 25px; 
     flex-grow: 1;
+    overflow-wrap: break-word;
   }
   
   .username {
     font-weight: bold;
-    margin-top: -10px; /* optional: if you want the username to stand out */
+    margin-top: -10px; 
   }
   
   .comment .timestamp {
-    font-size: 10px; /* smaller font size for the timestamp */
-    color: #777; /* lighter color for the timestamp */
+    font-size: 10px;
+    color: #777; 
     margin-top: -35px;
     margin-bottom: -20px;
   }
@@ -576,23 +575,23 @@ ul {
   }
   
   .comment .delete-comment:hover {
-    text-decoration: underline; /* underline on hover to indicate interactivity */
+    text-decoration: underline; 
   }
   
   /* Styling for the comment input area */
   #comment-input {
-    margin-top: 10px; /* add space above the comment input area */
+    margin-top: 10px; 
   }
   
-  /* Styling for the textarea and buttons in the comment input area */
+  
   #comment-input textarea,
   #comment-input button {
-    width: 100%; /* full width of the container */
-    margin-bottom: 2px; /* space between the textarea and the button */
+    width: 100%; 
+    margin-bottom: 2px; 
   }
   
   #comment-input button {
-    background-color: #5d1725; /* Match the theme color */
+    background-color: #5d1725; 
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -601,7 +600,7 @@ ul {
   }
   
   #comment-input button:hover {
-    opacity: 0.9; /* subtle hover effect */
+    opacity: 0.9; 
   }
 
   .comments-container h2{
