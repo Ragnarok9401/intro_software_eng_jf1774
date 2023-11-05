@@ -571,11 +571,11 @@ ul {
     border: none;
     cursor: pointer;
     box-shadow: none;
-    color: #777;
+    color: #d0d0d0;
   }
   
   .comment .delete-comment:hover {
-    text-decoration: underline; 
+    color: #5d1725; 
   }
   
   /* Styling for the comment input area */
@@ -583,14 +583,13 @@ ul {
     margin-top: 10px; 
   }
   
-  
   #comment-input textarea,
   #comment-input button {
     width: 100%; 
     margin-bottom: 2px; 
   }
   
-  #comment-input button {
+  .comment #comment-input button {
     background-color: #5d1725; 
     color: #fff;
     border: none;
@@ -599,7 +598,7 @@ ul {
     cursor: pointer;
   }
   
-  #comment-input button:hover {
+  .comment #comment-input button:hover {
     opacity: 0.9; 
   }
 
