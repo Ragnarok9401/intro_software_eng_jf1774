@@ -190,10 +190,12 @@
                           </div>
                           <div class="comment-content-display">
                             <p>{{ comment.body }}</p>
-                            {% if user.id == comment.name.id %}
-                            <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>   <!--needs script-->
-                        {% endif %}
                           </div>
+                          {% if user.id == comment.name.id %}
+                          <button class="delete-comment" data-comment-id="{{ comment.id }}">
+                        <i class="fas fa-trash"></i>
+                      </button> 
+                      {% endif %}
                         </li>
                         {% endfor %}
                       </ul>
