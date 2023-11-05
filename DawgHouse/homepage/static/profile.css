@@ -534,7 +534,6 @@ ul {
     position: relative;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 15px;
     margin-bottom: 10px;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -578,30 +577,6 @@ ul {
     color: #5d1725; 
   }
   
-  /* Styling for the comment input area */
-  #comment-input {
-    margin-top: 10px; 
-  }
-  
-  #comment-input textarea,
-  #comment-input button {
-    width: 100%; 
-    margin-bottom: 2px; 
-  }
-  
-  .comment #comment-input button {
-    background-color: #5d1725; 
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .comment #comment-input button:hover {
-    opacity: 0.9; 
-  }
-
   .comments-container h2{
     text-align: left;
     color:black;
