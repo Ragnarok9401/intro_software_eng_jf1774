@@ -143,6 +143,7 @@
                 <h4 class="counters-container">
                   <strong>{{ bark.num_likes }}</strong> Treats
                   <span class="comment-counter"><strong>{{ bark.num_yips }}</strong> Yips</span> <!--needs backend-->
+                  <strong>{{ bark.num_howls }}</strong> Howls
                 </h4>
               </div>
               <hr> <!--line-->
@@ -449,25 +450,35 @@ $(document).ready(function () {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function() {
-      $('.repost-button').click(function() {
-          var barkId = $(this).data('bark-id');
+$(document).ready(function() {
+    $('.repost-button').click(function() {
+        var barkId = $(this).data('bark-id');
 
-          // Send a POST request to repost the bark
-          $.ajax({
-              type: 'POST',
-              url: "/repost_post/" + barkId + "/",
-              data: {'bark_id': barkId, csrfmiddlewaretoken: '{{ csrf_token }}'},
-              success: function(data) {
-                  // Update the page content if needed
-                  alert('Bark reposted successfully');
-              },
-              error: function() {
-                  alert('Error reposting bark');
-              }
-          });
-      });
-  });
+        // Send a POST request to repost the bark or delete the repost
+        $.ajax({
+            type: 'POST',
+            url: "/repost_post/" + barkId + "/",
+            data: {'bark_id': barkId, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: function(data) {
+                if (data.success) {
+                    // Check if it was a repost or a delete
+                    if (data.is_repost) {
+                        alert('Bark reposted successfully');
+                    } else {
+                        alert('Repost deleted successfully');
+                    }
+                } else {
+                    alert('Error reposting/deleting bark');
+                }
+            },
+            error: function() {
+                alert('Error reposting/deleting bark');
+            }
+        });
+    });
+});
+
+
   </script>
 
 

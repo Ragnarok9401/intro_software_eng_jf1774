@@ -171,20 +171,29 @@ def delete_bark(request, id):
 def repost_post(request, bark_id):
     if request.method == "POST":
         # Get the original bark (you might need to adjust this query based on your models)
-        original_bark = Bark.objects.get(id=bark_id)
+        original_bark = get_object_or_404(Bark, id=bark_id)
+        existing_repost = Bark.objects.filter(original_bark=original_bark, user = request.user, is_repost=True).first()
 
+        if existing_repost:
+            existing_repost.delete()
+            original_bark.num_howls -= 1
+            original_bark.save()
+            return JsonResponse({"success": True, "is_repost": False})
         # Create a new Bark instance
-        new_bark = Bark(
-            content=original_bark.content,
-            user=request.user,  # Use the currently logged-in user as the author
-            is_repost=True,
-            original_bark=original_bark,
-        )
-        new_bark.save()
+        else:
+            new_bark = Bark(
+                content=original_bark.content,
+                user=request.user,  # Use the currently logged-in user as the author
+                is_repost=True,
+                original_bark=original_bark,
+            )
+            original_bark.num_howls += 1
+            new_bark.save()
+            original_bark.save()
 
-        # Handle the rest of your repost logic here
+            # Handle the rest of your repost logic here
 
-        return JsonResponse({"success": True})
+            return JsonResponse({"success": True, "is_repost":True})
     return JsonResponse({"success": False})
 
 
