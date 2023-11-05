@@ -523,3 +523,91 @@ ul {
 .delete-bark {
     right: 0;
 }
+
+/* Styling for the comment list to remove default list styling */
+#comment-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Styling for individual comments */
+  .comment {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+
+  .comment-header {
+    margin-bottom: 1px; /* Adjust space between header and content */
+  }
+  
+  .comment .comment-content-display {
+    margin-top: 25px; /* space above the comment content */
+    flex-grow: 1;
+  }
+  
+  .username {
+    font-weight: bold;
+    margin-top: -10px; /* optional: if you want the username to stand out */
+  }
+  
+  .comment .timestamp {
+    font-size: 10px; /* smaller font size for the timestamp */
+    color: #777; /* lighter color for the timestamp */
+    margin-top: -35px;
+    margin-bottom: -20px;
+  }
+  
+  .comment .delete-comment {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+    color: #777;
+  }
+  
+  .comment .delete-comment:hover {
+    text-decoration: underline; /* underline on hover to indicate interactivity */
+  }
+  
+  /* Styling for the comment input area */
+  #comment-input {
+    margin-top: 10px; /* add space above the comment input area */
+  }
+  
+  /* Styling for the textarea and buttons in the comment input area */
+  #comment-input textarea,
+  #comment-input button {
+    width: 100%; /* full width of the container */
+    margin-bottom: 2px; /* space between the textarea and the button */
+  }
+  
+  #comment-input button {
+    background-color: #5d1725; /* Match the theme color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  #comment-input button:hover {
+    opacity: 0.9; /* subtle hover effect */
+  }
+
+  .comments-container h2{
+    text-align: left;
+    color:black;
+    font-size: 12px;
+    margin-top: 8px;
+}
+  

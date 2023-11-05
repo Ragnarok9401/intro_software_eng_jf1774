@@ -174,7 +174,7 @@
                         {% for comment in bark.comments.all %}
                         <li class="comment">
                             <div class="comment-header">
-                                                            <h5 class="username">
+                                <h5 class="username">
                               <a href="{% url 'profile' comment.name.username %}"
                               class="hidden-link">
                               {{ comment.name.username }}
@@ -183,9 +183,11 @@
                                 <p class="timestamp">{{ comment.date_added }}</p>
                             </div>
                             <div class="comment-content-display">
-                                <p>{{ comment.body }}</p>
-                                <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>
+                                <p>{{ comment.body }}</p>                               
                             </div>
+                            <button class="delete-comment" data-comment-id="{{ comment.id }}">
+                              <i class="fas fa-trash"></i>
+                            </button> 
                         </li>
                         {% endfor %}
                     </ul>
