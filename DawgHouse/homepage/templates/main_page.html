@@ -28,18 +28,29 @@
   <body>
     <div class="top-bar">
       <a href="{% url 'main_timeline' %}" class="logo-link">
-          <img
-              src="{% static 'images/DHLogo.png' %}"
-              alt="DawgHouse Logo"
-              class="logo"
-          />
+        <img
+          src="{% static 'images/DHLogo.png' %}"
+          alt="DawgHouse Logo"
+          class="logo"
+        />
       </a>
-      <form method="POST" action="{% url 'search_users' %}" class="search-bar-container">
-          {% csrf_token %}
-          <input type="text" id="searchInput" name="username" placeholder="Search by Dawgtag...">
-          <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      <form
+        method="POST"
+        action="{% url 'search_users' %}"
+        class="search-bar-container"
+      >
+        {% csrf_token %}
+        <input
+          type="text"
+          id="searchInput"
+          name="username"
+          placeholder="Search by Dawgtag..."
+        />
+        <button type="submit">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
       </form>
-  </div>  
+    </div>
     <div class="box">
       <div class="sidebar">
         <p>DawgHouse</p>
@@ -184,18 +195,25 @@
               <li class="comment">
                 <div class="comment-header">
                   <h5 class="username">
-                    <a href="{% url 'profile' comment.name.username %}"
-                    class="hidden-link">
-                    {{ comment.name.username }}
-                  </a>
+                    <a
+                      href="{% url 'profile' comment.name.username %}"
+                      class="hidden-link"
+                    >
+                      {{ comment.name.username }}
+                    </a>
                   </h5>
                   <p class="timestamp">{{ comment.date_added }}</p>
                 </div>
                 <div class="comment-content-display">
                   <p>{{ comment.body }}</p>
-                  {% if user.id == comment.name.id or user.id == comment.bark.user.id %}
-                  <button class="delete-comment" data-comment-id="{{ comment.id }}">Delete</button>   <!--needs script-->
-              {% endif %}
+                  {% if user.id == comment.name.id %}
+                  <button
+                    class="delete-comment"
+                    data-comment-id="{{ comment.id }}"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                  {% endif %}
                 </div>
               </li>
               {% endfor %}
@@ -406,33 +424,33 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function() {
-          $('.repost-button').click(function() {
-              var barkId = $(this).data('bark-id');
-      
-              // Send a POST request to repost the bark or delete the repost
-              $.ajax({
-                  type: 'POST',
-                  url: "/repost_post/" + barkId + "/",
-                  data: {'bark_id': barkId, csrfmiddlewaretoken: '{{ csrf_token }}'},
-                  success: function(data) {
-                      if (data.success) {
-                          // Check if it was a repost or a delete
-                          if (data.is_repost) {
-                              alert('Bark reposted successfully');
-                          } else {
-                              alert('Repost deleted successfully');
-                          }
-                      } else {
-                          alert('Error reposting/deleting bark');
-                      }
-                  },
-                  error: function() {
-                      alert('Error reposting/deleting bark');
-                  }
-              });
+      $(document).ready(function () {
+        $(".repost-button").click(function () {
+          var barkId = $(this).data("bark-id");
+
+          // Send a POST request to repost the bark or delete the repost
+          $.ajax({
+            type: "POST",
+            url: "/repost_post/" + barkId + "/",
+            data: { bark_id: barkId, csrfmiddlewaretoken: "{{ csrf_token }}" },
+            success: function (data) {
+              if (data.success) {
+                // Check if it was a repost or a delete
+                if (data.is_repost) {
+                  alert("Bark reposted successfully");
+                } else {
+                  alert("Repost deleted successfully");
+                }
+              } else {
+                alert("Error reposting/deleting bark");
+              }
+            },
+            error: function () {
+              alert("Error reposting/deleting bark");
+            },
           });
+        });
       });
-        </script>
+    </script>
   </body>
 </html>
