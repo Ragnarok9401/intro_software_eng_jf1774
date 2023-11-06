@@ -20,6 +20,7 @@ urlpatterns = [
     path("send_example/", views.send_example_view, name="send_example"),
     path("profile/<str:username>/", views.ProfileView, name="profile"),
     path("post_bark/", views.post_bark, name="post_bark"),
+    path("home_post_bark/", views.home_post_bark, name="home_post_bark"),
     path(
         "give_treat/<uuid:bark_id>/<str:user_which>/<str:return_to>/",
         views.give_treat,
