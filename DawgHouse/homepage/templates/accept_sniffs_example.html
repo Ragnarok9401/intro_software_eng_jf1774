@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
         body {
             font-family: Arial, sans-serif;
             background-color: rgb(225, 225, 225);
-            margin: 20px; 
+            margin: 20px;
             padding: 0;
         }
-        h2{
+
+        h2 {
             background-color: #5d1725;
             text-align: center;
             padding: 20px;
@@ -19,10 +21,12 @@
             color: white;
             font-size: 30px;
         }
+
         .sniff_requests {
             list-style: none;
             padding: 0;
         }
+
         .sniff_requests li {
             background-color: #5d1725;
             color: white;
@@ -32,9 +36,11 @@
             padding-bottom: 15px;
             border-radius: 15px;
         }
+
         .from_user {
             margin: 5px;
         }
+
         .accept_request_link {
             color: #fff;
             font-size: 35px;
@@ -45,23 +51,29 @@
             border-radius: 15px;
             float: right;
         }
+
         .accept_request_link:hover {
             background-color: #218838;
             color: black;
         }
     </style>
 </head>
+
 <body>
     <h2>Sniff Requests</h2>
     <ul class="sniff_requests">
         {% for sniff_request in all_sniff_requests %}
-            <li>
-                <h1 class="from_user">{{sniff_request.from_user}} 
-                    <a href="/accept_sniff_request/{{sniff_request.id}}/" class="accept_request_link">Accept Sniff Request</a>
-                </h1>
-            </li>
+        {% if sniff_request.to_user == request.user %}
+        <li>
+            <h1 class="from_user">{{sniff_request.from_user}}
+                <a href="/accept_sniff_request/{{sniff_request.id}}/" class="accept_request_link">Accept Sniff
+                    Request</a>
+            </h1>
+        </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </body>
+
 </html>
 
