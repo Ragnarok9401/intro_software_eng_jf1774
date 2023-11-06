@@ -359,4 +359,55 @@ ul {
     font-size: 12px;
     margin-top: 8px;
 }
+/* container for adding a new bark */
+.add-bark-container {
+    flex: 1; 
+    background-color: #5d1725;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(127, 126, 126);
+    color: white;
+    max-height: 250px;
+    margin-top: 20px;
+    margin-left: 19%;  
+    margin-right: 19%;
+}
+/* group styling for the bark input area */
+.bark-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;  
+    width: 80%;  
+    margin: 0 auto; 
+}
+
+/* styling for the textarea for adding a bark */
+.add-bark-container textarea {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 5px;  
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px;
+    margin: 10px 0; 
+    border-radius: 15px;
+    resize: none; 
+    background-color:#f7f7f7; 
+    height: 65px;
+}
+
+/* button styling for posting a bark */
+.add-bark-container button {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    width: 60%;  
+    display: block;
+    padding: 10px;
+    background-color: #f7f7f7;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
   

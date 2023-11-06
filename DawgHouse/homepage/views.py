@@ -151,6 +151,17 @@ def post_bark(request):
 
     return redirect("/")
 
+@login_required
+def home_post_bark(request):
+    if request.method == "POST":
+        bark_content = request.POST.get("bark_content")
+
+        new_bark = Bark(user=request.user, content=bark_content)
+        new_bark.save()
+
+        return redirect(f"/main/")
+
+    return redirect("/")
 
 @login_required
 def delete_bark(request, id):

@@ -82,7 +82,21 @@
         </ul>
       </div>
     </div>
-    <div class="timeline"></div>
+
+    <div class="add-bark-container">
+      <form action="{% url 'home_post_bark' %}" method="post">
+        {% csrf_token %}
+        <div class="bark-input-group">
+          <strong>Add a Bark</strong>
+          <textarea
+            name="bark_content"
+            placeholder="What's on your mind?"
+            required
+          ></textarea>
+        </div>
+        <button type="submit">Post Bark</button>
+      </form>
+    </div>
 
     <!-- Barks-->
     <div class="barks-container">
