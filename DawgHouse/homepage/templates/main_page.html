@@ -297,6 +297,7 @@
 
         // Intercept the button click to add a comment
         $(".comment-button").on("click", function () {
+          event.preventDefault();
           var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
           var commentText = $("#comment-text-" + barkID).val();
 
