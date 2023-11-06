@@ -126,7 +126,7 @@
                     <div class="button-container">
                       <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
                       <form
-                        action="{% url 'give_treat' bark.id user.username 'main_timeline' %}"
+                        action="{% url 'give_treat' bark.id user.username 'profile' %}"
                         method="post"
                       >
                         {% csrf_token %} {% if user in bark.treated_by.all %}
