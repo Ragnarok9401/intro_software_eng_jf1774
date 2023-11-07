@@ -60,5 +60,6 @@
 ## Running DawgHouse
   DawgHouse is currently hosted through PythonAnywhere at the URL dawghousedev.pythonanywhere.com  
   To run locally, download the source code, add "127.0.0.1" to ALLOWED_HOSTS and set DEBUG to "True" in the settings.py file.  
-  Then, in a terminal set to the "DawgHouse" directory, type "python manage.py runserver".  
+  Then, in a terminal set to the "DawgHouse" directory, type "python manage.py migrate". This command generates a database.  
+  Finally, in the terminal type "python manage.py runserver".  
   The site will now be running on the 127.0.0.1 port.
