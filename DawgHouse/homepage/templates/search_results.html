@@ -12,9 +12,51 @@
     />
     <!--icons-->
     <style>
+      h2 {
+        flex: 1 100%;  
+        width: 55%;
+        margin-left: auto;  
+        margin-right: auto;
+        background-color: #5d1725;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgb(127, 126, 126);
+        color: rgb(225, 225, 225);
+        margin-top: 50px; 
+      }
       ul {
         list-style-type: none;
         padding-left: 0;
+      }
+       ul li a {
+        text-decoration: none;  
+        color: inherit;
+        font-size: 20px;
+        color: #5d1725;
+      }
+      .friend_link {
+        color: #5d1725;
+        text-align: center;
+        font-weight: bold;
+        background-color: rgb(225, 225, 225);
+        padding-top: 7px;
+        padding-bottom: 7px;
+        padding-left: 70px;
+        padding-right: 70px;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+      .container {
+        flex: 1 100%;  
+        width: 56%;
+        margin-left: auto;  
+        margin-right: auto;
+        background-color: #5d1725;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgb(127, 126, 126);
+        color: black;
+        margin-top: 20px; 
       }
     </style>
   </head>
@@ -45,13 +87,20 @@
       </form>
     </div>
     <hr color="maroon" />
-    <h2>Similar Users:</h2>
-    <ul>
-      {% for user in similar_users %}
-      <li>
-        <a href="{% url 'profile' user.username %}">@{{ user.username }}</a>
-      </li>
-      {% endfor %}
-    </ul>
+    <h2>Similar Dawgs:</h2>
+    <div class="container">
+      <ul class="all_users">
+        {% for user in similar_users %}
+          <li>
+            <h1 class="user_name">
+              <a href="{% url 'profile' user.username %}" class="friend_link"
+                >{{ user.username }}</a>
+            </h1>
+          </li>
+          {% endfor %}
+      </ul>
+  </div>
+
   </body>
+
 </html>
