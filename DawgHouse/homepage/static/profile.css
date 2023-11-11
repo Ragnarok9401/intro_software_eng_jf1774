@@ -149,6 +149,11 @@ ul {
     overflow: hidden; 
 }
 
+.friends-list a {
+    text-decoration: none;
+    color:#ffffff;
+}
+
 .friends-list:hover{
     overflow-y: auto;
     transition: opacity 0.3s ease;
