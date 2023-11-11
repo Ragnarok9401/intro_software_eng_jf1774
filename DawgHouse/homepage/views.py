@@ -102,6 +102,9 @@ def accept_sniff_request(request, request_ID):
     else:
         return HttpResponse("home_view")
 
+@login_required
+def decline_sniff_request(request, request_ID):
+
 
 @login_required
 def send_example_view(request):

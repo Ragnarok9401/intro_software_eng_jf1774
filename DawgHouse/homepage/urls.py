@@ -16,6 +16,11 @@ urlpatterns = [
         views.accept_sniff_request,
         name="accept_sniff_request",
     ),
+    path(
+        "decline_sniff_request/<int:request_ID>/",
+        views.decline_sniff_request,
+        name="decline_sniff_request",
+    )
     path("accept_example/", views.accept_example_view, name="accept_example"),
     path("send_example/", views.send_example_view, name="send_example"),
     path("profile/<str:username>/", views.ProfileView, name="profile"),

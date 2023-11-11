@@ -56,6 +56,29 @@
             background-color: #218838;
             color: black;
         }
+        .accept_request_link:active {
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .decline-button {
+            color: #fff;
+            font-size: 35px;
+            margin-left: 10px;
+            background-color: Red;
+            border-radius: 5px;
+            padding: 5px;
+            text-decoration: none;
+            border-radius: 15px;
+            float: right;
+        }
+        .decline-button:hover {
+            background-color: #961620 ;
+            color: black;
+        }
+        .decline-button:active {
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
     </style>
 </head>
 
@@ -66,8 +89,8 @@
         {% if sniff_request.to_user == request.user %}
         <li>
             <h1 class="from_user">{{sniff_request.from_user}}
-                <a href="/accept_sniff_request/{{sniff_request.id}}/" class="accept_request_link">Accept Sniff
-                    Request</a>
+                <a href="/decline_sniff_request/{{sniff_request.id}}" class="decline-button">Decline</a>
+                <a href="/accept_sniff_request/{{sniff_request.id}}/" class="accept_request_link">Accept Sniff Request</a>
             </h1>
         </li>
         {% endif %}
