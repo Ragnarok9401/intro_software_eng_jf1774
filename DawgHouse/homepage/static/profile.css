@@ -156,8 +156,8 @@ ul {
 
 .friends-list:hover{
     overflow-y: auto;
-    transition: opacity 0.3s ease;
 }
+
 /* bolded text for the pack section */
 .friends-list strong {
     display: block;
