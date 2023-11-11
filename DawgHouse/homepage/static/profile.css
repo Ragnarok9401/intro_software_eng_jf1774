@@ -145,6 +145,8 @@ ul {
 /* section that displays the user's friends or pack */
 .friends-list {
     margin-top: 40px;
+    max-height: 100px; 
+    overflow-y: auto; 
 }
 
 /* bolded text for the pack section */
@@ -159,6 +161,7 @@ ul {
 .friends-list ul {
     padding-left: 20px;  
 }
+
 
 /* container for adding a new bark */
 .add-bark-container {
