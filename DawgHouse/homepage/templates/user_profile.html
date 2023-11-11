@@ -68,7 +68,7 @@
           {% if friends_list %}
           <ul>
             {% for friend in friends_list %}
-            <li>@{{ friend.username }}</li>
+            <li><a href="{% url 'profile' username=friend.username %}">@{{ friend.username }}</a></li>
             {% endfor %}
           </ul>
           {% else %}
@@ -195,8 +195,6 @@
           {% endfor %}
         </ul>
       </div>
-
-
 
       <!--javascript for editing bio (didnt want the refresh so i used ajax)-->
       <script>
