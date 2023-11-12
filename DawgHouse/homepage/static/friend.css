@@ -181,12 +181,12 @@ ul {
   }
   
   ::-webkit-scrollbar-thumb {
-    background: #2222227f;
+    background: #7575757f;
     border-radius: 10px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: #55555562;
+    background: #d5d5d562;
   }
 
 /* group of buttons for bark actions like treat, yip, and howl */
@@ -510,6 +510,18 @@ ul {
     padding: 0;
     margin: 0;
   }
+
+#comment-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 260px;
+    overflow: hidden;
+  }
+
+#comment-list:hover {
+    overflow-y: auto;
+}
   
   .comment {
     position: relative;
