@@ -181,12 +181,12 @@ ul {
   }
   
   ::-webkit-scrollbar-thumb {
-    background: #2222227f;
+    background: #7575757f;
     border-radius: 10px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: #55555562;
+    background: #d5d5d562;
   }
 
 /* container for adding a new bark */
