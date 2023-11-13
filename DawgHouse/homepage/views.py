@@ -100,8 +100,16 @@ def accept_sniff_request(request, request_ID):
         sniff_request.delete()
         return redirect("home_view")
     else:
-        return HttpResponse("home_view")
+        return redirect("home_view")
 
+@login_required
+def decline_sniff_request(request, request_ID):
+    sniff_request = SniffRequest.objects.get(id=request_ID)
+    if sniff_request.to_user == request.user:
+        sniff_request.delete()
+        return redirect("home_view")
+    
+    return redirect("home_view")
 
 @login_required
 def send_example_view(request):
