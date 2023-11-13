@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>{{ user.first_name }} {{ user.last_name }}'s Profile</title>
     {% load static %}
     <!--loading in the static files-->
     <link rel="stylesheet" href="{% static 'friend.css' %}" />
     <!--css sheet connect to-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <!--icons-->
 
     <style>
@@ -19,294 +21,345 @@
         text-decoration: none;
       }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="top-bar">
-        <!--this is the bar with the logo and the search bar-->
-        <a href="{% url 'main_timeline' %}" class="logo-link">
-            <img src="{% static 'images/DHLogo.png' %}" alt="DawgHouse Logo" class="logo" />
-        </a>
-        <form method="POST" action="{% url 'search_users' %}" class="search-bar-container">
-            {% csrf_token %}
-            <input type="text" id="searchInput" name="username" placeholder="Search by Dawgtag...">
-            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-        </form>
+      <!--this is the bar with the logo and the search bar-->
+      <a href="{% url 'main_timeline' %}" class="logo-link">
+        <img
+          src="{% static 'images/DHLogo.png' %}"
+          alt="DawgHouse Logo"
+          class="logo"
+        />
+      </a>
+      <form
+        method="POST"
+        action="{% url 'search_users' %}"
+        class="search-bar-container"
+      >
+        {% csrf_token %}
+        <input
+          type="text"
+          id="searchInput"
+          name="username"
+          placeholder="Search by Dawgtag..."
+        />
+        <button type="submit">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
     </div>
 
     <!--photo of the drill field-->
     <div class="profile-cover">
-        <img src="{% static 'images/msstate.jpg' %}" alt="{{ user.username }}'s cover photo" />
+      <img
+        src="{% static 'images/msstate.jpg' %}"
+        alt="{{ user.username }}'s cover photo"
+      />
     </div>
 
     <!--profile container in front of cover photo ^-->
     <div class="profile-content">
-        <div class="profile-header">
-            <img src="{% static 'images/profilePicture.jpg' %}" alt="{{ user.username }}'s profile picture" />
-            <!--profile name and bio-->
-            <div class="profile-name-bio">
-                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-                <p>@{{ user.username }}</p>
-            </div>
+      <div class="profile-header">
+        <img
+          src="{% static 'images/profilePicture.jpg' %}"
+          alt="{{ user.username }}'s profile picture"
+        />
+        <!--profile name and bio-->
+        <div class="profile-name-bio">
+          <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+          <p>@{{ user.username }}</p>
         </div>
-        <!--layout is the grid which has two columns: bio and add a bark-->
-        <div class="profile-layout">
-            <!--bio-->
-            <div class="bio-container">
-                <strong>Bio</strong>
-                <div class="display-bio">
-                    <p id="bioText">{{ user.bio }}</p>
-                </div>
-                <!--pack list-->
-                <div class="friends-list">
-                    <strong>Pack</strong> {% if friends_list %}
-                    <ul>
-                        {% for friend in friends_list %}
-                        <li>@{{ friend.username }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p>No friends yet!</p>
-                    {% endif %}
-                </div>
-            </div>
+      </div>
+      <!--layout is the grid which has two columns: bio and add a bark-->
+      <div class="profile-layout">
+        <!--bio-->
+        <div class="bio-container">
+          <strong>Bio</strong>
+          <div class="display-bio">
+            <p id="bioText">{{ user.bio }}</p>
+          </div>
 
-            <div class="barks-container">
-                <h2>Timeline</h2>
-                <ul>
-                  {% for bark in barks %}
-                  <!--lists of barks-->
-                  <li class="bark">
-                    <div class="bark-header">
-                      <div class="user-names">
-                        <h3>
-                          <strong
-                            ><a
-                              href="{% url 'profile' bark.user.username %}"
-                              class="hidden-link"
-                              >{{ bark.user.first_name }} {{ bark.user.last_name }}</a
-                            ></strong
-                          >
-                        </h3>
-                        <h4>@{{ bark.user.username }}</h4>
-                        {% if bark.is_repost %}
-                        <p>
-                          Howled
-                          <a
-                            href="{% url 'profile' username=bark.original_bark.user.username %}"
-                            class="hidden-link"
-                            ><strong>@{{ bark.original_bark.user.username }}'s</strong>
-                            bark</a
-                          >
-                        </p>
-                        {% endif %}
-                      </div>
-                      <p class="timestamp">{{ bark.timestamp }}</p>
-                    </div>
-                    <hr color="maroon" />
-                    <!--line-->
-                    <!--content of barks-->
-                    <div class="bark-content-display">
-                      <p id="bark-content-{{ bark.id }}">{{ bark.content }}</p>
-                    </div>
-                    <!--shows number of yips and treats (yips needs functionality)-->
-                    <div class="counters-container">
-                      <h4 class="counters-container">
-                        <strong>{{ bark.num_likes }}</strong> Treats
-                        <span class="comment-counter"
-                          ><strong>{{ bark.num_yips }}</strong> Yips</span
-                        >
-                        <strong>{{ bark.num_howls }}</strong> Howls
-                        <!--needs backend-->
-                      </h4>
-                    </div>
-                    <hr />
-                    <!--line-->
-                    <!--contains the buttons for counters (Yip and Howl need functionality)-->
-                    <div class="button-container">
-                      <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
-                      <form
-                        action="{% url 'give_treat' bark.id user.username 'profile' %}"
-                        method="post"
+          <!--pack list-->
+          <div class="friends-list">
+            <strong>Pack</strong> {% if friends_list %}
+            <ul>
+              {% for friend in friends_list %}
+              <li>
+                <a href="{% url 'profile' username=friend.username %}"
+                  >@{{ friend.username }}</a
+                >
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No friends yet!</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="barks-container">
+          <h2>Timeline</h2>
+          <ul>
+            {% for bark in barks %}
+            <!--lists of barks-->
+            <li class="bark">
+              <div class="bark-header">
+                <div class="user-names">
+                  <h3>
+                    <strong
+                      ><a
+                        href="{% url 'profile' bark.user.username %}"
+                        class="hidden-link"
+                        >{{ bark.user.first_name }} {{ bark.user.last_name }}</a
+                      ></strong
+                    >
+                  </h3>
+                  <h4>@{{ bark.user.username }}</h4>
+                  {% if bark.is_repost %}
+                  <p>
+                    Howled
+                    <a
+                      href="{% url 'profile' username=bark.original_bark.user.username %}"
+                      class="hidden-link"
+                      ><strong
+                        >@{{ bark.original_bark.user.username }}'s</strong
                       >
-                        {% csrf_token %} {% if user in bark.treated_by.all %}
-                        <button type="submit" style="background-color: rgb(70, 18, 18)">
-                          <i class="fa-solid fa-bone" style="color: white"></i> Treat
-                        </button>
-                        {% else %}
-                        <button type="submit">
-                          <i class="fa-solid fa-bone" style="color: white"></i> Treat
-                        </button>
-                        {% endif %}
-                      </form>
-                      <!-- needs backend -->
-                      <button class="show-comment-input" data-bark-id="{{ bark.id }}">
-                        <i class="fa-solid fa-comments" style="color: white"></i> Yip
-                      </button>
-          
-                      <form method="POST" class="repost-form">
-                        {% csrf_token %}
-                        <input
-                          type="hidden"
-                          name="original_post_id"
-                          value="{{ bark.id }}"
-                        />
-                        <button
-                          type="button"
-                          class="repost-button"
-                          data-bark-id="{{ bark.id }}"
+                      bark</a
+                    >
+                  </p>
+                  {% endif %}
+                </div>
+                <p class="timestamp">{{ bark.timestamp }}</p>
+              </div>
+              <hr color="maroon" />
+              <!--line-->
+              <!--content of barks-->
+              <div class="bark-content-display">
+                <p id="bark-content-{{ bark.id }}">{{ bark.content }}</p>
+              </div>
+              <!--shows number of yips and treats (yips needs functionality)-->
+              <div class="counters-container">
+                <h4 class="counters-container">
+                  <strong>{{ bark.num_likes }}</strong> Treats
+                  <span class="comment-counter"
+                    ><strong>{{ bark.num_yips }}</strong> Yips</span
+                  >
+                  <strong>{{ bark.num_howls }}</strong> Howls
+                  <!--needs backend-->
+                </h4>
+              </div>
+              <hr />
+              <!--line-->
+              <!--contains the buttons for counters (Yip and Howl need functionality)-->
+              <div class="button-container">
+                <!--this is how I set up only allowing one treat per user. Button is maroon if already given treat-->
+                <form
+                  action="{% url 'give_treat' bark.id user.username 'profile' %}"
+                  method="post"
+                >
+                  {% csrf_token %} {% if user in bark.treated_by.all %}
+                  <button
+                    type="submit"
+                    style="background-color: rgb(70, 18, 18)"
+                  >
+                    <i class="fa-solid fa-bone" style="color: white"></i> Treat
+                  </button>
+                  {% else %}
+                  <button type="submit">
+                    <i class="fa-solid fa-bone" style="color: white"></i> Treat
+                  </button>
+                  {% endif %}
+                </form>
+                <!-- needs backend -->
+                <button class="show-comment-input" data-bark-id="{{ bark.id }}">
+                  <i class="fa-solid fa-comments" style="color: white"></i> Yip
+                </button>
+
+                <form method="POST" class="repost-form">
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="original_post_id"
+                    value="{{ bark.id }}"
+                  />
+                  <button
+                    type="button"
+                    class="repost-button"
+                    data-bark-id="{{ bark.id }}"
+                  >
+                    <i class="fa-solid fa-dog" style="color: white"></i> Howl
+                  </button>
+                </form>
+              </div>
+
+              <div id="comment-input-{{ bark.id }}" style="display: none">
+                <!-- I added the style here because of the bark ID, DO NOT MOVE TO THE CSS FILE -->
+
+                <textarea
+                  id="comment-text-{{ bark.id }}"
+                  placeholder="Yip what's on your mind..."
+                  required
+                  style="
+                    width: 100%;
+                    padding: 5px;
+                    margin: 10px 0;
+                    border-radius: 5px;
+                    resize: none;
+                    background-color: #f7f7f7;
+                    border: none;
+                    box-shadow: 0 4px 8px rgb(127, 126, 126);
+                  "
+                ></textarea>
+                <button class="comment-button" data-bark-id="{{ bark.id }}">
+                  Post
+                </button>
+                <button class="cancel-comment" data-bark-id="{{ bark.id }}">
+                  Cancel
+                </button>
+              </div>
+
+              <div class="comments-container">
+                <h2>Yips</h2>
+                <ul id="comment-list">
+                  {% for comment in bark.comments.all %}
+                  <li class="comment">
+                    <div class="comment-header">
+                      <h5 class="username">
+                        <a
+                          href="{% url 'profile' comment.name.username %}"
+                          class="hidden-link"
                         >
-                          <i class="fa-solid fa-dog" style="color: white"></i> Howl
-                        </button>
-          
-                        <div id="comment-input-{{ bark.id }}" style="display: none">
-                          <textarea
-                            id="comment-text-{{ bark.id }}"
-                            placeholder="Yip..."
-                            required
-                          ></textarea>
-                          <button class="comment-button" data-bark-id="{{ bark.id }}">
-                            Post
-                          </button>
-                          <button class="cancel-comment" data-bark-id="{{ bark.id }}">
-                            Cancel
-                          </button>
-                        </div>
-                      </form>
+                          {{ comment.name.username }}
+                        </a>
+                      </h5>
+                      <p class="timestamp">{{ comment.date_added }}</p>
                     </div>
-                    <div class="comments-container">
-                      <h2>Yips</h2>
-                      <ul id="comment-list">
-                        {% for comment in bark.comments.all %}
-                        <li class="comment">
-                          <div class="comment-header">
-                            <h5 class="username">
-                              <a href="{% url 'profile' comment.name.username %}"
-                              class="hidden-link">
-                              {{ comment.name.username }}
-                            </a>
-                            </h5>
-                            <p class="timestamp">{{ comment.date_added }}</p>
-                          </div>
-                          <div class="comment-content-display">
-                            <p>{{ comment.body }}</p>
-                          </div>
-                          {% if logged_in_user == comment.name.id %}
-                          <button class="delete-comment" data-comment-id="{{ comment.id }}">
-                        <i class="fas fa-trash"></i>
-                      </button> 
-                      {% endif %}
-                        </li>
-                        {% endfor %}
-                      </ul>
+                    <div class="comment-content-display">
+                      <p>{{ comment.body }}</p>
                     </div>
+                    {% if logged_in_user == comment.name.id %}
+                    <button
+                      class="delete-comment"
+                      data-comment-id="{{ comment.id }}"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                    {% endif %}
                   </li>
                   {% endfor %}
                 </ul>
               </div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            // Show the comment input field when the "Yip" button is clicked
-            $(".show-comment-input").on("click", function () {
-                var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
-                $("#comment-input-" + barkID).show(); // Show the comment input for the specific bark
-            });
-                // Hide the comment input field when the "Cancel" button is clicked
-                $(".cancel-comment").on("click", function () {
-                var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
-                $("#comment-input-" + barkID).hide(); // Hide the comment input for the specific bark
-            });
-        
-            // Intercept the button click to add a comment
-            $(".comment-button").on("click", function () {
-                event.preventDefault();
-                var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
-                var commentText = $("#comment-text-" + barkID).val();
-        
-                // Send an AJAX POST request to create a new comment
-                $.ajax({
-                    type: "POST",
-                    url: "/main/add_comment/" + barkID + "/", // Use the actual URL
-                    data: {
-                        'comment_text': commentText,
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                    },
-                    success: function (data) {
-                        // Append the new comment to the specific container for the bark
-                        $("#comment-list-" + barkID).append("<li>" + data.text + "</li>");
-                        $("#comment-text-" + barkID).val('');  // Clear the input field
-                        location.reload();  // Refresh the page after posting a comment
-                    }
-                });
-            });
-        
-            // Handle comment deletion
-            $(".delete-comment").on("click", function () {
-                if (confirm('Are you sure you want to delete this comment?')) {
-                    var commentId = $(this).data("comment-id");
-        
-                    // Send an AJAX POST request to delete the comment
-                    $.ajax({
-                        type: "POST",
-                        url: "/delete_comment/" + commentId + "/",
-                        data: {
-                            'csrfmiddlewaretoken': '{{ csrf_token }}',
-                        },
-                        success: function (data) {
-                            if (data.success) {
-                                // Remove the deleted comment from the UI
-                                var deletedComment = $(".comment[data-comment-id='" + commentId + "']");
-                                deletedComment.remove();
-                                location.reload();  // Refresh the page after deleting a comment
-                            } else {
-                                // Handle permission denied or other errors
-                                alert("Comment deletion failed: " + data.error);
-                            }
-                        },
-                        error: function () {
-                            // Handle AJAX request error
-                            alert("An error occurred while deleting the comment.");
-                        }
-                    });
-                }
-            });
+      $(document).ready(function () {
+        // Show the comment input field when the "Yip" button is clicked
+        $(".show-comment-input").on("click", function () {
+          var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+          $("#comment-input-" + barkID).show(); // Show the comment input for the specific bark
         });
+        // Hide the comment input field when the "Cancel" button is clicked
+        $(".cancel-comment").on("click", function () {
+          var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+          $("#comment-input-" + barkID).hide(); // Hide the comment input for the specific bark
+        });
+
+        // Intercept the button click to add a comment
+        $(".comment-button").on("click", function () {
+          event.preventDefault();
+          var barkID = $(this).data("bark-id"); // Get the bark ID from the button's data attribute
+          var commentText = $("#comment-text-" + barkID).val();
+
+          // Send an AJAX POST request to create a new comment
+          $.ajax({
+            type: "POST",
+            url: "/main/add_comment/" + barkID + "/", // Use the actual URL
+            data: {
+              comment_text: commentText,
+              csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            success: function (data) {
+              // Append the new comment to the specific container for the bark
+              $("#comment-list-" + barkID).append("<li>" + data.text + "</li>");
+              $("#comment-text-" + barkID).val(""); // Clear the input field
+              location.reload(); // Refresh the page after posting a comment
+            },
+          });
+        });
+
+        // Handle comment deletion
+        $(".delete-comment").on("click", function () {
+          if (confirm("Are you sure you want to delete this comment?")) {
+            var commentId = $(this).data("comment-id");
+
+            // Send an AJAX POST request to delete the comment
+            $.ajax({
+              type: "POST",
+              url: "/delete_comment/" + commentId + "/",
+              data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+              },
+              success: function (data) {
+                if (data.success) {
+                  // Remove the deleted comment from the UI
+                  var deletedComment = $(
+                    ".comment[data-comment-id='" + commentId + "']"
+                  );
+                  deletedComment.remove();
+                  location.reload(); // Refresh the page after deleting a comment
+                } else {
+                  // Handle permission denied or other errors
+                  alert("Comment deletion failed: " + data.error);
+                }
+              },
+              error: function () {
+                // Handle AJAX request error
+                alert("An error occurred while deleting the comment.");
+              },
+            });
+          }
+        });
+      });
     </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  $(document).ready(function() {
-      $('.repost-button').click(function() {
-          var barkId = $(this).data('bark-id');
-  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".repost-button").click(function () {
+          var barkId = $(this).data("bark-id");
+
           // Send a POST request to repost the bark or delete the repost
           $.ajax({
-              type: 'POST',
-              url: "/repost_post/" + barkId + "/",
-              data: {'bark_id': barkId, csrfmiddlewaretoken: '{{ csrf_token }}'},
-              success: function(data) {
-                  if (data.success) {
-                      // Check if it was a repost or a delete
-                      if (data.is_repost) {
-                          alert('Bark reposted successfully');
-                      } else {
-                          alert('Repost deleted successfully');
-                      }
-                  } else {
-                      alert('Error reposting/deleting bark');
-                  }
-              },
-              error: function() {
-                  alert('Error reposting/deleting bark');
+            type: "POST",
+            url: "/repost_post/" + barkId + "/",
+            data: { bark_id: barkId, csrfmiddlewaretoken: "{{ csrf_token }}" },
+            success: function (data) {
+              if (data.success) {
+                // Check if it was a repost or a delete
+                if (data.is_repost) {
+                  alert("Bark reposted successfully");
+                } else {
+                  alert("Repost deleted successfully");
+                }
+              } else {
+                alert("Error reposting/deleting bark");
               }
+            },
+            error: function () {
+              alert("Error reposting/deleting bark");
+            },
           });
+        });
       });
-  });
     </script>
-  
-</body>
-
+  </body>
 </html>

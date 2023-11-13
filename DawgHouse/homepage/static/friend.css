@@ -145,6 +145,17 @@ ul {
 /* section that displays the user's friends or pack */
 .friends-list {
     margin-top: 40px;
+    max-height: 150px; 
+    overflow: hidden; 
+}
+
+.friends-list a {
+    text-decoration: none;
+    color:#ffffff;
+}
+
+.friends-list:hover{
+    overflow-y: auto;
 }
 
 /* bolded text for the pack section */
@@ -159,6 +170,24 @@ ul {
 .friends-list ul {
     padding-left: 20px;  
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #4a121e;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #7575757f;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d5d5d562;
+  }
 
 /* group of buttons for bark actions like treat, yip, and howl */
 .button-container {
@@ -481,6 +510,18 @@ ul {
     padding: 0;
     margin: 0;
   }
+
+#comment-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 260px;
+    overflow: hidden;
+  }
+
+#comment-list:hover {
+    overflow-y: auto;
+}
   
   .comment {
     position: relative;

@@ -89,7 +89,7 @@
           <strong>Add a Bark</strong>
           <textarea
             name="bark_content"
-            placeholder="What's on your mind?"
+            placeholder="Bark your thoughts!"
             required
           ></textarea>
         </div>
@@ -185,22 +185,34 @@
               >
                 <i class="fa-solid fa-dog" style="color: white"></i> Howl
               </button>
-
-              <div id="comment-input-{{ bark.id }}" style="display: none">
-                <textarea
-                  id="comment-text-{{ bark.id }}"
-                  placeholder="Yip..."
-                  required
-                ></textarea>
-                <button class="comment-button" data-bark-id="{{ bark.id }}">
-                  Post
-                </button>
-                <button class="cancel-comment" data-bark-id="{{ bark.id }}">
-                  Cancel
-                </button>
-              </div>
             </form>
           </div>
+
+          <div id="comment-input-{{ bark.id }}" style="display: none">
+            <!-- I added the style here because of the bark ID, DO NOT MOVE TO THE CSS FILE -->
+            <textarea
+              id="comment-text-{{ bark.id }}"
+              placeholder="Yip what's on your mind..."
+              required
+              style="
+                width: 100%;
+                padding: 5px;
+                margin: 10px 0;
+                border-radius: 5px;
+                resize: none;
+                background-color: #f7f7f7;
+                border: none;
+                box-shadow: 0 4px 8px rgb(127, 126, 126);
+              "
+            ></textarea>
+            <button class="comment-button" data-bark-id="{{ bark.id }}">
+              Post
+            </button>
+            <button class="cancel-comment" data-bark-id="{{ bark.id }}">
+              Cancel
+            </button>
+          </div>
+
           <div class="comments-container">
             <h2>Yips</h2>
             <ul id="comment-list">
