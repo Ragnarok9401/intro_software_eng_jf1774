@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
     <title>View Sniff Requests</title>
     <style>
         body {
@@ -16,6 +16,8 @@
         h2 {
             background-color: #5d1725;
             text-align: center;
+            margin-left: 15%;
+            margin-right: 15%;
             padding: 20px;
             border-radius: 15px;
             color: white;
@@ -32,21 +34,26 @@
             color: white;
             font-size: 20px;
             margin-bottom: 10px;
+            margin-left: 15%;
+            margin-right: 15%;
             padding: 10px;
             padding-bottom: 15px;
             border-radius: 15px;
         }
-
         .from_user {
             margin: 5px;
+            margin-left: 1%;
         }
 
         .accept_request_link {
             color: #fff;
             font-size: 35px;
-            background-color: #28a745;
+            background-color: darkgreen;
             border-radius: 5px;
+            margin-right: 1%;
             padding: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
             text-decoration: none;
             border-radius: 15px;
             float: right;
@@ -64,9 +71,12 @@
             color: #fff;
             font-size: 35px;
             margin-left: 10px;
-            background-color: Red;
+            background-color: darkred;
             border-radius: 5px;
+            margin-right: 1%;
             padding: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
             text-decoration: none;
             border-radius: 15px;
             float: right;
@@ -79,10 +89,44 @@
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
+        .top-bar {
+            display: flex;
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 10px 5px; 
+            position: relative;
+        }
+        /* link container for the site's logo */
+        .logo-link {
+            display: inline-block; 
+            vertical-align: middle; 
+            z-index: 10;  
+        }
+
+        /* site logo styling */
+        .logo {
+            height: 70px; 
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        /* hover effect for the site logo */
+        .logo-link:hover .logo {
+            opacity: 0.7;  
+        }
     </style>
 </head>
 
 <body>
+    <div class="top-bar">
+        <a href="{% url 'main_timeline' %}" class="logo-link">
+          <img
+            src="{% static 'images/DHLogo.png' %}"
+            alt="DawgHouse Logo"
+            class="logo"
+          />
+        </a>
+    </div>
     <h2>Sniff Requests</h2>
     <ul class="sniff_requests">
         {% for sniff_request in all_sniff_requests %}
@@ -90,7 +134,7 @@
         <li>
             <h1 class="from_user">{{sniff_request.from_user}}
                 <a href="/decline_sniff_request/{{sniff_request.id}}" class="decline-button">Decline</a>
-                <a href="/accept_sniff_request/{{sniff_request.id}}/" class="accept_request_link">Accept Sniff Request</a>
+                <a href="/accept_sniff_request/{{sniff_request.id}}/" class="accept_request_link">Accept</a>
             </h1>
         </li>
         {% endif %}
