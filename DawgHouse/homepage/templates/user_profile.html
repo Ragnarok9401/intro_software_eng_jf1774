@@ -83,7 +83,9 @@
           </div>
           <!--for editing the bio (needs functionality, feel free to change!!)-->
           <div class="edit-bio" style="display: none">
-            <textarea id="bioTextarea">{{ user.bio }}</textarea>
+            <textarea id="bioTextarea" maxlength="300">
+{{ user.bio }}
+            </textarea>
             <button id="saveBioButton">Save</button>
             <button id="cancelBioButton">Cancel</button>
           </div>
