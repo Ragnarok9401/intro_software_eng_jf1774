@@ -83,7 +83,9 @@
           </div>
           <!--for editing the bio (needs functionality, feel free to change!!)-->
           <div class="edit-bio" style="display: none">
-            <textarea id="bioTextarea">{{ user.bio }}</textarea>
+            <textarea id="bioTextarea" maxlength="300">
+{{ user.bio }}
+            </textarea>
             <button id="saveBioButton">Save</button>
             <button id="cancelBioButton">Cancel</button>
           </div>
@@ -114,6 +116,7 @@
               <textarea
                 name="bark_content"
                 placeholder="Bark your thoughts!"
+                maxlength="1000"
                 required
               ></textarea>
             </div>
@@ -246,6 +249,7 @@
                 <textarea
                   id="comment-text-{{ bark.id }}"
                   placeholder="Yip what's on your mind..."
+                  maxlength="500"
                   required
                   style="
                     width: 100%;
