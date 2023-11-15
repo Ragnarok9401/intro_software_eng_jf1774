@@ -176,7 +176,7 @@ def delete_bark(request, id):
     post = get_object_or_404(Bark, pk=id)
 
     if request.method == "DELETE":
-        # Check if the user has permission to delete the post (you may customize this)
+        # Check if the user has permission to delete the post
         if request.user == post.user:
             post.delete()  # Delete the post
             return JsonResponse({"success": True})
@@ -189,7 +189,7 @@ def delete_bark(request, id):
 @login_required
 def repost_post(request, bark_id):
     if request.method == "POST":
-        # Get the original bark (you might need to adjust this query based on your models)
+        # Get the original bark 
         original_bark = get_object_or_404(Bark, id=bark_id)
         existing_repost = Bark.objects.filter(original_bark=original_bark, user = request.user, is_repost=True).first()
 
@@ -209,8 +209,6 @@ def repost_post(request, bark_id):
             original_bark.num_howls += 1
             new_bark.save()
             original_bark.save()
-
-            # Handle the rest of your repost logic here
 
             return JsonResponse({"success": True, "is_repost":True})
     return JsonResponse({"success": False})
