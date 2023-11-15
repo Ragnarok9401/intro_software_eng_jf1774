@@ -11,7 +11,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class DawgHouseUserManager(BaseUserManager):
     def create_user(
         self, username, password=None, first_name=None, last_name=None, **extra_fields

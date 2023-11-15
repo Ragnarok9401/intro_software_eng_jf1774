@@ -52,7 +52,7 @@ def login_view(request):
     return render(request, "login.html", {"form": form})
 
 
-def signupView(request):
+def signup_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
@@ -133,7 +133,7 @@ def accept_example_view(request):
     return render(request, "accept_sniffs_example.html", context)
 
 
-def ProfileView(request, username):
+def profile_view(request, username):
     logged_in_user = request.user
     user = get_object_or_404(DawgHouseUser, username=username)
     friends_list = user.friends.all()
