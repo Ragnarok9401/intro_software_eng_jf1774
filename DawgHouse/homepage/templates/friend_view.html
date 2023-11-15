@@ -159,7 +159,7 @@
                   action="{% url 'give_treat' bark.id user.username 'profile' %}"
                   method="post"
                 >
-                  {% csrf_token %} {% if user in bark.treated_by.all %}
+                  {% csrf_token %} {% if logged_in_user in bark.treated_by.all %}
                   <button
                     type="submit"
                     style="background-color: rgb(70, 18, 18)"
