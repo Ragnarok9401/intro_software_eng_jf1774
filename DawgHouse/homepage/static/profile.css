@@ -534,11 +534,12 @@ ul {
 }
 
 .edit-bark, .delete-bark {
+    transform: translateX(1150px);
     cursor: pointer;
     color: #d0d0d0; 
-    position: absolute;
-    top: 50%;
-    transform: translateY(100%);
+    position:static;
+    top: 10%;
+
 }
 
 .edit-bark:hover, .delete-bark:hover {
