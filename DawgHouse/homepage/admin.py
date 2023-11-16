@@ -1,3 +1,7 @@
+"""
+Registers models in admin portal
+"""
+
 from django.contrib import admin
 from .models import DawgHouseUser, Bark, Comment
 

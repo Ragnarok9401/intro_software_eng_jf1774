@@ -1,3 +1,7 @@
+"""
+Contains URL mappings for DawgHouse
+"""
+
 from django.urls import path
 from . import views
 

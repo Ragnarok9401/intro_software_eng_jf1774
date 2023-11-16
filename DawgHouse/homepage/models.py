@@ -1,7 +1,9 @@
-from typing import Any
+"""
+Contains Models For DawgHouse
+"""
+
 import uuid
 from django.conf import settings
-from django.utils import timezone
 from django.contrib.auth.models import (
     BaseUserManager,
     AbstractBaseUser,
@@ -12,9 +14,11 @@ from django.db import models
 # Create your models here.
 
 class DawgHouseUserManager(BaseUserManager):
+    """Commits new user to database"""
     def create_user(
         self, username, password=None, first_name=None, last_name=None, **extra_fields
     ):
+        """Adds regular user to databse"""
         if not username:
             raise ValueError("You must enter a DawgTag")
         if not first_name:
@@ -39,6 +43,7 @@ class DawgHouseUserManager(BaseUserManager):
     def create_superuser(
         self, username, password=None, first_name=None, last_name=None, **extra_fields
     ):
+        """Adds admin to database"""
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -53,6 +58,7 @@ class DawgHouseUserManager(BaseUserManager):
 
 
 class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
+    """Defines user model for database"""
     username = models.CharField(unique=True, max_length=30)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -67,6 +73,7 @@ class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
 
 
 class SniffRequest(models.Model):
+    """Defines sniff request model for database"""
     from_user = models.ForeignKey(
         DawgHouseUser, related_name="form_user", on_delete=models.CASCADE
     )
@@ -76,6 +83,7 @@ class SniffRequest(models.Model):
 
 
 class Bark(models.Model):
+    """Defines bark model for database"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
@@ -91,13 +99,16 @@ class Bark(models.Model):
     original_bark=models.ForeignKey('self',null=True,blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
+        """Returns user posting bark"""
         return str(self.user)
 
 class Comment(models.Model):
+    """Defines comment model for database"""
     bark = models.ForeignKey(Bark, related_name="comments", on_delete=models.CASCADE)
     name = models.ForeignKey(DawgHouseUser, on_delete=models.CASCADE)
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return '%s - %s' % (self.bark.content, self.name)
+    #def __str__(self):
+    #   return '%s - %s' % (self.bark.content, self.name)
+    
