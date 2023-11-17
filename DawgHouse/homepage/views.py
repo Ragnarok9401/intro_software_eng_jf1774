@@ -374,3 +374,11 @@ def main_timeline(request):
         "barks": barks,
     }
     return render(request, "main_page.html", context)
+
+@login_required
+def change_profile_picture(request, picture_path):
+    """Sets 'profile_picture' in DB to static image path"""
+    request.user.profile_picture = picture_path
+    request.user.save()
+    
+    return redirect(f"/profile/{request.user.username}")

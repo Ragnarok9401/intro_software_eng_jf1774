@@ -30,5 +30,6 @@ urlpatterns = [
     path("edit/<str:username>/", include("homepage.urls")),
     path("search_users/", include("homepage.urls")),
     path("main/", include("homepage.urls")),
-    path('give_treat/<uuid:bark_id>/<str:user_which>/', include("homepage.urls"))
+    path('give_treat/<uuid:bark_id>/<str:user_which>/', include("homepage.urls")),
+    path('change_profile_picture/<path:picture_path>', include("homepage.urls")),
 ]
