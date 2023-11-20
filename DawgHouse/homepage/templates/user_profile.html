@@ -51,6 +51,51 @@
         <p>@{{ user.username }}</p>
       </div>
     </div>
+    <div id="profile-picture" class="profile-picture" style="display:none;">
+      <ul class="images">
+        <a href="{% url 'change_profile_picture' 'images/profilePicture.jpg'%}"><img
+            src="{% static 'images/profilePicture.jpg' %}" alt="{{ user.username }}'s profile picture" width="180"
+            height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/beer.jpg' %}"><img src="{% static 'images/beer.jpg' %}"
+            alt="beer" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/bulldog.jpg' %}"><img src="{% static 'images/bulldog.jpg' %}"
+            alt="bulldog" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/cowbell.jpg' %}"><img src="{% static 'images/cowbell.jpg' %}"
+            alt="cowbell" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/hacker.jpg' %}"><img src="{% static 'images/hacker.jpg' %}"
+            alt="hacker" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/hamburger.jpg' %}"><img
+            src="{% static 'images/hamburger.jpg' %}" alt="hamburger" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/lake.jpg' %}"><img src="{% static 'images/lake.jpg' %}"
+            alt="lake" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/monkey-guitar.jpg' %}"><img
+            src="{% static 'images/monkey-guitar.jpg' %}" alt="monkey-guitar" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/msu-helmet.jpg' %}"><img
+            src="{% static 'images/msu-helmet.jpg' %}" alt="msu-helmet" width="180" height="180" /></a>
+        <a href="{% url 'change_profile_picture' 'images/msu-logo.jpg' %}"><img src="{% static 'images/msu-logo.jpg' %}"
+            alt="msu-logo" width="180" height="180" /></a>
+      </ul>
+    </div>
+    <div class="change-picture">
+      <style>
+        .button {
+          background-color: #5d1725;
+          box-shadow: 0 4px 8px rgb(127, 126, 126);
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          border-radius: 15px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          position: relative;
+          top: -10px;
+        }
+      </style>
+      <button type=button class="button" onclick="hideShow()">Choose Profile Picture</button>
+      <script src="{% static 'js/script.js' %}"></script>
+    </div>
     <!--layout is the grid which has two columns: bio and add a bark-->
     <div class="profile-layout">
       <!--bio-->
@@ -233,33 +278,6 @@
         </ul>
       </div>
     </div>
-    <div id="profile-picture" class="profile-picture" style="display:none;">
-      <ul class="images">
-        <a href="{% url 'change_profile_picture' 'images/profilePicture.jpg'%}"><img
-            src="{% static 'images/profilePicture.jpg' %}" alt="{{ user.username }}'s profile picture" width="180"
-            height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/beer.jpg' %}"><img src="{% static 'images/beer.jpg' %}"
-            alt="beer" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/bulldog.jpg' %}"><img src="{% static 'images/bulldog.jpg' %}"
-            alt="bulldog" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/cowbell.jpg' %}"><img src="{% static 'images/cowbell.jpg' %}"
-            alt="cowbell" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/hacker.jpg' %}"><img src="{% static 'images/hacker.jpg' %}"
-            alt="hacker" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/hamburger.jpg' %}"><img
-            src="{% static 'images/hamburger.jpg' %}" alt="hamburger" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/lake.jpg' %}"><img src="{% static 'images/lake.jpg' %}"
-            alt="lake" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/monkey-guitar.jpg' %}"><img
-            src="{% static 'images/monkey-guitar.jpg' %}" alt="monkey-guitar" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/msu-helmet.jpg' %}"><img
-            src="{% static 'images/msu-helmet.jpg' %}" alt="msu-helmet" width="180" height="180" /></a>
-        <a href="{% url 'change_profile_picture' 'images/msu-logo.jpg' %}"><img src="{% static 'images/msu-logo.jpg' %}"
-            alt="msu-logo" width="180" height="180" /></a>
-      </ul>
-    </div>
-    <button onclick="hideShow()">Click</button>
-    <script src="{% static 'js/script.js' %}"></script>
   </div>
 
   <!--javascript for editing bio (didnt want the refresh so i used ajax)-->

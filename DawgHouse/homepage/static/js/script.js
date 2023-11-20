@@ -1,4 +1,4 @@
-var div = document.getElementById('profile-picture');
+var div = document.getElementById('change-picture');
 var display = 1;
 
 function hideShow()
