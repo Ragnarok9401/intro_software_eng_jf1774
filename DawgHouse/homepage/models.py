@@ -65,6 +65,7 @@ class DawgHouseUser(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(blank=True, max_length=200)
     friends = models.ManyToManyField("self", blank=True)
     is_staff = models.BooleanField(default=False)
+    profile_picture = models.CharField(max_length=100, default="images/profilePicture.jpg")
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["first_name", "last_name"]
