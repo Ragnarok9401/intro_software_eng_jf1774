@@ -51,7 +51,7 @@
     - Role: Backend
 
 ## Languages & Techniques
-  Languages: Python, HTML, CSS 
+  Languages: Python, Javascript, HTML, CSS 
   
   Framework: Django 
   
